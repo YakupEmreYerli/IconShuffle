@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import http.cookiejar
+import sys
 import threading
 import urllib.request
 
@@ -9,6 +10,7 @@ import pytest
 
 import samples
 from fakes import FakeSpringBoard
+from ios_homescreen import desktop
 from ios_homescreen.transport import Transport, TransportError
 from ios_homescreen.ui import Options, serve
 from ios_homescreen.ui import session as session_module
@@ -114,3 +116,18 @@ def test_the_server_reports_its_address_and_stops_when_asked(tmp_path):
     thread.join(10)
 
     assert not thread.is_alive()
+
+
+@pytest.mark.parametrize("platform", ["win32", "darwin"])
+def test_only_linux_gets_the_png_window_icon(monkeypatch, platform):
+    """WinForms' ``Icon`` reads .ico only; the PNG would crash before the window
+    shows. On Windows and macOS the window icon comes from the app bundle anyway."""
+    monkeypatch.setattr(sys, "platform", platform)
+
+    assert desktop._window_icon() is None
+
+
+def test_linux_gets_the_png_window_icon(monkeypatch):
+    monkeypatch.setattr(sys, "platform", "linux")
+
+    assert desktop._window_icon().endswith("logo.png")

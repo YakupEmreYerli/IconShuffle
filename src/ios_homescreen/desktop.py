@@ -22,8 +22,13 @@ from .workflow import Timing
 
 TITLE = "ios-homescreen"
 START_TIMEOUT = 30.0
-# The window icon on Linux; macOS and Windows take it from the app bundle.
 ICON = Path(__file__).parent / "ui" / "static" / "logo.png"
+
+
+def _window_icon() -> str | None:
+    """The window icon on Linux; macOS and Windows take it from the app bundle, and
+    WinForms' ``Icon`` refuses the PNG with an ArgumentException before the window shows."""
+    return str(ICON) if sys.platform == "linux" else None
 
 
 def _options(demo: bool) -> Options:
@@ -118,7 +123,7 @@ def main(argv: list[str] | None = None) -> int:
         min_size=(900, 600),
     )
     try:
-        webview.start(icon=str(ICON))
+        webview.start(icon=_window_icon())
     finally:
         stop = found["stop"]
         assert callable(stop)
