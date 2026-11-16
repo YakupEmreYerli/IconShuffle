@@ -72,6 +72,10 @@ function TopBar() {
         <span>Read from phone</span>
       </button>
       <${LayoutFileButtons} />
+      <button class="btn btn-ghost" disabled=${!state.draft || running} title="Sort every page's apps and folders A-Z; the dock, folder contents and widgets keep their places" onClick=${actions.sortAZ}>
+        <svg viewBox="0 0 20 20"><path d="M4 5h12M4 10h9M4 15h6" /></svg>
+        <span>Sort A-Z</span>
+      </button>
       <button class="btn btn-ghost backups-btn" title="Backups made before each write" onClick=${actions.openBackups}>
         <svg viewBox="0 0 20 20"><ellipse cx="10" cy="5" rx="6" ry="2.5" /><path d="M4 5v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5M4 10v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5" /></svg>
         <span>Backups</span>

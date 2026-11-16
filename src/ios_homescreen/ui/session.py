@@ -29,6 +29,7 @@ from ..icons import IconCache, WallpaperCache
 from ..model import describe, describe_changes, match_folders, to_document
 from ..paths import cache_dir
 from ..planner import LayoutError, Plan, load_layout, plan_layout
+from ..sort import sort_view
 from ..state import (
     PAGE_CELLS,
     StateError,
@@ -532,6 +533,14 @@ class Session:
             "summary": summary,
             "dirty": bool(changes) and not same,
         }
+
+    def sort(self, layout: Mapping[str, Any]) -> dict[str, Any]:
+        """The posted view-layout with every page A-Z by name.
+
+        Draft math only: the dock, folder contents and widgets keep their places;
+        /api/apply still owns the write to the phone.
+        """
+        return sort_view(layout)
 
     def start_apply(
         self, layout: Mapping[str, Any], remove: Iterable[str] = (), *, force: bool = False

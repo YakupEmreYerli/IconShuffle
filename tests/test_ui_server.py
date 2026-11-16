@@ -372,6 +372,35 @@ def test_unchanged_layout_is_not_dirty(make_api):
     }
 
 
+def test_sort_orders_pages_by_name_and_keeps_dock_widgets_and_folders(make_api):
+    api = make_api()
+    layout = layout_of(api.read()["read"]["view"])
+
+    result = api.post("/api/sort", {"layout": layout}).json()["layout"]
+
+    assert result["dock"] == layout["dock"]
+    names = [
+        item["name"]
+        for page in result["pages"]
+        for item in page["items"]
+        if item["type"] != "widget"
+    ]
+    assert names == sorted(names, key=str.casefold)
+    folders = {
+        item["name"]: item["pages"]
+        for page in result["pages"]
+        for item in page["items"]
+        if item["type"] == "folder"
+    }
+    before = {
+        item["name"]: item["pages"]
+        for page in layout["pages"]
+        for item in page["items"]
+        if item["type"] == "folder"
+    }
+    assert folders == before
+
+
 def test_removing_a_widget_needs_the_users_confirmation(make_api):
     api = make_api()
     layout = layout_of(api.read()["read"]["view"])

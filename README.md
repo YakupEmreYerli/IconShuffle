@@ -134,6 +134,7 @@ ios-homescreen restore latest
 | --- | --- | --- |
 | `pull [LAYOUT]` | Reads the home screen into a layout file (`layout.toml` by default) and keeps the phone's state as a snapshot | Reads only |
 | `check [LAYOUT]` | Checks the file and lists what `push` would change, compared with the pull | No |
+| `sort [LAYOUT]` | Sorts every page's apps and folders A-Z in the file; the dock, folder contents and widgets keep their places | No |
 | `push [LAYOUT]` | Shows the changes, asks, then backs up, writes, verifies and rolls back on failure | Writes |
 | `apps [QUERY]` | Lists the installed apps with their bundle ids and where each one is, from the newest pull | No |
 | `editor` | Opens the browser editor on 127.0.0.1 | Reads; writes only when you press Apply |
@@ -142,7 +143,7 @@ ios-homescreen restore latest
 | `wifi setup\|status\|off` | Sets up, checks or turns off Wi-Fi access to the phone | Yes |
 
 `pull` will not replace a layout file that has edits you have not pushed; pull into another
-file, or pass `--overwrite`. `check` and `push` take `--allow-removal` (see the layout
+file, or pass `--overwrite`. `check`, `sort` and `push` take `--allow-removal` (see the layout
 reference); `push` and `restore` take `--force` (see the safety model). `backups` shows the 20
 newest; `--all` lists every one. Every command except `wifi` takes `--data-dir DIR`;
 `push`, `restore`, `editor` and `backups` also take `--backup-dir DIR`. All commands but

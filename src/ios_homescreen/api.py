@@ -35,6 +35,7 @@ from .model import describe, describe_changes, to_document
 from .paths import cache_dir, data_dir
 from .planner import LayoutError, LayoutIssue, Plan, changes_between, load_layout, plan_layout
 from .snapshots import load_pull, make_read, state_from_file
+from .sort import sort_state
 from .state import (
     PLAN_META_KEY,
     StateError,
@@ -95,6 +96,7 @@ __all__ = [
     "restore",
     "save_pull",
     "set_wifi",
+    "sort_state",
     "to_document",
     "wifi_status",
 ]

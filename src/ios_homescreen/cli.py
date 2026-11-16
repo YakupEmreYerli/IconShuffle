@@ -307,6 +307,22 @@ def build_parser() -> argparse.ArgumentParser:
     _allow_removal(check)
     _json(check)
 
+    sort = commands.add_parser(
+        "sort",
+        parents=[files],
+        usage="%(prog)s [LAYOUT] [--allow-removal] [--data-dir DIR]",
+        formatter_class=_Formatter,
+        help="sort every page's apps and folders A-Z in the layout file (offline)",
+        description=(
+            "Sort a layout file A-Z: every page's apps, folders, web clips and web\n"
+            "apps in name order. The dock, folder contents and widgets keep their\n"
+            "places. The phone is not contacted; push still asks before writing."
+        ),
+    )
+    _layout_argument(sort, "layout file to sort")
+    _allow_removal(sort)
+    _json(sort)
+
     push = commands.add_parser(
         "push",
         parents=[connection, files_and_backups, writing],
@@ -655,6 +671,37 @@ def _check(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def _sort(args: argparse.Namespace) -> int:
+    plan, read, path, _ = _plan(args)
+    sorted_state = api.sort_state(plan.payload)
+    if sorted_state["iconLists"] == plan.payload["iconLists"]:
+        report(sorted=False, unchanged=plan.unchanged, changes=list(plan.change_list))
+        say(f"{args.layout} is already in A-Z order.")
+        return EXIT_OK
+    args.layout.write_text(
+        api.export_layout(
+            {"state": sorted_state, "apps": read.get("apps", {})},
+            pull=path.name,
+            note=api.pull_note(read),
+        ),
+        encoding="utf-8",
+    )
+    sorted_plan = api.plan_layout(
+        api.load_layout(args.layout), read, allow_removal=args.allow_removal
+    )
+    report(
+        sorted=True,
+        unchanged=sorted_plan.unchanged,
+        changes=list(sorted_plan.change_list),
+        summary=change_summary(sorted_plan.change_list),
+    )
+    say(f"Sorted {args.layout} A-Z: every page's apps and folders by name;")
+    say("the dock, folder contents and widgets kept their places.")
+    _show_changes(list(sorted_plan.change_list))
+    say(f"Check it with: {_command('check', args.layout)}")
+    return EXIT_OK
+
+
 def _drift_message(args: argparse.Namespace, path: Path) -> str:
     return (
         f"the iPhone's layout changed since {args.layout} was pulled ({path.name}), so nothing "
@@ -980,6 +1027,8 @@ def _run(args: argparse.Namespace, opener: Opener, backend: Any = None) -> int:
         return asyncio.run(_pull(args, opener))
     if args.command == "check":
         return _check(args)
+    if args.command == "sort":
+        return _sort(args)
     if args.command == "push":
         return _run_push(args, opener)
     if args.command == "editor":

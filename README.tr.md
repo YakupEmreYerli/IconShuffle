@@ -138,6 +138,7 @@ ios-homescreen restore latest
 | --- | --- | --- |
 | `pull [LAYOUT]` | Ana ekranı bir düzen dosyasına (varsayılan `layout.toml`) yazar, telefonun o anki hâlini de kayıt olarak saklar | Yalnız okur |
 | `check [LAYOUT]` | Dosyayı denetler, `push` komutunun pull kaydına göre neyi değiştireceğini listeler | Hayır |
+| `sort [LAYOUT]` | Dosyadaki sayfaların uygulama ve klasörlerini A'dan Z'ye sıralar; dock, klasör içleri ve widget'lar yerinde kalır | Hayır |
 | `push [LAYOUT]` | Değişiklikleri gösterip sorar; sonra yedek alır, yazar, doğrular, tutmazsa geri döner | Yazar |
 | `apps [QUERY]` | Kurulu uygulamaları paket kimlikleri ve her birinin şu anki yeriyle listeler (en yeni pull kaydından) | Hayır |
 | `editor` | Tarayıcı düzenleyicisini 127.0.0.1 üzerinde açar | Okur; yalnız Uygula'ya basınca yazar |
@@ -146,7 +147,7 @@ ios-homescreen restore latest
 | `wifi setup\|status\|off` | Telefona Wi-Fi erişimini kurar, denetler ya da kapatır | Evet |
 
 `pull`, henüz telefona yazmadığınız değişiklikler taşıyan bir düzen dosyasının üstüne yazmaz;
-başka bir dosyaya çekin ya da `--overwrite` verin. `check` ve `push` komutları
+başka bir dosyaya çekin ya da `--overwrite` verin. `check`, `sort` ve `push` komutları
 `--allow-removal` alır (düzen dosyası bölümüne bakın); `push` ve `restore` komutları
 `--force` alır (güvenlik bölümüne bakın). `backups` en yeni 20 yedeği gösterir, `--all`
 hepsini listeler. `wifi` dışındaki bütün komutlar `--data-dir DIR` alır; `push`,
