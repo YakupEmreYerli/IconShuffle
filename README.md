@@ -105,6 +105,19 @@ extra names them explicitly, in case that ever changes:
 uv tool install "ios-homescreen[ui] @ git+https://github.com/YakupEmreYerli/ios-homescreen"
 ```
 
+### Desktop app
+
+Ready-made builds for Windows, macOS and Linux are on the
+[releases page](https://github.com/YakupEmreYerli/ios-homescreen/releases/latest)
+(`IconShuffle-*-windows-x64-setup.exe`, `IconShuffle-*-macos-arm64.dmg`,
+`IconShuffle-*-linux-x86_64.AppImage`). The app opens the same editor in its own window,
+no terminal or browser needed.
+
+The builds are not signed or notarized yet, so the first launch needs one extra step.
+On macOS, open System Settings → Privacy & Security and choose **Open Anyway** (or
+right-click the app → **Open**). On Windows, SmartScreen may ask once — **More info →
+Run anyway**.
+
 From a clone, for development:
 
 ```bash

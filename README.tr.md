@@ -109,6 +109,18 @@ kurulur. `ui` eki bunları ayrıca adıyla ister, ileride değişirse diye:
 uv tool install "ios-homescreen[ui] @ git+https://github.com/YakupEmreYerli/ios-homescreen"
 ```
 
+### Masaüstü uygulaması
+
+Windows, macOS ve Linux için hazır kurulum dosyaları
+[sürümler sayfasında](https://github.com/YakupEmreYerli/ios-homescreen/releases/latest)
+(`IconShuffle-*-windows-x64-setup.exe`, `IconShuffle-*-macos-arm64.dmg`,
+`IconShuffle-*-linux-x86_64.AppImage`). Uygulama aynı düzenleyiciyi kendi penceresinde açar;
+uçbirim ya da tarayıcı gerekmez.
+
+Derlemeler henüz imzalı/notarize edilmiş değil; ilk açılış bir ek adım ister. macOS'ta
+Sistem Ayarları → Gizlilik ve Güvenlik'ten **Yine de Aç**'ı seçin (ya da uygulamaya sağ
+tıklayıp **Aç**). Windows'ta SmartScreen bir kez sorabilir — **Ek bilgi → Yine de çalıştır**.
+
 Geliştirmek için depodan:
 
 ```bash
