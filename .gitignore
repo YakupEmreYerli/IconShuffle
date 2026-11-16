@@ -18,3 +18,7 @@ htmlcov/
 .idea/
 .vscode/
 *.swp
+
+# Personal home-screen layout pulled from a real phone
+layout.toml
+*.toml.bak
