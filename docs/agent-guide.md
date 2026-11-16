@@ -65,12 +65,13 @@ folder into the `skills` folder inside `~/.claude` (or inside a project's `.clau
 | `ios-homescreen pull [LAYOUT]` | Read the home screen into `LAYOUT` (default `layout.toml`); refuses to overwrite a file with unpushed edits unless `--overwrite` | Reads |
 | `ios-homescreen apps [QUERY]` | Installed apps, their bundle ids and where each one is, from the newest pull | No |
 | `ios-homescreen check [LAYOUT]` | Validate the file and list what `push` would change | No |
+| `ios-homescreen sort [LAYOUT]` | Sort every page's apps and folders A-Z in the file; dock, folder contents and widgets keep their places | No |
 | `ios-homescreen push [LAYOUT] --yes` | Back up, write, verify, roll back on failure. Without `--yes` it asks at a terminal; with `--json` it only reports the changes | Writes |
 | `ios-homescreen backups` | Backups made before each write, newest first | No |
 | `ios-homescreen restore latest --yes` | Write a backup back (`latest`, a name from `backups`, or a file), same safety steps | Writes |
 | `ios-homescreen wifi setup\|status\|off` | Wi-Fi access | Yes |
 
-Add `--json` to `pull`, `apps`, `check`, `push`, `backups`, `restore` and `wifi` to get one
+Add `--json` to `pull`, `apps`, `check`, `sort`, `push`, `backups`, `restore` and `wifi` to get one
 JSON object on stdout (messages go to stderr). Other flags: `--wifi`, `--udid UDID`,
 `--data-dir DIR`, `--force`, `--allow-removal`, `--overwrite`.
 
