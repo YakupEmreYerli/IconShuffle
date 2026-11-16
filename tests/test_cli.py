@@ -24,14 +24,13 @@ COMMANDS = ["pull", "check", "push", "editor", "backups", "restore", "wifi"]
 
 @pytest.fixture
 def home(tmp_path, monkeypatch) -> Path:
-    """An isolated XDG data dir and an empty working directory. Without a terminal."""
-    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path / "xdg"))
-    monkeypatch.delenv("IOS_HOMESCREEN_DATA_DIR", raising=False)
+    """An isolated data dir on every OS and an empty working directory. No terminal."""
+    monkeypatch.setenv("IOS_HOMESCREEN_DATA_DIR", str(tmp_path / "data"))
     monkeypatch.setattr(sys, "stdin", io.StringIO(""))
     work = tmp_path / "work"
     work.mkdir()
     monkeypatch.chdir(work)
-    return tmp_path / "xdg" / "ios-homescreen"
+    return tmp_path / "data"
 
 
 class Terminal(io.StringIO):

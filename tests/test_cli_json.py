@@ -24,13 +24,12 @@ COMMON = {"ok", "command", "exit_code"}
 
 @pytest.fixture
 def home(tmp_path, monkeypatch) -> Path:
-    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path / "xdg"))
-    monkeypatch.delenv("IOS_HOMESCREEN_DATA_DIR", raising=False)
+    monkeypatch.setenv("IOS_HOMESCREEN_DATA_DIR", str(tmp_path / "data"))
     monkeypatch.setattr(sys, "stdin", io.StringIO(""))
     work = tmp_path / "work"
     work.mkdir()
     monkeypatch.chdir(work)
-    return tmp_path / "xdg" / "ios-homescreen"
+    return tmp_path / "data"
 
 
 def phone(state=None, **kwargs) -> FakeSpringBoard:

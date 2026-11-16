@@ -116,7 +116,7 @@ def test_the_error_codes_in_the_guide_are_real():
     table = text[text.index("## Errors and what to tell the person") :]
     codes = set(re.findall(r"^\| `([a-z_]+)`(?:, `([a-z_]+)`)?", table, re.M))
     codes = {code for pair in codes for code in pair if code}
-    source = "".join(p.read_text() for p in (ROOT / "src").rglob("*.py"))
+    source = "".join(p.read_text(encoding="utf-8") for p in (ROOT / "src").rglob("*.py"))
 
     assert len(codes) > 15
     for code in codes:

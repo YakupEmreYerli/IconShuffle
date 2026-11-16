@@ -13,7 +13,7 @@ from __future__ import annotations
 import os
 import sys
 from collections.abc import Mapping
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 APP_NAME = "ios-homescreen"
 DATA_DIR_ENV = "IOS_HOMESCREEN_DATA_DIR"
@@ -52,8 +52,9 @@ def data_dir(
     if system is not None:
         return system
     xdg = env.get("XDG_DATA_HOME")
-    # The XDG spec says relative paths are invalid and must be ignored.
-    if xdg and Path(xdg).is_absolute():
+    # The XDG spec says relative paths are invalid and must be ignored; XDG paths
+    # are POSIX, so judge them as POSIX even when tests pass a different platform.
+    if xdg and PurePosixPath(xdg).is_absolute():
         return Path(xdg) / APP_NAME
     return (home or Path.home()) / ".local" / "share" / APP_NAME
 
@@ -74,6 +75,6 @@ def cache_dir(
     if system is not None:
         return system
     xdg = env.get("XDG_CACHE_HOME")
-    if xdg and Path(xdg).is_absolute():
+    if xdg and PurePosixPath(xdg).is_absolute():
         return Path(xdg) / APP_NAME
     return (home or Path.home()) / ".cache" / APP_NAME

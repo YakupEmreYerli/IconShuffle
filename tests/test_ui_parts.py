@@ -256,14 +256,18 @@ def test_unknown_errors_still_read_like_a_sentence():
 
 
 def test_vendored_libraries_match_their_recorded_checksums():
-    sources = (STATIC / "vendor" / "SOURCES.txt").read_text()
+    sources = (STATIC / "vendor" / "SOURCES.txt").read_text(encoding="utf-8")
     recorded = dict(re.findall(r"^(\S+\.mjs)\n(?:.*\n)*?  sha256:  ([0-9a-f]{64})", sources, re.M))
 
     assert set(recorded) == {"preact.mjs", "preact-hooks.mjs", "htm.mjs"}
     for name, digest in recorded.items():
         assert hashlib.sha256((STATIC / "vendor" / name).read_bytes()).hexdigest() == digest
-    assert (STATIC / "vendor" / "LICENSE-preact.txt").read_text().startswith("The MIT License")
-    assert "Apache License" in (STATIC / "vendor" / "LICENSE-htm.txt").read_text()
+    assert (
+        (STATIC / "vendor" / "LICENSE-preact.txt")
+        .read_text(encoding="utf-8")
+        .startswith("The MIT License")
+    )
+    assert "Apache License" in (STATIC / "vendor" / "LICENSE-htm.txt").read_text(encoding="utf-8")
 
 
 def test_the_vendored_font_matches_its_recorded_checksums():
@@ -271,22 +275,26 @@ def test_the_vendored_font_matches_its_recorded_checksums():
     recorded = {
         name: digest
         for digest, name in re.findall(
-            r"^([0-9a-f]{64})  (\S+\.woff2)$", (fonts / "SOURCES.txt").read_text(), re.M
+            r"^([0-9a-f]{64})  (\S+\.woff2)$",
+            (fonts / "SOURCES.txt").read_text(encoding="utf-8"),
+            re.M,
         )
     }
 
     assert len(recorded) == 6
     for name, digest in recorded.items():
         assert hashlib.sha256((fonts / name).read_bytes()).hexdigest() == digest
-        assert f"/static/fonts/{name}" in (STATIC / "app.css").read_text()
-    assert "SIL Open Font License" in (fonts / "LICENSE-ibm-plex-sans.txt").read_text()
+        assert f"/static/fonts/{name}" in (STATIC / "app.css").read_text(encoding="utf-8")
+    assert "SIL Open Font License" in (fonts / "LICENSE-ibm-plex-sans.txt").read_text(
+        encoding="utf-8"
+    )
 
 
 def test_the_editor_stays_flat():
     # The look is deliberately plain: no gradients, no frosted glass, and only the motion
     # that answers something the user did.
-    css = (STATIC / "app.css").read_text()
-    scripts = "".join(p.read_text() for p in (STATIC / "js").glob("*.js"))
+    css = (STATIC / "app.css").read_text(encoding="utf-8")
+    scripts = "".join(p.read_text(encoding="utf-8") for p in (STATIC / "js").glob("*.js"))
 
     for banned in ("gradient", "backdrop-filter", "text-shadow"):
         assert banned not in css
@@ -297,10 +305,10 @@ def test_the_editor_stays_flat():
 
 
 def test_every_module_and_asset_the_page_loads_exists():
-    page = (STATIC / "index.html").read_text()
+    page = (STATIC / "index.html").read_text(encoding="utf-8")
     referenced = re.findall(r'"/static/([^"]+)"', page)
     for script in (STATIC / "js").glob("*.js"):
-        text = script.read_text()
+        text = script.read_text(encoding="utf-8")
         for target in re.findall(r'from "\./([^"]+)"', text):
             assert (STATIC / "js" / target).is_file(), f"{script.name} imports {target}"
         for bare in re.findall(r'from "([a-z][^".]*)"', text):
@@ -312,7 +320,7 @@ def test_every_module_and_asset_the_page_loads_exists():
 
 
 def test_the_page_has_no_inline_code_besides_the_import_map():
-    page = (STATIC / "index.html").read_text()
+    page = (STATIC / "index.html").read_text(encoding="utf-8")
 
     scripts = re.findall(r"<script([^>]*)>(.*?)</script>", page, re.S)
     inline = [attrs for attrs, body in scripts if body.strip()]
@@ -439,7 +447,7 @@ def test_every_job_the_page_follows_ends_in_the_servers_state():
     # The editor starts the first read itself, so the page often finds it running. A job
     # followed without reloading the state afterwards ended on an empty phone with no
     # error (seen with a Wi-Fi read that failed after its retry).
-    actions = (STATIC / "js" / "actions.js").read_text()
+    actions = (STATIC / "js" / "actions.js").read_text(encoding="utf-8")
     settle = actions[actions.index("async function settle(") :]
     settle = settle[: settle.index("\n}\n")]
 
