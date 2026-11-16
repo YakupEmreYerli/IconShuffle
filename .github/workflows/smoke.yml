@@ -149,7 +149,8 @@ jobs:
 
       - name: Verdict (macOS)
         if: runner.os == 'macOS'
-        run: grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
+        run: |
+          grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
 
       # -------------------------------------------------------------- Linux
 
@@ -171,7 +172,8 @@ jobs:
 
       - name: Verdict (Linux)
         if: runner.os == 'Linux'
-        run: grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
+        run: |
+          grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
 
       # ------------------------------------------------------------ results
 
