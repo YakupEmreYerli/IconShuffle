@@ -43,7 +43,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libegl1 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 \
             libxcb-keysyms1 libxcb-shape0 libxcb-xinerama0 libnss3 libxcomposite1 \
-            libxdamage1 libxrandr2 libxtst6 libasound2 libfuse2 xvfb imagemagick
+            libxdamage1 libxrandr2 libxtst6 libasound2 libfuse2 xvfb imagemagick x11-utils
 
       - run: uv sync --locked --extra app --group package
       - run: uv run python packaging/make_icons.py
@@ -77,8 +77,10 @@ jobs:
 
           $setup = Get-ChildItem out\*-setup.exe | Select-Object -First 1
           "setup: $($setup.Name)" | Tee-Object $report
-          & $setup.FullName /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-
-          "installer exit: $LASTEXITCODE" | Tee-Object -Append $report
+          $inst = Start-Process $setup.FullName -Wait -PassThru `
+            -ArgumentList '/VERYSILENT','/NORESTART','/SUPPRESSMSGBOXES','/SP-'
+          "installer exit: $($inst.ExitCode)" | Tee-Object -Append $report
+          Start-Sleep -Seconds 3
 
           $exe = "$env:LOCALAPPDATA\Programs\ios-homescreen\ios-homescreen.exe"
           "exe exists: $(Test-Path $exe)" | Tee-Object -Append $report
@@ -130,22 +132,33 @@ jobs:
 
       - name: Gatekeeper on a quarantined copy (macOS)
         if: runner.os == 'macOS'
+        timeout-minutes: 5
         run: |
           set +e
+          # A command that cannot hang the job: Gatekeeper's "verifying" dialog can
+          # make `open` or `spctl` wait forever on a headless runner.
+          capped() {
+            local secs=$1; shift
+            "$@" & local pid=$!
+            for _ in $(seq "$secs"); do
+              kill -0 "$pid" 2>/dev/null || { wait "$pid"; return; }
+              sleep 1
+            done
+            kill "$pid" 2>/dev/null
+            echo "(timed out after ${secs}s: $*)"
+          }
           mkdir -p smoke
           cp -R dist/ios-homescreen.app smoke/downloaded.app
           # The quarantine mark a browser adds on download: flags 0081, agent Safari.
           xattr -w -r com.apple.quarantine "0081;00000000;Safari;" smoke/downloaded.app
           {
             echo "== spctl =="
-            spctl --assess --verbose=4 smoke/downloaded.app 2>&1
-            echo "spctl exit: $?"
+            capped 60 spctl --assess --verbose=4 smoke/downloaded.app 2>&1
             echo "== open =="
-            open smoke/downloaded.app 2>&1
-            echo "open exit: $?"
+            capped 30 open smoke/downloaded.app 2>&1
           } | tee smoke/quarantine.txt
-          sleep 8
-          screencapture -x smoke/macos-gatekeeper.png 2>&1 || echo "screenshot failed"
+          sleep 5
+          capped 20 screencapture -x smoke/macos-gatekeeper.png 2>&1
 
       - name: Verdict (macOS)
         if: runner.os == 'macOS'
@@ -160,20 +173,24 @@ jobs:
           mkdir -p smoke
           APPIMAGE=$(ls out/*.AppImage | head -1)
           chmod +x "$APPIMAGE"
-          xvfb-run --server-args="-screen 0 1600x1000x24" "$APPIMAGE" --demo &
-          PID=$!
+          cat > smoke/open-and-shoot.sh <<'EOF'
+          #!/bin/bash
+          "$1" --demo &
           sleep 25
-          {
-            echo "appimage: $APPIMAGE"
-            echo "alive: $(kill -0 $PID 2>/dev/null && echo yes || echo no)"
-            DISPLAY=:99 import -window root smoke/linux.png 2>&1 && echo "screenshot saved" || echo "screenshot failed"
-            kill $PID 2>/dev/null
-          } | tee smoke/report.txt
+          echo "== window tree =="
+          xwininfo -root -tree | grep -i "ios-homescreen" || echo "no ios-homescreen window"
+          import -window root smoke/linux.png 2>&1 && echo "screenshot saved" || echo "screenshot failed"
+          pkill -f ios-homescreen || true
+          EOF
+          chmod +x smoke/open-and-shoot.sh
+          echo "appimage: $APPIMAGE" | tee smoke/report.txt
+          xvfb-run -a --server-args="-screen 0 1600x1000x24" smoke/open-and-shoot.sh "$APPIMAGE" \
+            | tee -a smoke/report.txt
 
       - name: Verdict (Linux)
         if: runner.os == 'Linux'
         run: |
-          grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
+          grep -q '"ios-homescreen' smoke/report.txt || { cat smoke/report.txt; exit 1; }
 
       # ------------------------------------------------------------ results
 
