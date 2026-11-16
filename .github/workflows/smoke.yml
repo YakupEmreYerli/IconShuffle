@@ -1,0 +1,183 @@
+name: Smoke test
+
+# Installs the packaged app on each OS, opens it in --demo mode, photographs the
+# window and collects what went wrong when it does not. On macOS it also marks the
+# app as downloaded (quarantine) to see what Gatekeeper does with an unsigned build.
+# A trial workflow on the desktop-app branch: it publishes nothing.
+
+on:
+  pull_request:
+    paths:
+      - "packaging/**"
+      - "src/ios_homescreen/desktop.py"
+      - ".github/workflows/smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS (Apple silicon)
+            os: macos-15
+          - name: Windows
+            os: windows-2022
+          - name: Linux
+            os: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          python-version: "3.13"
+
+      - name: Linux libraries for Qt, AppImage and a virtual screen
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 \
+            libxcb-keysyms1 libxcb-shape0 libxcb-xinerama0 libnss3 libxcomposite1 \
+            libxdamage1 libxrandr2 libxtst6 libasound2 libfuse2 xvfb imagemagick
+
+      - run: uv sync --locked --extra app --group package
+      - run: uv run python packaging/make_icons.py
+      - run: uv run pyinstaller packaging/ios-homescreen.spec --noconfirm
+
+      - name: Version
+        id: version
+        shell: bash
+        run: echo "value=$(uv run python -c 'import ios_homescreen; print(ios_homescreen.__version__)')" >> "$GITHUB_OUTPUT"
+
+      - name: Make the installer (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install innosetup -y --no-progress
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /DAppVersion=${{ steps.version.outputs.value }} packaging\windows.iss
+
+      - name: Make the AppImage (Linux)
+        if: runner.os == 'Linux'
+        run: packaging/appimage.sh "${{ steps.version.outputs.value }}"
+
+      # ------------------------------------------------------------- Windows
+
+      - name: Install, open, photograph (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        id: smoke_win
+        run: |
+          $smoke = "smoke"; New-Item -ItemType Directory -Force $smoke | Out-Null
+          $report = "$smoke\report.txt"
+
+          $setup = Get-ChildItem out\*-setup.exe | Select-Object -First 1
+          "setup: $($setup.Name)" | Tee-Object $report
+          & $setup.FullName /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-
+          "installer exit: $LASTEXITCODE" | Tee-Object -Append $report
+
+          $exe = "$env:LOCALAPPDATA\Programs\ios-homescreen\ios-homescreen.exe"
+          "exe exists: $(Test-Path $exe)" | Tee-Object -Append $report
+          try {
+            $proc = Start-Process $exe -ArgumentList '--demo' -PassThru
+            Start-Sleep -Seconds 25
+
+            $again = Get-Process -Id $proc.Id -ErrorAction SilentlyContinue
+            "alive: $($null -ne $again)" | Tee-Object -Append $report
+            "exit code: $(if ($proc.HasExited) { $proc.ExitCode } else { 'still running' })" | Tee-Object -Append $report
+            "window title: '$($again.MainWindowTitle)'" | Tee-Object -Append $report
+            Get-Process | Where-Object { $_.MainWindowTitle } |
+              Select-Object Name, MainWindowTitle | Out-String | Tee-Object -Append $report
+            if ($again) { Stop-Process -Id $proc.Id -Force }
+          } catch {
+            "launch error: $_" | Tee-Object -Append $report
+          }
+
+          Add-Type -AssemblyName System.Windows.Forms, System.Drawing
+          $b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+          $bmp = New-Object System.Drawing.Bitmap $b.Width, $b.Height
+          $g = [System.Drawing.Graphics]::FromImage($bmp)
+          $g.CopyFromScreen($b.Location, [System.Drawing.Point]::Empty, $b.Size)
+          $bmp.Save("$smoke\windows.png")
+          "screenshot saved" | Tee-Object -Append $report
+
+      - name: Verdict (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $report = Get-Content smoke\report.txt -Raw
+          if ($report -notmatch "window title: '.+'") { throw "the app window never opened" }
+
+      # -------------------------------------------------------------- macOS
+
+      - name: Open, photograph (macOS)
+        if: runner.os == 'macOS'
+        id: smoke_mac
+        run: |
+          mkdir -p smoke
+          dist/ios-homescreen.app/Contents/MacOS/ios-homescreen --demo &
+          PID=$!
+          sleep 25
+          {
+            echo "alive: $(kill -0 $PID 2>/dev/null && echo yes || echo no)"
+            screencapture -x smoke/macos.png 2>&1 && echo "screenshot saved" || echo "screenshot failed"
+            kill $PID 2>/dev/null
+          } | tee smoke/report.txt
+
+      - name: Gatekeeper on a quarantined copy (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          set +e
+          mkdir -p smoke
+          cp -R dist/ios-homescreen.app smoke/downloaded.app
+          # The quarantine mark a browser adds on download: flags 0081, agent Safari.
+          xattr -w -r com.apple.quarantine "0081;00000000;Safari;" smoke/downloaded.app
+          {
+            echo "== spctl =="
+            spctl --assess --verbose=4 smoke/downloaded.app 2>&1
+            echo "spctl exit: $?"
+            echo "== open =="
+            open smoke/downloaded.app 2>&1
+            echo "open exit: $?"
+          } | tee smoke/quarantine.txt
+          sleep 8
+          screencapture -x smoke/macos-gatekeeper.png 2>&1 || echo "screenshot failed"
+
+      - name: Verdict (macOS)
+        if: runner.os == 'macOS'
+        run: grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
+
+      # -------------------------------------------------------------- Linux
+
+      - name: Open, photograph (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          mkdir -p smoke
+          APPIMAGE=$(ls out/*.AppImage | head -1)
+          chmod +x "$APPIMAGE"
+          xvfb-run --server-args="-screen 0 1600x1000x24" "$APPIMAGE" --demo &
+          PID=$!
+          sleep 25
+          {
+            echo "appimage: $APPIMAGE"
+            echo "alive: $(kill -0 $PID 2>/dev/null && echo yes || echo no)"
+            DISPLAY=:99 import -window root smoke/linux.png 2>&1 && echo "screenshot saved" || echo "screenshot failed"
+            kill $PID 2>/dev/null
+          } | tee smoke/report.txt
+
+      - name: Verdict (Linux)
+        if: runner.os == 'Linux'
+        run: grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
+
+      # ------------------------------------------------------------ results
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: smoke-${{ runner.os }}
+          path: smoke/*
+          if-no-files-found: warn
