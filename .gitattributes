@@ -1,0 +1,9 @@
+# Keep checkouts identical on every OS: tests hash vendored assets byte for byte,
+# and Windows' autocrlf would rewrite them as CRLF otherwise.
+* text=auto eol=lf
+
+*.png binary
+*.icns binary
+*.ico binary
+*.woff2 binary
+*.dmg binary

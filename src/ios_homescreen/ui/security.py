@@ -36,7 +36,7 @@ SAFE_METHODS = frozenset({"GET", "HEAD"})
 ALLOWED_FETCH_SITES = frozenset({"same-origin", "none"})
 
 _LOCKED_PAGE = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>ios-homescreen</title>
+<html lang="en"><head><meta charset="utf-8"><title>IconShuffle</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>body{{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0f17;
 color:#e6eaf2;font:16px/1.5 system-ui,sans-serif}}main{{max-width:30rem;padding:2rem}}

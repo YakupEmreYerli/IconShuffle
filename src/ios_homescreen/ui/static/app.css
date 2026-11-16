@@ -75,18 +75,18 @@
   --graphite: #23272d;
   --pencil: #5e6672;
   --rule: #d3d8de;
-  --signal: #17804a;
+  --signal: #8b6cff;
   --brick: #b3372b;
   --ochre: #8a5a00;
   --dusk: #46536a;
   /* derived, flat */
   --hover: #dde1e6;
   --press: #d3d8de;
-  --signal-hover: #136c3e;
+  --signal-hover: #6f4de0;
   --brick-hover: #9a2e24;
   --brick-tint: #f6e3e0;
   --ochre-tint: #f4ead6;
-  --signal-tint: #dcefe3;
+  --signal-tint: #e9e4ff;
   /* type */
   --font: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --ios-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "IBM Plex Sans", system-ui, sans-serif;
@@ -2008,7 +2008,7 @@ body.is-dragging .lib-row:hover {
 
 .outcome.tone-success {
   background: var(--signal-tint);
-  color: #0f5232;
+  color: #3c2a8c;
 }
 
 .outcome.tone-success .outcome-icon {

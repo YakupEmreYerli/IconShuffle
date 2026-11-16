@@ -1,4 +1,4 @@
-<h1 align="center">ios-homescreen</h1>
+<h1 align="center">IconShuffle</h1>
 
 <p align="center">
 iPhone ana ekranını Linux'tan düzenleyin: gerçek simgeleri tarayıcıda sürükleyin ya da yapay zekâ ajanınıza ne istediğinizi söyleyin. USB ya da Wi-Fi ile, Mac gerekmez.
@@ -10,7 +10,15 @@ iPhone ana ekranını Linux'tan düzenleyin: gerçek simgeleri tarayıcıda sür
 <img src="https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776ab" alt="Python 3.11, 3.12, 3.13">
 </p>
 
+<p align="center">
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Windows-8b6cff?logo=windows&logoColor=white" alt="Windows için indir"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-macOS-8b6cff?logo=apple&logoColor=white" alt="macOS için indir"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Linux-8b6cff?logo=linux&logoColor=white" alt="Linux için indir"></a>
+</p>
+
 <p align="center"><a href="README.md">English</a></p>
+
+![IconShuffle demosu: tarayıcı düzenleyicisi örnek bir iPhone'u yansıtır; A-Z sırala simgeleri dizer, değişiklik listesi dolar ve Apply'a basılmadan telefona bir şey yazılmaz](docs/assets/demo.gif)
 
 ![ios-homescreen: iPhone ana ekranını Linux'tan düzenle, USB ya da Wi-Fi ile; yanında tarayıcı düzenleyicisi ve telefonun aynası](docs/banner.tr.png)
 
@@ -101,6 +109,18 @@ kurulur. `ui` eki bunları ayrıca adıyla ister, ileride değişirse diye:
 uv tool install "ios-homescreen[ui] @ git+https://github.com/YakupEmreYerli/ios-homescreen"
 ```
 
+### Masaüstü uygulaması
+
+Windows, macOS ve Linux için hazır kurulum dosyaları
+[sürümler sayfasında](https://github.com/YakupEmreYerli/ios-homescreen/releases/latest)
+(`IconShuffle-*-windows-x64-setup.exe`, `IconShuffle-*-macos-arm64.dmg`,
+`IconShuffle-*-linux-x86_64.AppImage`). Uygulama aynı düzenleyiciyi kendi penceresinde açar;
+uçbirim ya da tarayıcı gerekmez.
+
+Derlemeler henüz imzalı/notarize edilmiş değil; ilk açılış bir ek adım ister. macOS'ta
+Sistem Ayarları → Gizlilik ve Güvenlik'ten **Yine de Aç**'ı seçin (ya da uygulamaya sağ
+tıklayıp **Aç**). Windows'ta SmartScreen bir kez sorabilir — **Ek bilgi → Yine de çalıştır**.
+
 Geliştirmek için depodan:
 
 ```bash
@@ -138,6 +158,7 @@ ios-homescreen restore latest
 | --- | --- | --- |
 | `pull [LAYOUT]` | Ana ekranı bir düzen dosyasına (varsayılan `layout.toml`) yazar, telefonun o anki hâlini de kayıt olarak saklar | Yalnız okur |
 | `check [LAYOUT]` | Dosyayı denetler, `push` komutunun pull kaydına göre neyi değiştireceğini listeler | Hayır |
+| `sort [LAYOUT]` | Dosyadaki sayfaların uygulama ve klasörlerini A'dan Z'ye sıralar; dock, klasör içleri ve widget'lar yerinde kalır | Hayır |
 | `push [LAYOUT]` | Değişiklikleri gösterip sorar; sonra yedek alır, yazar, doğrular, tutmazsa geri döner | Yazar |
 | `apps [QUERY]` | Kurulu uygulamaları paket kimlikleri ve her birinin şu anki yeriyle listeler (en yeni pull kaydından) | Hayır |
 | `editor` | Tarayıcı düzenleyicisini 127.0.0.1 üzerinde açar | Okur; yalnız Uygula'ya basınca yazar |
@@ -146,7 +167,7 @@ ios-homescreen restore latest
 | `wifi setup\|status\|off` | Telefona Wi-Fi erişimini kurar, denetler ya da kapatır | Evet |
 
 `pull`, henüz telefona yazmadığınız değişiklikler taşıyan bir düzen dosyasının üstüne yazmaz;
-başka bir dosyaya çekin ya da `--overwrite` verin. `check` ve `push` komutları
+başka bir dosyaya çekin ya da `--overwrite` verin. `check`, `sort` ve `push` komutları
 `--allow-removal` alır (düzen dosyası bölümüne bakın); `push` ve `restore` komutları
 `--force` alır (güvenlik bölümüne bakın). `backups` en yeni 20 yedeği gösterir, `--all`
 hepsini listeler. `wifi` dışındaki bütün komutlar `--data-dir DIR` alır; `push`,

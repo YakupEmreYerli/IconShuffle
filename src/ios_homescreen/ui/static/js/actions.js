@@ -243,7 +243,7 @@ async function settle(job) {
         ...(state.server || {}),
         error: {
           title: "Cannot reach the server",
-          steps: ["Check that ios-homescreen is still running, then reload this page."],
+          steps: ["Check that IconShuffle is still running, then reload this page."],
           detail: error.message,
         },
       },
@@ -386,6 +386,19 @@ export function useImported(result) {
 }
 
 // ------------------------------------------------------------------ edits
+
+// A draft change like any other: the change list shows the moves and nothing
+// reaches the phone until Apply. The server sorts so the same code serves the CLI.
+export async function sortAZ() {
+  const state = getState();
+  if (!state.draft || state.drag) return;
+  try {
+    const { layout } = await post("/api/sort", { layout: ops.toLayout(state.draft) });
+    commit(ops.fromView(layout), { label: "Sorted A-Z." });
+  } catch (error) {
+    toast(error.message, { tone: "error" });
+  }
+}
 
 export function dropItem(source, target, base) {
   const { item } = source;

@@ -8,6 +8,7 @@ Endpoints (all under the guard in :mod:`.security`):
 ``/api/state``            GET     Device, connection, last read (as a view), job, icons
 ``/api/read``             POST    Start reading the phone (a job)
 ``/api/plan``             POST    Check an edited layout: issues, changes, summary
+``/api/sort``             POST    The layout with every page's items sorted A-Z
 ``/api/apply``            POST    Plan and start the safe write (a job)
 ``/api/job``              GET     The current job; ``?since=N`` skips known events
 ``/api/job/events``       GET     The current job's events as a stream (NDJSON)
@@ -157,6 +158,13 @@ def create_app(session: Session, *, token: str, port: int) -> Any:
         except Exception as exc:
             return _handle(exc)
 
+    async def sort(request: Request) -> Response:
+        try:
+            layout, _ = _layout(await _body(request))
+            return JSONResponse({"layout": session.sort(layout)})
+        except Exception as exc:
+            return _handle(exc)
+
     async def apply(request: Request) -> Response:
         try:
             data = await _body(request)
@@ -256,6 +264,7 @@ def create_app(session: Session, *, token: str, port: int) -> Any:
         Route("/api/state", state, methods=["GET"]),
         Route("/api/read", read, methods=["POST"]),
         Route("/api/plan", plan, methods=["POST"]),
+        Route("/api/sort", sort, methods=["POST"]),
         Route("/api/apply", apply, methods=["POST"]),
         Route("/api/job", job, methods=["GET"]),
         Route("/api/job/events", job_events, methods=["GET"]),

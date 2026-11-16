@@ -24,7 +24,7 @@ export async function call(method, path, body) {
       cache: "no-store",
     });
   } catch (error) {
-    throw new ApiError(0, { code: "offline", message: "The ios-homescreen server is not reachable. Is it still running?" });
+    throw new ApiError(0, { code: "offline", message: "The IconShuffle server is not reachable. Is it still running?" });
   }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new ApiError(response.status, data);

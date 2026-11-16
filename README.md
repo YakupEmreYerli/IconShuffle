@@ -1,4 +1,4 @@
-<h1 align="center">ios-homescreen</h1>
+<h1 align="center">IconShuffle</h1>
 
 <p align="center">
 Rearrange your iPhone home screen from Linux: drag your real icons around in the browser, or tell your AI agent what you want. Over USB or Wi-Fi, no Mac needed.
@@ -10,7 +10,15 @@ Rearrange your iPhone home screen from Linux: drag your real icons around in the
 <img src="https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776ab" alt="Python 3.11, 3.12, 3.13">
 </p>
 
+<p align="center">
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/Download-Windows-8b6cff?logo=windows&logoColor=white" alt="Download for Windows"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/Download-macOS-8b6cff?logo=apple&logoColor=white" alt="Download for macOS"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/Download-Linux-8b6cff?logo=linux&logoColor=white" alt="Download for Linux"></a>
+</p>
+
 <p align="center"><a href="README.tr.md">Türkçe</a></p>
+
+![IconShuffle demo: the browser editor mirrors a demo iPhone; Sort A-Z rearranges the icons, the change list fills in, and nothing is written until Apply is pressed](docs/assets/demo.gif)
 
 ![ios-homescreen: rearrange your iPhone home screen from Linux, over USB or Wi-Fi, next to the browser editor and its mirror of the phone](docs/banner.en.png)
 
@@ -97,6 +105,19 @@ extra names them explicitly, in case that ever changes:
 uv tool install "ios-homescreen[ui] @ git+https://github.com/YakupEmreYerli/ios-homescreen"
 ```
 
+### Desktop app
+
+Ready-made builds for Windows, macOS and Linux are on the
+[releases page](https://github.com/YakupEmreYerli/ios-homescreen/releases/latest)
+(`IconShuffle-*-windows-x64-setup.exe`, `IconShuffle-*-macos-arm64.dmg`,
+`IconShuffle-*-linux-x86_64.AppImage`). The app opens the same editor in its own window,
+no terminal or browser needed.
+
+The builds are not signed or notarized yet, so the first launch needs one extra step.
+On macOS, open System Settings → Privacy & Security and choose **Open Anyway** (or
+right-click the app → **Open**). On Windows, SmartScreen may ask once — **More info →
+Run anyway**.
+
 From a clone, for development:
 
 ```bash
@@ -134,6 +155,7 @@ ios-homescreen restore latest
 | --- | --- | --- |
 | `pull [LAYOUT]` | Reads the home screen into a layout file (`layout.toml` by default) and keeps the phone's state as a snapshot | Reads only |
 | `check [LAYOUT]` | Checks the file and lists what `push` would change, compared with the pull | No |
+| `sort [LAYOUT]` | Sorts every page's apps and folders A-Z in the file; the dock, folder contents and widgets keep their places | No |
 | `push [LAYOUT]` | Shows the changes, asks, then backs up, writes, verifies and rolls back on failure | Writes |
 | `apps [QUERY]` | Lists the installed apps with their bundle ids and where each one is, from the newest pull | No |
 | `editor` | Opens the browser editor on 127.0.0.1 | Reads; writes only when you press Apply |
@@ -142,7 +164,7 @@ ios-homescreen restore latest
 | `wifi setup\|status\|off` | Sets up, checks or turns off Wi-Fi access to the phone | Yes |
 
 `pull` will not replace a layout file that has edits you have not pushed; pull into another
-file, or pass `--overwrite`. `check` and `push` take `--allow-removal` (see the layout
+file, or pass `--overwrite`. `check`, `sort` and `push` take `--allow-removal` (see the layout
 reference); `push` and `restore` take `--force` (see the safety model). `backups` shows the 20
 newest; `--all` lists every one. Every command except `wifi` takes `--data-dir DIR`;
 `push`, `restore`, `editor` and `backups` also take `--backup-dir DIR`. All commands but

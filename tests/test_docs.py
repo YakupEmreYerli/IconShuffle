@@ -106,7 +106,7 @@ def test_the_commands_the_guide_gives_json_for_have_it():
     listed = re.search(r"Add `--json` to (.*?) to get", text, re.S).group(1)
     named = set(re.findall(r"`([a-z]+)`", listed))
 
-    assert named == {"pull", "apps", "check", "push", "backups", "restore", "wifi"}
+    assert named == {"pull", "apps", "check", "sort", "push", "backups", "restore", "wifi"}
     for command in named:
         assert "--json" in {o for a in _parsers()[command]._actions for o in a.option_strings}
 
@@ -116,7 +116,7 @@ def test_the_error_codes_in_the_guide_are_real():
     table = text[text.index("## Errors and what to tell the person") :]
     codes = set(re.findall(r"^\| `([a-z_]+)`(?:, `([a-z_]+)`)?", table, re.M))
     codes = {code for pair in codes for code in pair if code}
-    source = "".join(p.read_text() for p in (ROOT / "src").rglob("*.py"))
+    source = "".join(p.read_text(encoding="utf-8") for p in (ROOT / "src").rglob("*.py"))
 
     assert len(codes) > 15
     for code in codes:

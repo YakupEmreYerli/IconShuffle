@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime
 from pathlib import Path
 
 import pytest
 
 import samples
+from ios_homescreen import snapshots
 from ios_homescreen.snapshots import make_backup
 from ios_homescreen.state import StateError, save_plist
 from ios_homescreen.storage import (
@@ -67,6 +69,23 @@ def test_pulls_are_found_by_name_or_as_the_newest(tmp_path):
     assert find_pull({"dock": {}}, tmp_path) == (second, False)
     with pytest.raises(StateError, match="no pull snapshot named"):
         find_pull({"pull": {"snapshot": "pull-gone.plist"}}, tmp_path)
+
+
+def test_two_pulls_in_one_clock_tick_get_different_names(tmp_path, monkeypatch):
+    """A coarse timer (Windows ticks every ~15 ms) must not make a pull overwrite another."""
+
+    class Frozen:
+        @classmethod
+        def now(cls, tz=None):
+            return datetime(2026, 10, 10, 8, 0, 0).astimezone()
+
+    monkeypatch.setattr(snapshots, "datetime", Frozen)
+
+    first = save_pull(samples.read_snapshot(), tmp_path)
+    second = save_pull(samples.read_snapshot(), tmp_path)
+
+    assert first != second
+    assert newest_pull(tmp_path) == second
 
 
 def test_a_pull_name_cannot_escape_the_pulls_directory(tmp_path):

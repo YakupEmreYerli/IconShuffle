@@ -24,14 +24,13 @@ COMMANDS = ["pull", "check", "push", "editor", "backups", "restore", "wifi"]
 
 @pytest.fixture
 def home(tmp_path, monkeypatch) -> Path:
-    """An isolated XDG data dir and an empty working directory. Without a terminal."""
-    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path / "xdg"))
-    monkeypatch.delenv("IOS_HOMESCREEN_DATA_DIR", raising=False)
+    """An isolated data dir on every OS and an empty working directory. No terminal."""
+    monkeypatch.setenv("IOS_HOMESCREEN_DATA_DIR", str(tmp_path / "data"))
     monkeypatch.setattr(sys, "stdin", io.StringIO(""))
     work = tmp_path / "work"
     work.mkdir()
     monkeypatch.chdir(work)
-    return tmp_path / "xdg" / "ios-homescreen"
+    return tmp_path / "data"
 
 
 class Terminal(io.StringIO):
@@ -178,7 +177,7 @@ def test_pull_into_a_named_file(home, capsys):
     pull(home, None, "phones/mine.toml")
 
     assert Path("phones/mine.toml").read_text().startswith("# ios-homescreen layout.")
-    assert "  ios-homescreen check phones/mine.toml  to see" in capsys.readouterr().out
+    assert f"  ios-homescreen check {Path('phones/mine.toml')}  to see" in (capsys.readouterr().out)
 
 
 def test_data_dir_flag_and_env_override_the_default(home, tmp_path, monkeypatch):

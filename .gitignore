@@ -4,6 +4,7 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+out/
 
 # Environments and caches
 .venv/
@@ -17,3 +18,7 @@ htmlcov/
 .idea/
 .vscode/
 *.swp
+
+# Personal home-screen layout pulled from a real phone
+layout.toml
+*.toml.bak
