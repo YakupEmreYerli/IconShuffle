@@ -10,7 +10,15 @@ Rearrange your iPhone home screen from Linux: drag your real icons around in the
 <img src="https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776ab" alt="Python 3.11, 3.12, 3.13">
 </p>
 
+<p align="center">
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/Download-Windows-8b6cff?logo=windows&logoColor=white" alt="Download for Windows"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/Download-macOS-8b6cff?logo=apple&logoColor=white" alt="Download for macOS"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/Download-Linux-8b6cff?logo=linux&logoColor=white" alt="Download for Linux"></a>
+</p>
+
 <p align="center"><a href="README.tr.md">Türkçe</a></p>
+
+![IconShuffle demo: the browser editor mirrors a demo iPhone; Sort A-Z rearranges the icons, the change list fills in, and nothing is written until Apply is pressed](docs/assets/demo.gif)
 
 ![ios-homescreen: rearrange your iPhone home screen from Linux, over USB or Wi-Fi, next to the browser editor and its mirror of the phone](docs/banner.en.png)
 

@@ -10,7 +10,15 @@ iPhone ana ekranını Linux'tan düzenleyin: gerçek simgeleri tarayıcıda sür
 <img src="https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776ab" alt="Python 3.11, 3.12, 3.13">
 </p>
 
+<p align="center">
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Windows-8b6cff?logo=windows&logoColor=white" alt="Windows için indir"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-macOS-8b6cff?logo=apple&logoColor=white" alt="macOS için indir"></a>
+<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Linux-8b6cff?logo=linux&logoColor=white" alt="Linux için indir"></a>
+</p>
+
 <p align="center"><a href="README.md">English</a></p>
+
+![IconShuffle demosu: tarayıcı düzenleyicisi örnek bir iPhone'u yansıtır; A-Z sırala simgeleri dizer, değişiklik listesi dolar ve Apply'a basılmadan telefona bir şey yazılmaz](docs/assets/demo.gif)
 
 ![ios-homescreen: iPhone ana ekranını Linux'tan düzenle, USB ya da Wi-Fi ile; yanında tarayıcı düzenleyicisi ve telefonun aynası](docs/banner.tr.png)
 
