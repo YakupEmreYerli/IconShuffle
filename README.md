@@ -1,4 +1,4 @@
-<h1 align="center">ios-homescreen</h1>
+<h1 align="center">IconShuffle</h1>
 
 <p align="center">
 Rearrange your iPhone home screen from Linux: drag your real icons around in the browser, or tell your AI agent what you want. Over USB or Wi-Fi, no Mac needed.

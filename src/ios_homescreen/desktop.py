@@ -20,7 +20,7 @@ from .transport import Transport
 from .ui import Options, serve
 from .workflow import Timing
 
-TITLE = "ios-homescreen"
+TITLE = "IconShuffle"
 START_TIMEOUT = 30.0
 ICON = Path(__file__).parent / "ui" / "static" / "logo.png"
 
@@ -76,7 +76,7 @@ def _self_test() -> int:
         urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())
     )
     with browser.open(str(found["url"]), timeout=10) as page:
-        ok = page.status == 200 and b"ios-homescreen" in page.read()
+        ok = page.status == 200 and b"IconShuffle" in page.read()
     stop = found["stop"]
     assert callable(stop)
     stop()
@@ -110,7 +110,7 @@ def main(argv: list[str] | None = None) -> int:
     server.start()
     if not started.wait(START_TIMEOUT) or "error" in found:
         message = str(found.get("error") or "the editor did not start")
-        page = f"<p>ios-homescreen could not start: {html.escape(message)}</p>"
+        page = f"<p>IconShuffle could not start: {html.escape(message)}</p>"
         webview.create_window(TITLE, html=page)
         webview.start()
         return 1

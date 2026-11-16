@@ -58,7 +58,7 @@ function TopBar() {
   const changes = state.check.changes?.length || 0;
   return html`<header class="topbar">
     <div class="brand">
-      ${logo}<span class="brand-name">ios-homescreen</span>
+      ${logo}<span class="brand-name">IconShuffle</span>
       ${state.server?.demo && !state.server?.showcase ? html`<span class="brand-note">demo mode</span>` : null}
     </div>
     <div class="toolbar">

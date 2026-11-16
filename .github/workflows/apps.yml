@@ -47,7 +47,7 @@ jobs:
 
       - run: uv sync --locked --extra app --group package
       - run: uv run python packaging/make_icons.py
-      - run: uv run pyinstaller packaging/ios-homescreen.spec --noconfirm
+      - run: uv run pyinstaller packaging/iconshuffle.spec --noconfirm
 
       - name: Version
         id: version
@@ -57,16 +57,16 @@ jobs:
       - name: Self-test and .dmg (macOS)
         if: runner.os == 'macOS'
         run: |
-          dist/ios-homescreen.app/Contents/MacOS/ios-homescreen --self-test
+          dist/IconShuffle.app/Contents/MacOS/iconshuffle --self-test
           mkdir -p out
-          hdiutil create -volname ios-homescreen -srcfolder dist/ios-homescreen.app -ov \
-            -format UDZO "out/ios-homescreen-${{ steps.version.outputs.value }}-macos-arm64.dmg"
+          hdiutil create -volname IconShuffle -srcfolder dist/IconShuffle.app -ov \
+            -format UDZO "out/IconShuffle-${{ steps.version.outputs.value }}-macos-arm64.dmg"
 
       - name: Self-test and installer (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $test = Start-Process -FilePath dist\ios-homescreen\ios-homescreen.exe -ArgumentList '--self-test' -Wait -PassThru
+          $test = Start-Process -FilePath dist\iconshuffle\iconshuffle.exe -ArgumentList '--self-test' -Wait -PassThru
           if ($test.ExitCode -ne 0) { throw "self-test failed: $($test.ExitCode)" }
           choco install innosetup -y --no-progress
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /DAppVersion=${{ steps.version.outputs.value }} packaging\windows.iss
@@ -76,12 +76,12 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
         run: |
-          dist/ios-homescreen/ios-homescreen --self-test
+          dist/iconshuffle/iconshuffle --self-test
           packaging/appimage.sh "${{ steps.version.outputs.value }}"
 
       - uses: actions/upload-artifact@v7
         with:
-          name: ios-homescreen-${{ runner.os }}
+          name: IconShuffle-${{ runner.os }}
           path: out/*
           if-no-files-found: error
 

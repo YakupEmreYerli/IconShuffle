@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- IconShuffle: the product is now called IconShuffle — the desktop window, installers (`IconShuffle-*.exe`, `.dmg`, `.AppImage`), the editor's title bar and icons all carry the new name and the purple brand accent. The command and the Python package stay `ios-homescreen`.
 - Sort A-Z: `ios-homescreen sort` rewrites the layout file with every page's apps, folders, web clips and web apps in name order, and the editor's Sort A-Z button does the same to the draft — the change list shows the moves and nothing reaches the phone until Apply. The dock, folder contents and widgets keep their places.
 - Desktop app: `ios-homescreen-app` opens the editor in its own window, with no terminal or browser. It connects over USB when a cable is in and looks on the network otherwise. Downloadable builds for macOS (.dmg), Windows (installer .exe) and Linux (AppImage) are made by the Desktop apps workflow.
 - macOS and Windows: data and cache go to the system's own folders, and the connection help names the service each system uses.

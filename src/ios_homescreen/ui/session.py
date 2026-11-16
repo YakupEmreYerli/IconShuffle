@@ -707,7 +707,7 @@ class Session:
         return api.export_layout(
             {"state": state, "apps": self.read.get("apps", {})},
             pull=self.read_file.name if self.read_file else None,
-            note=f"Edited in the ios-homescreen editor. {api.pull_note(self.read)}",
+            note=f"Edited in the IconShuffle editor. {api.pull_note(self.read)}",
         )
 
     def import_layout(self, text: str) -> dict[str, Any]:

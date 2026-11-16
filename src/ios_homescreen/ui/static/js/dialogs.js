@@ -212,7 +212,7 @@ function ConfirmRemove() {
   return html`<${Modal} title="Remove widget" tone="danger">
     <h3 class="modal-title">Remove the ${item.name} widget?</h3>
     <p class="modal-text">
-      ios-homescreen can move widgets but cannot create them. After you apply, the only way back is to add it again on the iPhone (touch and hold the home screen, then Edit → Add Widget), or to restore a backup.
+      IconShuffle can move widgets but cannot create them. After you apply, the only way back is to add it again on the iPhone (touch and hold the home screen, then Edit → Add Widget), or to restore a backup.
     </p>
     <div class="modal-actions">
       <button class="btn" data-autofocus onClick=${close}>Keep it</button>

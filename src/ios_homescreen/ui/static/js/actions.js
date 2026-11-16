@@ -243,7 +243,7 @@ async function settle(job) {
         ...(state.server || {}),
         error: {
           title: "Cannot reach the server",
-          steps: ["Check that ios-homescreen is still running, then reload this page."],
+          steps: ["Check that IconShuffle is still running, then reload this page."],
           detail: error.message,
         },
       },

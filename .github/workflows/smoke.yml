@@ -47,7 +47,7 @@ jobs:
 
       - run: uv sync --locked --extra app --group package
       - run: uv run python packaging/make_icons.py
-      - run: uv run pyinstaller packaging/ios-homescreen.spec --noconfirm
+      - run: uv run pyinstaller packaging/iconshuffle.spec --noconfirm
 
       - name: Version
         id: version
@@ -82,7 +82,7 @@ jobs:
           "installer exit: $($inst.ExitCode)" | Tee-Object -Append $report
           Start-Sleep -Seconds 3
 
-          $exe = "$env:LOCALAPPDATA\Programs\ios-homescreen\ios-homescreen.exe"
+          $exe = "$env:LOCALAPPDATA\Programs\IconShuffle\iconshuffle.exe"
           "exe exists: $(Test-Path $exe)" | Tee-Object -Append $report
           $wv2 = "${env:ProgramFiles(x86)}\Microsoft\EdgeWebView\Application"
           "webview2 runtime: $(if (Test-Path $wv2) { (Get-ChildItem $wv2 -Directory).Name -join ',' } else { 'MISSING' })" |
@@ -108,13 +108,13 @@ jobs:
             LogName = 'Application'
             StartTime = (Get-Date).AddMinutes(-3)
           } -ErrorAction SilentlyContinue |
-            Where-Object { $_.Message -match 'ios-homescreen|WebView|\.NET' } |
+            Where-Object { $_.Message -match 'iconshuffle|WebView|\.NET' } |
             Select-Object -First 6 -ExpandProperty Message | Tee-Object -Append $report
 
           # Bring the app window to the front so the screenshot shows it.
           try {
             $wshell = New-Object -ComObject WScript.Shell
-            $target = Get-Process ios-homescreen -ErrorAction SilentlyContinue
+            $target = Get-Process iconshuffle -ErrorAction SilentlyContinue
             if ($target) { [void]$wshell.AppActivate($target.Id) }
             Start-Sleep -Milliseconds 700
           } catch {
@@ -143,7 +143,7 @@ jobs:
         id: smoke_mac
         run: |
           mkdir -p smoke
-          dist/ios-homescreen.app/Contents/MacOS/ios-homescreen --demo &
+          dist/IconShuffle.app/Contents/MacOS/iconshuffle --demo &
           PID=$!
           sleep 25
           {
@@ -170,7 +170,7 @@ jobs:
             echo "(timed out after ${secs}s: $*)"
           }
           mkdir -p smoke
-          cp -R dist/ios-homescreen.app "$RUNNER_TEMP/downloaded.app"
+          cp -R dist/IconShuffle.app "$RUNNER_TEMP/downloaded.app"
           # The quarantine mark a browser adds on download: flags 0081, agent Safari.
           xattr -w -r com.apple.quarantine "0081;00000000;Safari;" "$RUNNER_TEMP/downloaded.app"
           {
@@ -200,9 +200,9 @@ jobs:
           "$1" --demo &
           sleep 25
           echo "== window tree =="
-          xwininfo -root -tree | grep -i "ios-homescreen" || echo "no ios-homescreen window"
+          xwininfo -root -tree | grep -i "iconshuffle" || echo "no IconShuffle window"
           import -window root smoke/linux.png 2>&1 && echo "screenshot saved" || echo "screenshot failed"
-          pkill -f ios-homescreen || true
+          pkill -f iconshuffle || true
           EOF
           chmod +x smoke/open-and-shoot.sh
           echo "appimage: $APPIMAGE" | tee smoke/report.txt
@@ -212,7 +212,7 @@ jobs:
       - name: Verdict (Linux)
         if: runner.os == 'Linux'
         run: |
-          grep -q '"ios-homescreen' smoke/report.txt || { cat smoke/report.txt; exit 1; }
+          grep -q '"IconShuffle' smoke/report.txt || { cat smoke/report.txt; exit 1; }
 
       # ------------------------------------------------------------ results
 

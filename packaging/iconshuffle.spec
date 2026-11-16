@@ -1,5 +1,5 @@
-# PyInstaller spec for the desktop app: `pyinstaller packaging/ios-homescreen.spec`.
-# Builds ios-homescreen.app on macOS and a one-folder app on Windows and Linux; the
+# PyInstaller spec for the desktop app: `pyinstaller packaging/iconshuffle.spec`.
+# Builds IconShuffle.app on macOS and a one-folder app on Windows and Linux; the
 # workflow in .github/workflows/release-apps.yml wraps them into a .dmg, an installer
 # .exe and an AppImage.
 import sys
@@ -11,8 +11,8 @@ ROOT = Path(SPECPATH).parent
 # packaging/make_icons.py makes these first.
 ICONS = ROOT / "build" / "icons"
 ICON = str(
-    ICONS / {"darwin": "ios-homescreen.icns", "win32": "ios-homescreen.ico"}.get(
-        sys.platform, "ios-homescreen.png"
+    ICONS / {"darwin": "iconshuffle.icns", "win32": "iconshuffle.ico"}.get(
+        sys.platform, "iconshuffle.png"
     )
 )
 sys.path.insert(0, str(ROOT / "src"))
@@ -77,25 +77,25 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name="ios-homescreen",
+    name="iconshuffle",
     console=False,
     icon=ICON,
 )
-coll = COLLECT(exe, a.binaries, a.datas, name="ios-homescreen")
+coll = COLLECT(exe, a.binaries, a.datas, name="iconshuffle")
 
 if sys.platform == "darwin":
     app = BUNDLE(
         coll,
-        name="ios-homescreen.app",
+        name="IconShuffle.app",
         icon=ICON,
-        bundle_identifier="io.github.yakupemreyerli.ios-homescreen",
+        bundle_identifier="me.iconshuffle.app",
         version=__version__,
         info_plist={
             "CFBundleShortVersionString": __version__,
             "NSHighResolutionCapable": True,
             "LSMinimumSystemVersion": "13.0",
             # Wi-Fi mode finds the phone with Bonjour on the local network.
-            "NSLocalNetworkUsageDescription": "ios-homescreen finds your iPhone on the local network to read and write its Home Screen over Wi-Fi.",
+            "NSLocalNetworkUsageDescription": "IconShuffle finds your iPhone on the local network to read and write its Home Screen over Wi-Fi.",
             "NSBonjourServices": ["_remotepairing._tcp", "_apple-mobdev2._tcp"],
         },
     )

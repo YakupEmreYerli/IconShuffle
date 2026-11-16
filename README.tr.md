@@ -1,4 +1,4 @@
-<h1 align="center">ios-homescreen</h1>
+<h1 align="center">IconShuffle</h1>
 
 <p align="center">
 iPhone ana ekranını Linux'tan düzenleyin: gerçek simgeleri tarayıcıda sürükleyin ya da yapay zekâ ajanınıza ne istediğinizi söyleyin. USB ya da Wi-Fi ile, Mac gerekmez.
