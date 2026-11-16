@@ -7,7 +7,7 @@ Everything is stored as a binary plist because icon state carries ``datetime`` a
 from __future__ import annotations
 
 from collections.abc import Mapping
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -21,9 +21,21 @@ FORMAT_VERSION = 1
 _DEVICE_KEYS = ("name", "model", "ios_version", "udid")
 
 
+_last_stamp: datetime | None = None
+
+
 def timestamp() -> str:
-    """Local time stamp for file names; sorts chronologically."""
-    return datetime.now().astimezone().strftime("%Y%m%d-%H%M%S-%f")
+    """Local time stamp for file names; sorts chronologically and never repeats.
+
+    Two calls inside one clock tick (Windows' timer ticks every ~15 ms) still get
+    different names by nudging the later one a microsecond past the last.
+    """
+    global _last_stamp
+    now = datetime.now().astimezone()
+    if _last_stamp is not None and now <= _last_stamp:
+        now = _last_stamp + timedelta(microseconds=1)
+    _last_stamp = now
+    return now.strftime("%Y%m%d-%H%M%S-%f")
 
 
 def utc_now() -> datetime:

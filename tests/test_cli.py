@@ -177,7 +177,7 @@ def test_pull_into_a_named_file(home, capsys):
     pull(home, None, "phones/mine.toml")
 
     assert Path("phones/mine.toml").read_text().startswith("# ios-homescreen layout.")
-    assert "  ios-homescreen check phones/mine.toml  to see" in capsys.readouterr().out
+    assert f"  ios-homescreen check {Path('phones/mine.toml')}  to see" in (capsys.readouterr().out)
 
 
 def test_data_dir_flag_and_env_override_the_default(home, tmp_path, monkeypatch):
