@@ -84,6 +84,9 @@ jobs:
 
           $exe = "$env:LOCALAPPDATA\Programs\ios-homescreen\ios-homescreen.exe"
           "exe exists: $(Test-Path $exe)" | Tee-Object -Append $report
+          $wv2 = "${env:ProgramFiles(x86)}\Microsoft\EdgeWebView\Application"
+          "webview2 runtime: $(if (Test-Path $wv2) { (Get-ChildItem $wv2 -Directory).Name -join ',' } else { 'MISSING' })" |
+            Tee-Object -Append $report
           try {
             $proc = Start-Process $exe -ArgumentList '--demo' -PassThru
             Start-Sleep -Seconds 25
@@ -98,6 +101,15 @@ jobs:
           } catch {
             "launch error: $_" | Tee-Object -Append $report
           }
+
+          # A crashed GUI app leaves its exception in the Application log.
+          "`n== event log ==" | Tee-Object -Append $report
+          Get-WinEvent -FilterHashtable @{
+            LogName = 'Application'
+            StartTime = (Get-Date).AddMinutes(-3)
+          } -ErrorAction SilentlyContinue |
+            Where-Object { $_.Message -match 'ios-homescreen|WebView|\.NET' } |
+            Select-Object -First 6 -ExpandProperty Message | Tee-Object -Append $report
 
           Add-Type -AssemblyName System.Windows.Forms, System.Drawing
           $b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
@@ -148,14 +160,14 @@ jobs:
             echo "(timed out after ${secs}s: $*)"
           }
           mkdir -p smoke
-          cp -R dist/ios-homescreen.app smoke/downloaded.app
+          cp -R dist/ios-homescreen.app "$RUNNER_TEMP/downloaded.app"
           # The quarantine mark a browser adds on download: flags 0081, agent Safari.
-          xattr -w -r com.apple.quarantine "0081;00000000;Safari;" smoke/downloaded.app
+          xattr -w -r com.apple.quarantine "0081;00000000;Safari;" "$RUNNER_TEMP/downloaded.app"
           {
             echo "== spctl =="
-            capped 60 spctl --assess --verbose=4 smoke/downloaded.app 2>&1
+            capped 60 spctl --assess --verbose=4 "$RUNNER_TEMP/downloaded.app" 2>&1
             echo "== open =="
-            capped 30 open smoke/downloaded.app 2>&1
+            capped 30 open "$RUNNER_TEMP/downloaded.app" 2>&1
           } | tee smoke/quarantine.txt
           sleep 5
           capped 20 screencapture -x smoke/macos-gatekeeper.png 2>&1
