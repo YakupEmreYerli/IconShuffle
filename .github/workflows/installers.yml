@@ -1,0 +1,85 @@
+name: Installers
+
+# Runs install.sh and install.ps1 the way people do (piped into the shell) on real
+# macOS, Windows and Linux runners, against the latest published release, then checks
+# that the app is where it should be and passes its self-test.
+
+on:
+  pull_request:
+    paths:
+      - "install.sh"
+      - "install.ps1"
+      - ".github/workflows/installers.yml"
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Repository whose releases to install (owner/name); default: this one"
+        required: false
+
+permissions:
+  contents: read
+
+env:
+  ICONSHUFFLE_REPO: ${{ inputs.repo || github.repository }}
+
+jobs:
+  linux:
+    name: Linux (install.sh)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Libraries the AppImage needs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse2 libegl1 libxkbcommon-x11-0 libxcb-cursor0 libnss3
+      - name: Install (piped into dash, Ubuntu's sh)
+        run: cat install.sh | sh
+      - name: Installed where it says
+        run: |
+          test -x ~/.local/bin/iconshuffle
+          test -s ~/.local/share/icons/hicolor/512x512/apps/iconshuffle.png
+          grep -q "^Exec=$HOME/.local/bin/iconshuffle$" ~/.local/share/applications/iconshuffle.desktop
+      - name: Self-test
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: ~/.local/bin/iconshuffle --self-test
+      - name: A release that does not exist fails clearly
+        run: |
+          if ICONSHUFFLE_VERSION=0.0.0 sh install.sh 2> err.txt; then exit 1; fi
+          cat err.txt
+          grep -q "download failed" err.txt
+
+  macos:
+    name: macOS (install.sh)
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install (piped into sh)
+        run: cat install.sh | sh
+      - name: Installed, without the quarantine mark
+        run: |
+          app=/Applications/IconShuffle.app
+          test -d "$app"
+          if xattr -r "$app" | grep -q com.apple.quarantine; then exit 1; fi
+          test -z "$(mount | grep IconShuffle || true)"
+      - name: Self-test
+        run: /Applications/IconShuffle.app/Contents/MacOS/iconshuffle --self-test
+
+  windows:
+    name: Windows (install.ps1, PowerShell 5.1)
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install (piped into Invoke-Expression)
+        shell: powershell
+        run: Get-Content -Raw install.ps1 | Invoke-Expression
+      - name: Installed for this user; self-test
+        shell: powershell
+        run: |
+          $exe = "$env:LOCALAPPDATA\Programs\IconShuffle\iconshuffle.exe"
+          if (-not (Test-Path $exe)) { throw "not installed: $exe" }
+          $test = Start-Process -FilePath $exe -ArgumentList '--self-test' -Wait -PassThru
+          if ($test.ExitCode -ne 0) { throw "self-test failed: $($test.ExitCode)" }
