@@ -776,7 +776,7 @@ def test_the_wallpaper_is_cached_per_iphone_for_the_next_start(tmp_path):
         client.__exit__(None, None, None)
 
 
-def test_the_demo_has_a_plain_wallpaper_of_its_own(make_api):
+def test_the_demo_has_a_drawn_wallpaper_of_its_own(make_api):
     from ios_homescreen.ui.demo import DemoDevice
 
     api = make_api(DemoDevice(delay=0), demo=True)
@@ -786,7 +786,6 @@ def test_the_demo_has_a_plain_wallpaper_of_its_own(make_api):
     response = api.client.get("/api/wallpaper")
     assert response.headers["content-type"] == "image/svg+xml"
     assert response.content.startswith(b"<svg")
-    assert b"Gradient" not in response.content
     assert b"<image" not in response.content
 
 

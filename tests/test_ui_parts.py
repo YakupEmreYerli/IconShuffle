@@ -290,18 +290,23 @@ def test_the_vendored_font_matches_its_recorded_checksums():
     )
 
 
-def test_the_editor_stays_flat():
-    # The look is deliberately plain: no gradients, no frosted glass, and only the motion
-    # that answers something the user did.
+def test_the_editor_only_moves_when_asked():
+    # Only the motion that answers something the user did; no decorative text shadows.
     css = (STATIC / "app.css").read_text(encoding="utf-8")
     scripts = "".join(p.read_text(encoding="utf-8") for p in (STATIC / "js").glob("*.js"))
 
-    for banned in ("gradient", "backdrop-filter", "text-shadow"):
-        assert banned not in css
-        assert banned not in scripts
+    assert "text-shadow" not in css
+    assert "text-shadow" not in scripts
     assert set(re.findall(r"@keyframes (\S+)", css)) == {"spin", "open", "flash"}
-    icons = run(demo.DemoDevice(delay=0).icons(list(demo.installed_apps())))
-    assert not any(b"Gradient" in data for data in icons.values())
+
+
+def test_the_editor_follows_the_system_theme():
+    css = (STATIC / "app.css").read_text(encoding="utf-8")
+
+    assert "@media (prefers-color-scheme: dark)" in css
+    dark = css[css.index("@media (prefers-color-scheme: dark)") :]
+    for token in ("--bench", "--sheet", "--graphite", "--pencil", "--device"):
+        assert f"{token}:" in dark
 
 
 def test_every_module_and_asset_the_page_loads_exists():
