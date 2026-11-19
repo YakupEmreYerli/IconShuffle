@@ -309,8 +309,8 @@ def test_wifi_lookup_runs_on_this_os_network_stack(tmp_path, pymobiledevice3_hom
 
     assert backend.remote_records() == [RemoteRecord(UDID, record, True)]
     assert asyncio.run(backend._browse(UDID, 1.0)) is None
+    # The default connect budget: on a busy CI runner, starting and stopping Bonjour can
+    # take longer than a tight budget, which would end in 'timeout' instead.
     with pytest.raises(TransportError) as caught:
-        asyncio.run(
-            connect(Transport(wifi=True, discovery_timeout=2, connect_timeout=5), backend=backend)
-        )
+        asyncio.run(connect(Transport(wifi=True, discovery_timeout=2), backend=backend))
     assert caught.value.code == "not_advertising"
