@@ -1,9 +1,10 @@
-/* ios-homescreen editor.
+/* IconShuffle editor.
 
-   One calm plane (bench) with one object on it: the phone. Side columns are plain type on
-   the same plane. White only for things you type into or that float over the page. One
-   accent (signal) for committing and for success. Phone sizes are in iPhone points; the
-   phone is scaled as a whole. */
+   The phone sits in the middle of a softly lit plane (bench), between two frosted cards:
+   the App Library and the change list. One accent (signal) for committing and for
+   success. Two themes follow the system: lavender when it is light, deep ink when it is
+   dark (see "themes" at the end). Phone sizes are in iPhone points; the phone is scaled
+   as a whole. */
 
 @font-face {
   font-family: "IBM Plex Sans";
@@ -70,23 +71,24 @@
 
 :root {
   /* palette */
-  --bench: #e7eaee;
+  --bench: #f3f1fb;
   --sheet: #ffffff;
-  --graphite: #23272d;
-  --pencil: #5e6672;
-  --rule: #d3d8de;
+  --graphite: #1d1830;
+  --pencil: #6b6688;
+  --rule: #e2ddf3;
+  --device: #23272d;
   --signal: #8b6cff;
   --brick: #b3372b;
   --ochre: #8a5a00;
   --dusk: #46536a;
   /* derived, flat */
-  --hover: #dde1e6;
-  --press: #d3d8de;
+  --hover: #ebe7fa;
+  --press: #e2ddf3;
   --signal-hover: #6f4de0;
   --brick-hover: #9a2e24;
   --brick-tint: #f6e3e0;
   --ochre-tint: #f4ead6;
-  --signal-tint: #e9e4ff;
+  --signal-tint: #ece6ff;
   /* type */
   --font: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --ios-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "IBM Plex Sans", system-ui, sans-serif;
@@ -853,7 +855,7 @@ svg {
   padding: 13px;
   border-radius: 68px;
   transform-origin: 0 0;
-  background: var(--graphite);
+  background: var(--device);
   box-shadow: inset 0 0 0 1.5px #4a5059;
 }
 
@@ -861,7 +863,7 @@ svg {
   position: absolute;
   width: 4px;
   border-radius: 2px;
-  background: var(--graphite);
+  background: var(--device);
 }
 
 .side-action {
@@ -1106,7 +1108,7 @@ svg {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--graphite);
+  background: var(--device);
   color: #fff;
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
 }
@@ -2343,5 +2345,167 @@ body.is-dragging .lib-row:hover {
 
   .device-name {
     display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ themes */
+
+/* Light (the default): a lavender wash with a warm glow low on the right, frosted cards. */
+body {
+  background:
+    radial-gradient(1000px 700px at 50% 45%, #ddd3ff, transparent 65%),
+    radial-gradient(600px 500px at 85% 100%, rgba(255, 217, 191, 0.4), transparent 70%),
+    linear-gradient(180deg, #f7f5ff, #eeebfa);
+}
+
+.topbar {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+}
+
+.btn-apply {
+  background: linear-gradient(180deg, #9a80ff, #6f4de0);
+  box-shadow:
+    0 10px 24px rgba(111, 77, 224, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.btn-apply:hover:not(:disabled) {
+  background: linear-gradient(180deg, #a993ff, #6342d6);
+}
+
+.btn-apply:disabled {
+  background: var(--hover);
+  box-shadow: none;
+}
+
+.phone {
+  box-shadow:
+    inset 0 0 0 1.5px #4a5059,
+    0 40px 80px rgba(59, 42, 138, 0.25);
+}
+
+.lib-icon,
+.change-glyph {
+  box-shadow: 0 2px 6px rgba(59, 42, 138, 0.18);
+}
+
+@media (min-width: 1121px) {
+  .workspace {
+    padding: 0 14px 14px;
+  }
+
+  .panel.library,
+  .panel.changes {
+    margin-top: 14px;
+    border: 1px solid #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow:
+      inset 0 1px 0 #fff,
+      0 18px 40px rgba(75, 58, 154, 0.12);
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* Dark: the brand's deep ink, a violet glow behind the phone, glass cards. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bench: #0e0c17;
+    --sheet: #1a1730;
+    --graphite: #f1eefc;
+    --pencil: #a49fc2;
+    --rule: rgba(255, 255, 255, 0.08);
+    --device: #1b1930;
+    --dusk: #b9a6ff;
+    --hover: rgba(255, 255, 255, 0.06);
+    --press: rgba(255, 255, 255, 0.1);
+    --signal-tint: rgba(139, 108, 255, 0.15);
+    --brick-tint: rgba(248, 113, 113, 0.13);
+    --ochre-tint: rgba(251, 191, 36, 0.13);
+    --brick: #e5534b;
+    --ochre: #e0a028;
+    color-scheme: dark;
+  }
+
+  .callout,
+  .outcome.tone-warning {
+    color: #fcd9a0;
+  }
+
+  .callout.tone-danger,
+  .outcome.tone-danger {
+    color: #ffc2bd;
+  }
+
+  * {
+    scrollbar-color: #3a3560 transparent;
+  }
+
+  body {
+    background:
+      radial-gradient(900px 700px at 50% 55%, rgba(59, 42, 138, 0.33), transparent 65%),
+      radial-gradient(500px 400px at 52% 85%, rgba(255, 154, 77, 0.08), transparent 70%),
+      #0e0c17;
+  }
+
+  .topbar {
+    background: rgba(14, 12, 23, 0.7);
+  }
+
+  .btn-primary {
+    background: var(--signal);
+    color: #fff;
+  }
+
+  .btn-apply {
+    background: linear-gradient(180deg, #9d84ff, #7556f5);
+    box-shadow:
+      0 8px 28px rgba(139, 108, 255, 0.33),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  .btn-apply:disabled {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .toast {
+    background: #2b2650;
+  }
+
+  .search {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .phone {
+    box-shadow:
+      inset 0 0 0 1.5px #3a3560,
+      0 40px 90px rgba(0, 0, 0, 0.6),
+      0 0 0 6px rgba(255, 255, 255, 0.02);
+  }
+
+  .badge {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55);
+  }
+
+  .lib-icon,
+  .change-glyph {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .drawer-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (min-width: 1121px) and (prefers-color-scheme: dark) {
+  .panel.library,
+  .panel.changes {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 20px 50px rgba(0, 0, 0, 0.4);
   }
 }

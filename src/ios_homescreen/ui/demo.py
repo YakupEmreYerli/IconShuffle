@@ -1,10 +1,11 @@
 """A pretend iPhone for ``ios-homescreen editor --demo``.
 
 Every app, widget and web clip here is invented, with ``com.example.*`` ids and the
-generated icons from :mod:`.demo_icons`. The wallpaper is a plain drawing made for the
-demo: flat dusk hills, no photo and nothing from Apple. :class:`DemoDevice` answers like the real
-:class:`~ios_homescreen.device.Device` (reads, writes, icons), with a short delay so
-progress can be seen, and keeps the layout in memory: nothing touches a phone.
+generated icons from :mod:`.demo_icons`. The wallpaper is a drawing made for the
+demo: a violet dusk with a warm glow, no photo and nothing from Apple.
+:class:`DemoDevice` answers like the real :class:`~ios_homescreen.device.Device`
+(reads, writes, icons), with a short delay so progress can be seen, and keeps the
+layout in memory: nothing touches a phone.
 """
 
 from __future__ import annotations
@@ -105,14 +106,28 @@ PLANNER = "B7C8D9E0-1A2B-4C3D-8E4F-000000000005"
 
 _SPECIAL_ICONS = {HANDBOOK: ("document", "slate"), PLANNER: ("kanban", "teal")}
 
-# Flat colour fields only, in the editor's dusk tones, so icons and labels stay readable.
+# Soft violet dusk with a warm glow low down: rich enough to look like a real phone,
+# dark enough under the icons that their white labels stay readable.
 WALLPAPER = (
     b'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" width="1170" '
-    b'height="2532"><rect width="390" height="844" fill="#4B5974"/>'
-    b'<circle cx="286" cy="236" r="78" fill="#5C6A86"/>'
-    b'<path d="M0 548C62 514 128 516 192 540S318 586 390 552V844H0Z" fill="#435069"/>'
-    b'<path d="M0 626C84 596 164 600 236 624S346 654 390 640V844H0Z" fill="#3A465D"/>'
-    b'<path d="M0 712C72 690 168 692 252 712S354 730 390 722V844H0Z" fill="#313B50"/></svg>'
+    b'height="2532"><defs>'
+    b'<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">'
+    b'<stop offset="0" stop-color="#2A1F66"/><stop offset=".55" stop-color="#4B2E9E"/>'
+    b'<stop offset="1" stop-color="#1B1440"/></linearGradient>'
+    b'<radialGradient id="sun" cx=".72" cy=".78" r=".55">'
+    b'<stop offset="0" stop-color="#FF9A4D" stop-opacity=".85"/>'
+    b'<stop offset=".45" stop-color="#E0608F" stop-opacity=".35"/>'
+    b'<stop offset="1" stop-color="#E0608F" stop-opacity="0"/></radialGradient>'
+    b'<radialGradient id="haze" cx=".2" cy=".18" r=".6">'
+    b'<stop offset="0" stop-color="#8B6CFF" stop-opacity=".55"/>'
+    b'<stop offset="1" stop-color="#8B6CFF" stop-opacity="0"/></radialGradient>'
+    b"</defs>"
+    b'<rect width="390" height="844" fill="url(#sky)"/>'
+    b'<rect width="390" height="844" fill="url(#haze)"/>'
+    b'<rect width="390" height="844" fill="url(#sun)"/>'
+    b'<path d="M0 600C80 560 150 572 220 600S340 640 390 612V844H0Z" fill="#1E1650" opacity=".55"/>'
+    b'<path d="M0 690C90 660 170 668 250 690S350 712 390 700V844H0Z" fill="#140F38" opacity=".7"/>'
+    b"</svg>"
 )
 
 

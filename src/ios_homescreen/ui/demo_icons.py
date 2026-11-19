@@ -1,33 +1,34 @@
-"""Simple generated app icons for the demo: a flat single-colour tile with a white glyph.
+"""Generated app icons for the demo: a lit gradient tile with a white glyph.
 
 Every app in demo mode is invented, and so are these icons. They are plain SVG built
 from the shapes below, drawn in a 120 x 120 box; the UI rounds the corners like iOS.
-The colours are flat and of one saturation, so the demo reads as neutral sample data.
+Each tile runs from a lighter shade at the top to a deeper one at the bottom, with a
+soft sheen and a faint shadow under the glyph, the way current iOS icons are lit.
 """
 
 from __future__ import annotations
 
 # name -> (tile, cut-out). The cut-out colour is a darker shade for holes in glyphs.
 PALETTES: dict[str, tuple[str, str]] = {
-    "green": ("#2F9460", "#1F6B44"),
-    "blue": ("#3A72C4", "#28528F"),
-    "sky": ("#3A8BBF", "#28658C"),
-    "rose": ("#C9444B", "#932F35"),
-    "orange": ("#D07335", "#984F21"),
-    "amber": ("#B98A1E", "#86630F"),
-    "purple": ("#7A5BB8", "#573F87"),
-    "indigo": ("#5864B8", "#3D4687"),
-    "teal": ("#2C8C8C", "#1D6464"),
-    "mint": ("#2E9A7A", "#1F6F57"),
-    "slate": ("#5D6876", "#424A55"),
-    "graphite": ("#3E434B", "#2A2E34"),
-    "coral": ("#C95D45", "#93402F"),
-    "violet": ("#6E58B5", "#4E3E85"),
-    "cyan": ("#2C8FA8", "#1F677A"),
-    "lime": ("#6A9433", "#4C6B22"),
-    "pink": ("#B84A7E", "#86345B"),
-    "navy": ("#3D5590", "#2B3C67"),
-    "sand": ("#A88247", "#7A5D31"),
+    "green": ("#34B36B", "#1F7A47"),
+    "blue": ("#3B82F6", "#2459B8"),
+    "sky": ("#38A8E8", "#2275A8"),
+    "rose": ("#F0505A", "#B3343C"),
+    "orange": ("#FF8A3D", "#C2601F"),
+    "amber": ("#F5B417", "#B5810A"),
+    "purple": ("#9B6BF2", "#6B44B8"),
+    "indigo": ("#6366F1", "#4144B8"),
+    "teal": ("#22B5B0", "#167F7B"),
+    "mint": ("#2FCB98", "#1C8E69"),
+    "slate": ("#6B7A8F", "#4A5566"),
+    "graphite": ("#454B55", "#2C3038"),
+    "coral": ("#FF6F55", "#C24A35"),
+    "violet": ("#8B6CFF", "#5F44C9"),
+    "cyan": ("#1FB6D6", "#147F96"),
+    "lime": ("#7CC23A", "#558A22"),
+    "pink": ("#EC5AA0", "#B03A74"),
+    "navy": ("#3E5FB8", "#2A4282"),
+    "sand": ("#D4A25A", "#9A713A"),
     "white": ("#FFFFFF", "#D5DAE0"),
 }
 
@@ -232,11 +233,31 @@ GLYPHS: dict[str, str] = {
 }
 
 
+def _mix(colour: str, other: str, amount: float) -> str:
+    """``colour`` moved ``amount`` (0-1) of the way towards ``other``, as #rrggbb."""
+    a = [int(colour[i : i + 2], 16) for i in (1, 3, 5)]
+    b = [int(other[i : i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x + (y - x) * amount):02X}" for x, y in zip(a, b, strict=True))
+
+
 def icon_svg(glyph: str, palette: str, *, fg: str = "#FFFFFF", dark: str | None = None) -> bytes:
     """A full-bleed square icon as SVG bytes (the UI applies the rounded mask)."""
     tile, shade = PALETTES[palette]
     shape = GLYPHS[glyph].replace("{fg}", fg).replace("{dark}", dark or shade)
+    top, bottom = _mix(tile, "#FFFFFF", 0.22), _mix(tile, "#000000", 0.12)
+    if palette == "white":
+        top, bottom = "#FFFFFF", "#E9EDF2"
     return (
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" '
-        f'height="120"><rect width="120" height="120" fill="{tile}"/>{shape}</svg>'
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">'
+        '<defs><linearGradient id="t" x1="0" y1="0" x2="0" y2="1">'
+        f'<stop offset="0" stop-color="{top}"/><stop offset="1" stop-color="{bottom}"/>'
+        '</linearGradient><radialGradient id="s" cx=".5" cy="0" r=".9">'
+        '<stop offset="0" stop-color="#FFFFFF" stop-opacity=".28"/>'
+        '<stop offset=".6" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>'
+        '<filter id="d" x="-20%" y="-20%" width="140%" height="140%">'
+        '<feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000" flood-opacity=".22"/>'
+        "</filter></defs>"
+        '<rect width="120" height="120" fill="url(#t)"/>'
+        '<rect width="120" height="120" fill="url(#s)"/>'
+        f'<g filter="url(#d)">{shape}</g></svg>'
     ).encode()
