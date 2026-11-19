@@ -129,7 +129,8 @@ Ayrıntılar [Güvenlik modeli](#güvenlik-modeli) bölümünde.
 Motor her sistemde aynı ve testleri üç sistemde de çalışıyor. Windows ve macOS'u beta diye
 işaretledik, çünkü henüz çok sayıda gerçek iPhone'la buluşmadılar. IconShuffle'ı bu
 sistemlerde denerseniz, çalıştığını (ya da çalışmadığını) anlatan bir
-[issue](https://github.com/YakupEmreYerli/IconShuffle/issues) çok işe yarar.
+[issue](https://github.com/YakupEmreYerli/IconShuffle/issues) çok işe yarar. Her sistemde neyin otomatik
+denendiği [docs/platforms.md](docs/platforms.md) sayfasında.
 
 Her sistemde gereken tek şey bilgisayara güvenen bir iPhone: telefonu bir kez kabloyla
 bağlayın, kilidini açın, **Bu Bilgisayara Güven**'e dokunun ve parolanızı girin. Wi-Fi,

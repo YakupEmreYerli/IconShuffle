@@ -126,7 +126,8 @@ The details are in [How the safety model works](#how-the-safety-model-works).
 The engine is the same on every system and its tests run on all three. Windows and macOS
 are marked beta because they have not met many real iPhones yet: if you try IconShuffle
 there, an [issue](https://github.com/YakupEmreYerli/IconShuffle/issues) saying it worked
-(or didn't) helps a lot.
+(or didn't) helps a lot. [docs/platforms.md](docs/platforms.md) lists what is tested
+automatically on each system.
 
 On every system: an iPhone that trusts the computer (connect it with a cable once, unlock
 it, tap **Trust This Computer** and enter the passcode). Wi-Fi works with iOS 17 and later

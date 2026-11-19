@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- The repository is now github.com/YakupEmreYerli/IconShuffle; the old ios-homescreen address redirects to it, so existing installs and pinned links keep working. The command and the Python package stay `ios-homescreen`.
+- A new glass logo for the app, the installers and the editor, with a simplified drawing for 16 and 32 px.
+- The editor follows the system theme: lavender with frosted cards when it is light, the brand's deep ink with a violet glow when it is dark. Demo mode has lit icons like current iOS and a violet dusk wallpaper.
 - One-line installers: `curl -fsSL https://iconshuffle.app/install.sh | sh` on macOS and Linux, `irm https://iconshuffle.app/install.ps1 | iex` on Windows. They install the latest desktop app from GitHub releases.
 - Windows: a layout file saved with a byte order mark is read, and `check` or `push` no longer crash when their output goes to a pipe that is not UTF-8 (`--json` stays exact). Push keeps a file's CRLF line endings on every system.
 - The command line's connection errors name the USB service of the system it runs on, not usbmuxd everywhere.
