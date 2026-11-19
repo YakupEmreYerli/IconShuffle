@@ -93,8 +93,10 @@ are, and the wheel ships them as package data. Edit a file, reload the page.
 
 ## Screenshots for the README
 
-`docs/assets/ui.png` should show a real phone's icons and widgets, but not the rest of
-that phone. `editor --showcase LAYOUT` does that: it reads the phone, shows LAYOUT instead
+The README's pictures (`docs/assets/demo-*.gif`, `ui-*.png`, one per theme) come from
+`editor --demo`, which needs no phone and shows only invented apps. For a picture with a
+real phone's icons and widgets, but not the rest of that phone, `editor --showcase LAYOUT`
+does that: it reads the phone, shows LAYOUT instead
 of the phone's own layout, and never writes. The page looks like the normal editor, so the
 terminal says when it starts in this mode; Apply only opens a notice, Restore is refused
 and backups are not listed (the server refuses writes, and the device is wrapped so a write

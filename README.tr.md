@@ -24,7 +24,10 @@ Windows, macOS ve Linux · USB ya da Wi-Fi · Mac, jailbreak ya da hesap gerekme
 
 <p align="center"><a href="https://iconshuffle.app">Web sitesi</a> · <a href="docs/agent-guide.md">Asistan rehberi</a> · <a href="README.md">English</a></p>
 
-![IconShuffle demosu: düzenleyici bir deneme iPhone'unu gösteriyor; A-Z sırala simgeleri dizer, değişiklik listesi dolar ve Uygula'ya basılana kadar telefona hiçbir şey yazılmaz](docs/assets/demo.gif)
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="docs/assets/demo-dark.gif">
+<img src="docs/assets/demo-light.gif" alt="IconShuffle demosu: düzenleyici bir deneme iPhone'unu gösteriyor; A-Z sırala simgeleri dizer, değişiklik listesi dolar ve Uygula'ya basılana kadar telefona hiçbir şey yazılmaz">
+</picture>
 
 Altı inçlik ekranda altmış simgeyi tek tek sürüklemek, üstelik simgeler titreyip birbirini
 sonraki sayfaya iterken, kimsenin sevdiği bir iş değil. IconShuffle ana ekranınızı gerçek
@@ -318,7 +321,10 @@ Changes compared with the pull from iPhone (iPhone 15, iOS 27.0) on 2026-10-10 1
 
 ## Düzenleyici
 
-![Deneme modunda, A-Z sıralamadan sonra IconShuffle düzenleyicisi: solda App Library, ortada telefon, sağda değişiklik listesi ve Uygula düğmesi](docs/assets/ui.png)
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="docs/assets/ui-dark.png">
+<img src="docs/assets/ui-light.png" alt="Deneme modunda, A-Z sıralamadan sonra IconShuffle düzenleyicisi: solda App Library, ortada telefon, sağda değişiklik listesi ve Uygula düğmesi">
+</picture>
 
 Masaüstü uygulaması düzenleyiciyi kendi penceresinde açar; `ios-homescreen editor` aynı
 düzenleyiciyi tarayıcıda açar. Düzenleyici telefonu okur; telefonun uygulama simgelerini ve

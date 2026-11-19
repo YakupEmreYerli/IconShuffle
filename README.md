@@ -24,7 +24,10 @@ Windows, macOS and Linux · USB or Wi-Fi · no Mac, no jailbreak, no account.
 
 <p align="center"><a href="https://iconshuffle.app">Website</a> · <a href="docs/agent-guide.md">Agent guide</a> · <a href="README.tr.md">Türkçe</a></p>
 
-![IconShuffle demo: the editor mirrors a demo iPhone; Sort A-Z rearranges the icons, the change list fills in, and nothing is written until Apply is pressed](docs/assets/demo.gif)
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="docs/assets/demo-dark.gif">
+<img src="docs/assets/demo-light.gif" alt="IconShuffle demo: the editor mirrors a demo iPhone; Sort A-Z rearranges the icons, the change list fills in, and nothing is written until Apply is pressed">
+</picture>
 
 Sorting sixty icons by dragging them one by one on a six-inch screen, while they wiggle and
 push each other onto the next page, is nobody's idea of fun. IconShuffle puts your home
@@ -310,7 +313,10 @@ Changes compared with the pull from iPhone (iPhone 15, iOS 27.0) on 2026-10-10 1
 
 ## The editor
 
-![The IconShuffle editor in demo mode after Sort A-Z: the App Library on the left, the phone in the middle, the list of changes and the Apply button on the right](docs/assets/ui.png)
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="docs/assets/ui-dark.png">
+<img src="docs/assets/ui-light.png" alt="The IconShuffle editor in demo mode after Sort A-Z: the App Library on the left, the phone in the middle, the list of changes and the Apply button on the right">
+</picture>
 
 The desktop app opens the editor in its own window; `ios-homescreen editor` opens the same
 editor in your browser. It reads the phone and shows it with the
