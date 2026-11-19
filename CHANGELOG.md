@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- One-line installers: `curl -fsSL https://iconshuffle.app/install.sh | sh` on macOS and Linux, `irm https://iconshuffle.app/install.ps1 | iex` on Windows. They install the latest desktop app from GitHub releases.
+- Windows: a layout file saved with a byte order mark is read, and `check` or `push` no longer crash when their output goes to a pipe that is not UTF-8 (`--json` stays exact). Push keeps a file's CRLF line endings on every system.
+- The command line's connection errors name the USB service of the system it runs on, not usbmuxd everywhere.
+- The desktop app's `--self-test` runs one edit through its own server on the demo phone. [docs/platforms.md](docs/platforms.md) lists what is tested on each system and how beta testers can help.
+
 ## 0.2.0 — 2026-11-16
 
 - IconShuffle: the product is now called IconShuffle — the desktop window, installers (`IconShuffle-*.exe`, `.dmg`, `.AppImage`), the editor's title bar and icons all carry the new name and the purple brand accent. The command and the Python package stay `ios-homescreen`.
