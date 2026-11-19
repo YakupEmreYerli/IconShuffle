@@ -102,7 +102,8 @@ def point_layout_at(path: Path, snapshot: str) -> bool:
     if not _NAME.match(snapshot):
         raise StateError(f"{snapshot!r} is not a pull snapshot file name")
     path = Path(path)
-    lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
+    # Bytes, so that Windows line endings (and a byte order mark) come back as they were.
+    lines = path.read_bytes().decode("utf-8").splitlines(keepends=True)
     inside = False
     for number, line in enumerate(lines):
         if _TABLE.match(line):
@@ -113,7 +114,7 @@ def point_layout_at(path: Path, snapshot: str) -> bool:
             ending = line[len(line.rstrip("\r\n")) :]
             lines[number] = f'{match.group(1)}"{snapshot}"{match.group(2)}{ending}'
             tmp = path.with_name(f".{path.name}.tmp")
-            tmp.write_text("".join(lines), encoding="utf-8")
+            tmp.write_text("".join(lines), encoding="utf-8", newline="")
             tmp.replace(path)
             return True
     return False

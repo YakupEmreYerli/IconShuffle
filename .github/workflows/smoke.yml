@@ -1,8 +1,10 @@
 name: Smoke test
 
 # Installs the packaged app on each OS, opens it in --demo mode, photographs the
-# window and collects what went wrong when it does not. On macOS it also marks the
-# app as downloaded (quarantine) to see what Gatekeeper does with an unsigned build.
+# window and collects what went wrong when it does not, then runs its self-test: one
+# edit read, applied and verified on the demo phone through the app's own local
+# server. On macOS it also marks the app as downloaded (quarantine) to see what
+# Gatekeeper does with an unsigned build.
 # A trial workflow on the desktop-app branch: it publishes nothing.
 
 on:
@@ -136,6 +138,14 @@ jobs:
           $report = Get-Content smoke\report.txt -Raw
           if ($report -notmatch "window title: '.+'") { throw "the app window never opened" }
 
+      - name: Self-test of the installed app (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $exe = "$env:LOCALAPPDATA\Programs\IconShuffle\iconshuffle.exe"
+          $test = Start-Process $exe -ArgumentList '--self-test' -Wait -PassThru
+          if ($test.ExitCode -ne 0) { throw "self-test failed: $($test.ExitCode)" }
+
       # -------------------------------------------------------------- macOS
 
       - name: Open, photograph (macOS)
@@ -187,6 +197,10 @@ jobs:
         run: |
           grep -q "alive: yes" smoke/report.txt || { cat smoke/report.txt; exit 1; }
 
+      - name: Self-test (macOS)
+        if: runner.os == 'macOS'
+        run: dist/IconShuffle.app/Contents/MacOS/iconshuffle --self-test
+
       # -------------------------------------------------------------- Linux
 
       - name: Open, photograph (Linux)
@@ -213,6 +227,12 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           grep -q '"IconShuffle' smoke/report.txt || { cat smoke/report.txt; exit 1; }
+
+      - name: Self-test of the AppImage (Linux)
+        if: runner.os == 'Linux'
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: $(ls out/*.AppImage | head -1) --self-test
 
       # ------------------------------------------------------------ results
 

@@ -1053,6 +1053,7 @@ def main(
     """Entry point. ``open_device`` replaces the real connection and ``wifi_backend`` the
     Wi-Fi pairing helpers (tests use fakes)."""
     args = build_parser().parse_args(argv)
+    _keep_printing()
     _out.json = bool(getattr(args, "json", False))
     _out.data = {}
     try:
@@ -1083,8 +1084,21 @@ def main(
         failed("interrupted", message)
     if _out.json:
         result = {"ok": code == EXIT_OK, "command": args.command, "exit_code": code}
-        print(json.dumps({**result, **_out.data}, ensure_ascii=False, default=str), flush=True)
+        text = json.dumps({**result, **_out.data}, ensure_ascii=not _utf8(sys.stdout), default=str)
+        print(text, flush=True)
     return code
+
+
+def _utf8(stream: Any) -> bool:
+    return (getattr(stream, "encoding", None) or "").lower().replace("-", "") == "utf8"
+
+
+def _keep_printing() -> None:
+    """App and folder names can hold any character, but a Windows pipe or console code
+    page (cp1252, cp857...) cannot show them all: print those as escapes, never crash."""
+    for stream in (sys.stdout, sys.stderr):
+        if stream is not None and not _utf8(stream) and hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
 
 
 def _error_code(exc: BaseException) -> str:

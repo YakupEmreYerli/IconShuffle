@@ -9,10 +9,14 @@ Wi-Fi here, so the app tries USB first and the network when no cable is in.
 from __future__ import annotations
 
 import html
+import json
+import re
 import sys
 import threading
+import time
 from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 from . import __version__
 from .paths import BACKUPS, data_dir
@@ -45,7 +49,8 @@ def _options(demo: bool) -> Options:
 
 
 def _self_test() -> int:
-    """For the build pipeline: start the server in demo mode, load the page, stop.
+    """For the build pipeline: start the server in demo mode, load the page, run one edit
+    through it (read, apply, verify on the pretend iPhone), stop.
 
     It also imports the window backend, so a package that lost it fails here.
     """
@@ -75,14 +80,64 @@ def _self_test() -> int:
     browser = urllib.request.build_opener(
         urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())
     )
-    with browser.open(str(found["url"]), timeout=10) as page:
-        ok = page.status == 200 and b"IconShuffle" in page.read()
+    url = str(found["url"])
+    try:
+        with browser.open(url, timeout=10) as page:
+            body = page.read()
+            problem = None if page.status == 200 and b"IconShuffle" in body else "no page"
+        problem = problem or _round_trip(browser, url.split("/?", 1)[0], body)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        problem = f"{type(exc).__name__}: {exc}"
     stop = found["stop"]
     assert callable(stop)
     stop()
     thread.join(timeout=10)
-    print(f"self-test: {'ok' if ok else 'the page did not load'} ({__version__})")
-    return 0 if ok else 1
+    print(f"self-test: {problem or 'ok'} ({__version__})")
+    return 0 if problem is None else 1
+
+
+def _round_trip(browser: Any, base: str, page: bytes) -> str | None:
+    """What the page does for one edit: wait for the first read, reverse the dock, apply,
+    and see the phone show it. Returns what went wrong, or ``None``."""
+    import urllib.request
+
+    token = re.search(rb'name="ihs-token" content="([^"]+)"', page)
+    if token is None:
+        return "the page has no token"
+    headers = {"X-IHS-Token": token.group(1).decode(), "Origin": base}
+
+    def call(path: str, body: Any = None) -> Any:
+        data = None if body is None else json.dumps(body).encode()
+        request = urllib.request.Request(base + path, data=data, headers=headers)
+        if data is not None:
+            request.add_header("Content-Type", "application/json")
+        with browser.open(request, timeout=10) as answer:
+            return json.loads(answer.read())
+
+    def finished() -> dict[str, Any] | None:
+        deadline = time.monotonic() + START_TIMEOUT
+        while time.monotonic() < deadline:
+            job = call("/api/job")["job"]
+            if job and job["state"] != "running":
+                return job
+            time.sleep(0.1)
+        return None
+
+    if (finished() or {}).get("state") != "done":
+        return "the first read did not finish"
+    view = call("/api/state")["read"]["view"]
+    dock = [item["id"] for item in reversed(view["dock"])]
+    layout = {
+        "dock": list(reversed(view["dock"])),
+        "pages": [{"items": page["items"]} for page in view["pages"]],
+    }
+    call("/api/apply", {"layout": layout})
+    job = finished() or {}
+    if (job.get("result") or {}).get("status") != "applied":
+        return f"the edit was not applied: {job.get('error') or job.get('result')}"
+    if [item["id"] for item in call("/api/state")["read"]["view"]["dock"]] != dock:
+        return "the phone does not show the edit"
+    return None
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -131,3 +131,11 @@ def test_linux_gets_the_png_window_icon(monkeypatch):
     monkeypatch.setattr(sys, "platform", "linux")
 
     assert desktop._window_icon().endswith("logo.png")
+
+
+def test_the_self_test_runs_one_edit_through_the_demo_server(capsys):
+    """The packaged app's ``--self-test``: page, first read, an edit applied and verified."""
+    pytest.importorskip("webview")
+
+    assert desktop.main(["--self-test"]) == 0
+    assert capsys.readouterr().out.startswith("self-test: ok")
