@@ -7,8 +7,8 @@ Thanks for helping. Bug reports with the exact command and its output are as use
 You need Python 3.11+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-git clone https://github.com/YakupEmreYerli/ios-homescreen
-cd ios-homescreen
+git clone https://github.com/YakupEmreYerli/IconShuffle
+cd IconShuffle
 uv sync
 ```
 

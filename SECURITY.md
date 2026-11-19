@@ -5,7 +5,7 @@
 Please do not open a public issue for a security problem. Report it privately through
 GitHub: open the repository's **Security** tab and choose **Report a vulnerability**, or go
 straight to
-<https://github.com/YakupEmreYerli/ios-homescreen/security/advisories/new>.
+<https://github.com/YakupEmreYerli/IconShuffle/security/advisories/new>.
 
 Include what you found, how to reproduce it, and what it lets an attacker do. Once a fix is
 released, the advisory is published with credit to you unless you prefer otherwise.

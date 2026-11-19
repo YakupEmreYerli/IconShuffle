@@ -1,9 +1,9 @@
-# ios-homescreen: guide for AI agents
+# IconShuffle (`ios-homescreen`): guide for AI agents
 
 You are helping a person rearrange their iPhone home screen with `ios-homescreen`, a
 command-line tool. It reads the home screen into a text file (`layout.toml`), you edit that
 file, and it writes the result back to the phone over USB or Wi-Fi. This page is everything
-you need. Source: <https://github.com/YakupEmreYerli/ios-homescreen>.
+you need. Source: <https://github.com/YakupEmreYerli/IconShuffle>.
 
 ## Rules
 
@@ -33,17 +33,19 @@ you need. Source: <https://github.com/YakupEmreYerli/ios-homescreen>.
 
 ## Setup
 
-Linux is tested. macOS may work (it has usbmuxd built in) but is untested. Windows is not
-supported. Python 3.11 or newer is needed.
+It runs on Linux, macOS and Windows (macOS and Windows are in beta). Python 3.11 or newer
+is needed.
 
-1. **usbmuxd (Linux only).** Install and start it: `sudo apt install usbmuxd`,
+1. **The USB service.** Linux: install and start usbmuxd (`sudo apt install usbmuxd`,
    `sudo dnf install usbmuxd` or `sudo pacman -S usbmuxd`, then
-   `sudo systemctl start usbmuxd`. Ask before running `sudo`.
+   `sudo systemctl start usbmuxd`; ask before running `sudo`). macOS: nothing to do.
+   Windows: the person installs Apple Devices from the Microsoft Store (or iTunes), which
+   brings Apple Mobile Device Service.
 2. **Install the tool**, with [uv](https://docs.astral.sh/uv/) or pipx:
 
    ```bash
-   uv tool install git+https://github.com/YakupEmreYerli/ios-homescreen
-   # or: pipx install git+https://github.com/YakupEmreYerli/ios-homescreen
+   uv tool install git+https://github.com/YakupEmreYerli/IconShuffle
+   # or: pipx install git+https://github.com/YakupEmreYerli/IconShuffle
    ios-homescreen --version
    ```
 
@@ -179,7 +181,7 @@ a failure adds `error: {code, message}`.
 | `error.code` | Meaning and next step |
 | --- | --- |
 | `no_usb_device` | No iPhone over USB: plug it in with a data cable, unlock it, tap Trust |
-| `usbmuxd_unreachable` | usbmuxd is not running: install and start it (Setup step 1) |
+| `usbmuxd_unreachable` | The USB service is not running: usbmuxd on Linux, Apple Mobile Device Service on Windows (Setup step 1) |
 | `timeout`, `connection_failed` | Unlock the phone and keep it awake; if it repeats, `sudo systemctl restart usbmuxd` and reconnect |
 | `not_advertising` | Not found on Wi-Fi: phone awake, unlocked, same network; try again or use the cable |
 | `no_pair_record`, `stale_pair_record` | Wi-Fi not set up: over USB run `ios-homescreen wifi setup` |

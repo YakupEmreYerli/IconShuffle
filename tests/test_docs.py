@@ -137,11 +137,11 @@ def test_the_skill_is_a_valid_agent_skill_that_points_to_the_guide():
 def test_llms_txt_follows_the_convention_and_links_to_real_files():
     text = (ROOT / "llms.txt").read_text(encoding="utf-8")
     links = re.findall(
-        r"\]\(https://raw\.githubusercontent\.com/YakupEmreYerli/ios-homescreen/main/([^)]+)\)",
+        r"\]\(https://raw\.githubusercontent\.com/YakupEmreYerli/IconShuffle/main/([^)]+)\)",
         text,
     )
 
-    assert text.startswith("# ios-homescreen\n\n> ")
+    assert text.startswith("# IconShuffle\n\n> ")
     assert "docs/agent-guide.md" in links
     for path in links:
         assert (ROOT / path).is_file(), path
@@ -151,5 +151,5 @@ def test_llms_txt_follows_the_convention_and_links_to_real_files():
 def test_the_readme_gives_agents_the_guide(readme):
     text = (ROOT / readme).read_text(encoding="utf-8")
 
-    assert "https://github.com/YakupEmreYerli/ios-homescreen/blob/main/docs/agent-guide.md" in text
+    assert "https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md" in text
     assert "skills/ios-homescreen" in text

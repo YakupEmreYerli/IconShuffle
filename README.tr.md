@@ -1,47 +1,83 @@
+<p align="center">
+<img src="docs/assets/logo.png" width="140" height="140" alt="IconShuffle logosu: yuvasından kalkan mor cam bir simge">
+</p>
+
 <h1 align="center">IconShuffle</h1>
 
 <p align="center">
-iPhone ana ekranını Linux'tan düzenleyin: gerçek simgeleri tarayıcıda sürükleyin ya da yapay zekâ ajanınıza ne istediğinizi söyleyin. USB ya da Wi-Fi ile, Mac gerekmez.
+<b>iPhone ana ekranınızı bilgisayardan düzenleyin.</b><br>
+Telefonunuzun canlı aynasında gerçek simgelerinizi sürükleyin ya da ne istediğinizi yapay zekâ asistanınıza söyleyin.<br>
+Windows, macOS ve Linux · USB ya da Wi-Fi · Mac, jailbreak ya da hesap gerekmez.
 </p>
 
 <p align="center">
-<a href="https://github.com/YakupEmreYerli/ios-homescreen/actions/workflows/ci.yml"><img src="https://github.com/YakupEmreYerli/ios-homescreen/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT lisansı"></a>
-<img src="https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776ab" alt="Python 3.11, 3.12, 3.13">
+<a href="https://github.com/YakupEmreYerli/IconShuffle/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Windows-8b6cff?logo=windows&logoColor=white" alt="Windows için indir"></a>
+<a href="https://github.com/YakupEmreYerli/IconShuffle/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-macOS-8b6cff?logo=apple&logoColor=white" alt="macOS için indir"></a>
+<a href="https://github.com/YakupEmreYerli/IconShuffle/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Linux-8b6cff?logo=linux&logoColor=white" alt="Linux için indir"></a>
 </p>
 
 <p align="center">
-<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Windows-8b6cff?logo=windows&logoColor=white" alt="Windows için indir"></a>
-<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-macOS-8b6cff?logo=apple&logoColor=white" alt="macOS için indir"></a>
-<a href="https://github.com/YakupEmreYerli/ios-homescreen/releases/latest"><img src="https://img.shields.io/badge/%C4%B0ndir-Linux-8b6cff?logo=linux&logoColor=white" alt="Linux için indir"></a>
+<a href="https://github.com/YakupEmreYerli/IconShuffle/actions/workflows/ci.yml"><img src="https://github.com/YakupEmreYerli/IconShuffle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/lisans-MIT-blue" alt="MIT lisansı"></a>
+<a href="https://iconshuffle.app"><img src="https://img.shields.io/badge/site-iconshuffle.app-ff9a4d" alt="iconshuffle.app"></a>
 </p>
 
-<p align="center"><a href="README.md">English</a></p>
+<p align="center"><a href="https://iconshuffle.app">Web sitesi</a> · <a href="docs/agent-guide.md">Asistan rehberi</a> · <a href="README.md">English</a></p>
 
-![IconShuffle demosu: tarayıcı düzenleyicisi örnek bir iPhone'u yansıtır; A-Z sırala simgeleri dizer, değişiklik listesi dolar ve Apply'a basılmadan telefona bir şey yazılmaz](docs/assets/demo.gif)
+![IconShuffle demosu: düzenleyici bir deneme iPhone'unu gösteriyor; A-Z sırala simgeleri dizer, değişiklik listesi dolar ve Uygula'ya basılana kadar telefona hiçbir şey yazılmaz](docs/assets/demo.gif)
 
-![ios-homescreen: iPhone ana ekranını Linux'tan düzenle, USB ya da Wi-Fi ile; yanında tarayıcı düzenleyicisi ve telefonun aynası](docs/banner.tr.png)
+Altı inçlik ekranda altmış simgeyi tek tek sürüklemek, üstelik simgeler titreyip birbirini
+sonraki sayfaya iterken, kimsenin sevdiği bir iş değil. IconShuffle ana ekranınızı gerçek
+simgeleri, klasörleri ve widget'larıyla bilgisayarın büyük ekranına taşır; düzeni orada
+kurarsınız. Uygula'ya basmadan telefona hiçbir şey gitmez. Her yazmadan önce yedek alınır,
+yazmadan sonra telefon yeniden okunur ve planla uyuşmazsa eski düzen kendiliğinden geri
+yüklenir.
 
-Onlarca simgeyi telefonda tek tek sürükleyerek yerleştirmek uzun sürüyor. ios-homescreen
-bunun için iki kolay yol sunar:
+## Kurulum
 
-- **Tarayıcıda.** `ios-homescreen editor` telefonunuzun aynasını gerçek simgeleriyle açar.
-  Uygulamaları sürükleyin, klasör kurun, değişiklik listesine bakıp Uygula'ya basın.
-- **Yapay zekâ ajanınızla.** Claude Code, Codex ya da Cursor'a bu deponun bağlantısını verin
-  ve ne istediğinizi söyleyin ("oyunlarımı 2. sayfaya al"). Ajan kurulumu yapar,
-  değişiklikleri gösterir ve onayınızı bekler.
+**Windows** (PowerShell):
 
-İkisi de aynı dikkatle yazar: önce yedek alınır, sonra yazılır, telefon yeniden okunup
-karşılaştırılır; tutmazsa yedek geri yazılır. Arka planda düzen düz bir TOML dosyasıdır;
-isterseniz onu çekip herhangi bir metin düzenleyicide değiştirip geri de yazabilirsiniz.
+```powershell
+irm https://iconshuffle.app/install.ps1 | iex
+```
 
-## Bir yapay zekâ asistanıyla kullanmak
+**macOS ve Linux:**
 
-Claude Code, Codex ya da Cursor gibi bir kodlama asistanı kurulumu da düzenlemeyi de sizin
-yerinize yapabilir. Ona şunu verin, sonuna kendi isteğinizi yazın:
+```bash
+curl -fsSL https://iconshuffle.app/install.sh | sh
+```
+
+Betikler bu depodaki son sürümü indirip kurar. İsterseniz önce okuyun:
+[`install.ps1`](install.ps1), [`install.sh`](install.sh). Kurulum dosyasını kendiniz de
+[sürümler sayfasından](https://github.com/YakupEmreYerli/IconShuffle/releases/latest)
+indirebilirsiniz: `IconShuffle-*-windows-x64-setup.exe`, `IconShuffle-*-macos-arm64.dmg`
+ya da `IconShuffle-*-linux-x86_64.AppImage`.
+
+Terminali mi seviyorsunuz? Komut satırı aracı bir Python paketi:
+
+```bash
+uv tool install git+https://github.com/YakupEmreYerli/IconShuffle
+# ya da
+pipx install git+https://github.com/YakupEmreYerli/IconShuffle
+```
+
+Kurulum dosyaları henüz imzalı değil, bu yüzden ilk açılışta bir tıklama fazladan gerekir.
+macOS'ta: Sistem Ayarları → Gizlilik ve Güvenlik → **Yine de Aç**. Windows'ta SmartScreen
+bir kez sorabilir: **Ek bilgi → Yine de çalıştır**.
+
+## Üç kullanım yolu
+
+**Uygulama.** IconShuffle'ı açın ve iPhone'u takın. Ana ekranınızı kendi simgeleri ve duvar
+kâğıdıyla görürsünüz. Uygulamaları sayfalar arasında ve dock'a sürükleyin, klasör yapmak
+için bir uygulamayı ötekinin üstüne bırakın, App Library'den uygulama çekin ya da
+**A-Z sırala**'ya basın. Sağ taraf her değişikliği sade bir dille listeler. **Uygula**
+hepsini yazar.
+
+**Yapay zekâ asistanınız.** Claude Code, Codex, Cursor ya da başka bir kodlama asistanı
+bütün işi sizin yerinize yapabilir. Şunu yapıştırın, sonuna kendi isteğinizi yazın:
 
 ```text
-https://github.com/YakupEmreYerli/ios-homescreen/blob/main/docs/agent-guide.md dosyasını oku
+https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md dosyasını oku
 ve ios-homescreen ile iPhone ana ekranımı düzenlememe yardım et. Gerekiyorsa kur, telefona
 bir şey yazmadan önce her değişikliği bana göster ve onayımı bekle. İstediğim: iş
 uygulamalarımı tek bir klasöre koy, oyunları 2. sayfaya taşı.
@@ -49,83 +85,81 @@ uygulamalarımı tek bir klasöre koy, oyunları 2. sayfaya taşı.
 
 [Asistan rehberi](docs/agent-guide.md) asistana aracı nasıl kurup kullanacağını anlatır;
 telefona bir şey yazmadan önce değişiklikleri size göstermesi ve onayınızı beklemesi
-gerektiğini de söyler. Telefonu bağlamak ve Güven'e dokunmak yine size kalır. Claude Code
+gerektiğini de söyler. Telefonu takmak ve Güven'e dokunmak yine size kalır. Claude Code
 için aynı akışı izleyen bir skill de var: [`skills/ios-homescreen`](skills/ios-homescreen)
-klasörünü `~/.claude` içindeki `skills` klasörüne (ya da projenin `.claude` klasöründeki `skills` klasörüne) kopyalayın.
+klasörünü `~/.claude` içindeki `skills` klasörüne (ya da projenin `.claude` klasöründeki
+`skills` klasörüne) kopyalayın.
+
+**Terminal.** Düzeniniz düz bir TOML dosyası. Okuyun, istediğiniz editörde düzenleyin, yazın:
+
+```bash
+ios-homescreen pull        # telefonu layout.toml dosyasına okur (yalnız okur)
+ios-homescreen check       # neyin değişeceğini gösterir (bağlantısız)
+ios-homescreen push        # sorar, yedekler, yazar, doğrular, gerekirse geri alır
+```
+
+## Güvenlik baştan düşünüldü
+
+Ana ekran protokolünün belgesi yok ve hata affetmiyor. Bu yüzden IconShuffle göremediği bir
+yazmaya asla güvenmez:
+
+- **Önce yedek.** Her yazma, telefona dokunmadan önce mevcut düzeni kaydeder.
+- **Her seferinde geri okuma.** Yazmadan sonra telefon yeniden okunur ve simge simge planla
+  karşılaştırılır.
+- **Kendini geri alır.** Telefon planla uyuşmazsa yedek kendiliğinden geri yüklenir.
+  `ios-homescreen restore latest` herhangi bir yazmayı sonradan da geri alır.
+- **Yazmadan önce sorar.** Uygulamada, terminalde ya da asistanla, değişikliklerin tam
+  listesini görürsünüz ve onayınız olmadan hiçbir şey yazılmaz.
+- **Bilgisayarınızda kalır.** Düzenleyici yalnız 127.0.0.1 üzerinde çalışır; düzenler,
+  simgeler ve yedekler bilgisayarınızdan çıkmaz. Hesap ve kullanım verisi toplama yok.
+
+Ayrıntılar [Güvenlik modeli](#güvenlik-modeli) bölümünde.
+
+## Platformlar
+
+| | Gerekenler | Durum |
+| --- | --- | --- |
+| **Windows 10 ve 11** (64 bit) | Microsoft Store'dan [Apple Devices](https://apps.microsoft.com/detail/9np83lwlpz9k) (ya da iTunes): USB sürücüsünü o getirir | Beta |
+| **macOS** (Apple silicon) | Ek bir şey gerekmez | Beta |
+| **Linux** | Kurulu ve çalışan `usbmuxd` (`sudo apt install usbmuxd`, `sudo dnf install usbmuxd`, `sudo pacman -S usbmuxd`) | Kararlı |
+
+Motor her sistemde aynı ve testleri üç sistemde de çalışıyor. Windows ve macOS'u beta diye
+işaretledik, çünkü henüz çok sayıda gerçek iPhone'la buluşmadılar. IconShuffle'ı bu
+sistemlerde denerseniz, çalıştığını (ya da çalışmadığını) anlatan bir
+[issue](https://github.com/YakupEmreYerli/IconShuffle/issues) çok işe yarar.
+
+Her sistemde gereken tek şey bilgisayara güvenen bir iPhone: telefonu bir kez kabloyla
+bağlayın, kilidini açın, **Bu Bilgisayara Güven**'e dokunun ve parolanızı girin. Wi-Fi,
+USB üzerinden bir kerelik kurulumdan sonra iOS 17 ve üstünde çalışır. Root ya da
+Geliştirici Modu gerekmez.
 
 ## Özellikler
 
-- Dock'u, sayfaları, klasörleri (çok sayfalı klasörler dahil), widget'ları, widget
-  yığınlarını, web kısayollarını, Safari web uygulamalarını ve boşaltılmış uygulamaları
-  düzenlenebilir bir TOML dosyasına çeker. Yalnız Uygulama Arşivi'nde duran uygulamaları da
-  dosyanın sonunda listeler.
-- Uygulamalara paket kimliğiyle ya da simgenin altındaki adla başvurabilirsiniz.
-- Düzeni telefona gitmeden denetler: bilinmeyen ya da iki kez kullanılan öğe, dolu dock,
-  24 hücreyi aşan sayfa (widget'lar boyutlarına göre sayılır), boş ya da iç içe klasör,
-  klasördeki widget.
-- Düzene yazmadığınız uygulamalar Uygulama Arşivi'ne gider ve orada kalır.
-- Yazmadan önce neyin taşınacağını, neyin arşive gideceğini ve neyin ana ekrana döneceğini gösterir.
-- Telefon `pull` komutundan sonra değiştiyse yazmaz. Yazmadan önce sorar, yedek alır ve
-  sonucu telefonu yeniden okuyarak denetler. Tutmazsa yedeği geri yazar. Bir `push`
-  komutunu `ios-homescreen restore latest` geri alır.
-- USB ile çalışır; USB üzerinden bir kez kurduktan sonra Wi-Fi ile de (iOS 17 ve sonrası).
-  İkisi için de root ya da Geliştirici Modu gerekmez.
-- Telefonun kayıtlarını ve yedekleri `~/.local/share/ios-homescreen` altında tutar; çalışma
-  klasörüne yalnız düzen dosyası yazılır.
-- Tarayıcıda çalışan bir düzenleyicisi var (`ios-homescreen editor`): uygulamaları, klasörleri
-  ve widget'ları ana ekranın kendi simgeleriyle çizilmiş resmi üzerinde sürüklersiniz,
-  her değişikliği telefona yazılmadan önce görürsünüz, aynı güvenlik adımlarıyla
-  uygularsınız. Telefon olmadan denemek için bir
-  demo modu da var.
-- Python'dan da kullanılabilir: komut satırı, `ios_homescreen.api` üzerine ince bir katman.
+- Dock'u, sayfaları, klasörleri (birden çok sayfalı klasörler dahil), widget'ları, widget
+  yığınlarını, web kliplerini, Safari web uygulamalarını ve boşaltılmış uygulamaları okur;
+  yalnız App Library'de duran uygulamaları listeler.
+- Telefona bir şey yazmadan önce neyin taşınacağını, neyin App Library'ye gideceğini ve
+  neyin geri geleceğini gösterir.
+- Düzeni telefona dokunmadan önce denetler: bilinmeyen ya da iki kez geçen öğe, dolu dock,
+  24 hücreyi aşan sayfa (widget'lar boyutlarıyla sayılır), boş ya da iç içe klasör,
+  klasörde widget.
+- Düzene koymadığınız uygulamalar App Library'ye gider ve orada kalır.
+- Her sayfayı tek tıkla A-Z sıralar; dock, klasör içleri ve widget'lar yerinde kalır.
+- Telefon okunduktan sonra değiştiyse yazmayı reddeder.
+- Her komutta betikler ve asistanlar için JSON çıktısı var, komut satırının altında da bir
+  Python API'si (`ios_homescreen.api`) duruyor.
+- Okuma kayıtlarını ve yedekleri kendi veri klasöründe tutar; yalnız düzen dosyası sizin
+  gösterdiğiniz yere gider.
 
-## Gereksinimler
-
-- Linux. macOS'ta çalışabilir ama denenmedi.
-- Python 3.11 ya da üstü.
-- Kurulu ve çalışan `usbmuxd`. Çoğu dağıtımda paketin adı `usbmuxd`
-  (`sudo pacman -S usbmuxd`, `sudo apt install usbmuxd`, `sudo dnf install usbmuxd`).
-- Bu bilgisayara güvenen bir iPhone. Kabloyla bağlayın, kilidini açın, **Bu Bilgisayara Güven**
-  sorusuna Güven deyin ve parolayı girin. Bunu bir kez yapmanız yeterli.
-
-## Kurulum
-
-[uv](https://docs.astral.sh/uv/) ile:
-
-```bash
-uv tool install git+https://github.com/YakupEmreYerli/ios-homescreen
-```
-
-[pipx](https://pipx.pypa.io/) ile:
-
-```bash
-pipx install git+https://github.com/YakupEmreYerli/ios-homescreen
-```
-
-Tarayıcı düzenleyicisi Starlette ve uvicorn kullanır; ikisi de pymobiledevice3 ile zaten
-kurulur. `ui` eki bunları ayrıca adıyla ister, ileride değişirse diye:
-
-```bash
-uv tool install "ios-homescreen[ui] @ git+https://github.com/YakupEmreYerli/ios-homescreen"
-```
-
-### Masaüstü uygulaması
-
-Windows, macOS ve Linux için hazır kurulum dosyaları
-[sürümler sayfasında](https://github.com/YakupEmreYerli/ios-homescreen/releases/latest)
-(`IconShuffle-*-windows-x64-setup.exe`, `IconShuffle-*-macos-arm64.dmg`,
-`IconShuffle-*-linux-x86_64.AppImage`). Uygulama aynı düzenleyiciyi kendi penceresinde açar;
-uçbirim ya da tarayıcı gerekmez.
-
-Derlemeler henüz imzalı/notarize edilmiş değil; ilk açılış bir ek adım ister. macOS'ta
-Sistem Ayarları → Gizlilik ve Güvenlik'ten **Yine de Aç**'ı seçin (ya da uygulamaya sağ
-tıklayıp **Aç**). Windows'ta SmartScreen bir kez sorabilir — **Ek bilgi → Yine de çalıştır**.
+Komutun adı `ios-homescreen`, Python paketinin adı `ios_homescreen`. Bu adlar projenin ilk
+aylarından kaldı ve değişmiyor; böylece onlara dayanan betikler ve araçlar çalışmaya devam
+ediyor.
 
 Geliştirmek için depodan:
 
 ```bash
-git clone https://github.com/YakupEmreYerli/ios-homescreen
-cd ios-homescreen
+git clone https://github.com/YakupEmreYerli/IconShuffle
+cd IconShuffle
 uv sync
 uv run ios-homescreen --help
 ```
@@ -282,12 +316,13 @@ Changes compared with the pull from iPhone (iPhone 15, iOS 27.0) on 2026-10-10 1
 30 apps will be only in the App Library.
 ```
 
-## Tarayıcı düzenleyicisi
+## Düzenleyici
 
-![Wi-Fi ile iPhone 15’e bağlı tarayıcı düzenleyicisi (vitrin düzeni)](docs/assets/ui.png)
+![Deneme modunda, A-Z sıralamadan sonra IconShuffle düzenleyicisi: solda App Library, ortada telefon, sağda değişiklik listesi ve Uygula düğmesi](docs/assets/ui.png)
 
-`ios-homescreen editor` telefonu okur ve tarayıcıda, telefonun uygulama simgeleriyle ve
-telefon gönderiyorsa duvar kâğıdıyla bir düzenleyici açar. Uygulamaları,
+Masaüstü uygulaması düzenleyiciyi kendi penceresinde açar; `ios-homescreen editor` aynı
+düzenleyiciyi tarayıcıda açar. Düzenleyici telefonu okur; telefonun uygulama simgelerini ve
+telefon gönderiyorsa duvar kâğıdını gösterir. Uygulamaları,
 klasörleri ve widget'ları ana ekranın resmi üzerinde, sayfalar arasında ve dock'a
 sürükleyebilirsiniz. Bir uygulamayı ötekinin üstüne bırakınca klasör olur; klasöre tıklayınca
 açılır, adını orada değiştirir, içine uygulama atar ya da çıkarırsınız. Soldaki Uygulama
@@ -332,13 +367,13 @@ bozdu; tasarım bu ikisinin etrafından dolaşıyor.
 
 1. Telefona hangi uygulamaların ana ekranda olmayacağı söylenmeli. `setIconState` yalnız
    sayfa listesi alırsa SpringBoard, listede olmayan her kurulu uygulamayı (Uygulama Arşivi'ndekiler
-   ve Apple'ın hazır uygulamaları dahil) ana ekranın sonuna ekliyor. ios-homescreen her zaman
+   ve Apple'ın hazır uygulamaları dahil) ana ekranın sonuna ekliyor. IconShuffle her zaman
    `{buttonBar, iconLists, ignored}` gönderir; `ignored`, ana ekranda olmayan bütün kurulu User
    ve System uygulamalarının listesidir. Bu liste yazma anında kurulu uygulamalardan yeniden
    hesaplanır.
 2. Yazmanın güvenilir bir cevabı yok. SpringBoard `setIconState` isteğine çoğu zaman cevap
    vermiyor, pymobiledevice3'ün `set_icon_state` fonksiyonu da bu cevabı sonsuza kadar bekliyor.
-   ios-homescreen isteği kendisi, süre sınırıyla gönderir ve cevap gelmemesini "belirsiz" sayar.
+   IconShuffle isteği kendisi, süre sınırıyla gönderir ve cevap gelmemesini "belirsiz" sayar.
    Kanıt, telefonun yeniden okunan düzeninin gönderilenle aynı çıkmasıdır.
 
 Her `push` ve `restore` aynı adımlardan geçer:
@@ -371,11 +406,11 @@ ios-homescreen wifi status     # ayar, eşleşme ve telefonun Wi-Fi'de cevap ver
 `wifi setup` telefondaki Wi-Fi bağlantısı ayarını açar ve bu bilgisayarı Wi-Fi için
 RemotePairing ile eşler; Xcode kablosuz cihazlar için aynı yolu kullanır. Bilgisayar USB
 üzerinden zaten güvenilir olduğu için telefonda bir soru çıkmaz. Root, Geliştirici Modu ya da
-ayrı bir tünel servisi gerekmez: bağlantı, pymobiledevice3'ün ios-homescreen sürecinin içinde
+ayrı bir tünel servisi gerekmez: bağlantı, pymobiledevice3'ün IconShuffle sürecinin içinde
 çalışan ağ yığınından geçer.
 
 Bundan sonra `pull`, `push`, `restore` ya da `editor` komutuna `--wifi` ekleyin. Telefon
-bilgisayarla aynı ağda, uyanık ve kilidi açık olmalı. ios-homescreen telefonu
+bilgisayarla aynı ağda, uyanık ve kilidi açık olmalı. IconShuffle telefonu
 `--discovery-timeout` saniye boyunca Bonjour ile (`_remotepairing._tcp`) arar ve adresinden
 değil eşleşmeden tanır; iOS özel ve değişen Wi-Fi adresleri kullanıyor. Bilgisayar birden çok
 telefonla eşliyse `--udid` verin.
@@ -388,7 +423,7 @@ dosyasında durur; dosyayı silmek yalnız bir sonraki bağlantının Bonjour'a 
 
 Eşleşme, pymobiledevice3'ün tuttuğu bir dosyadır: `~/.local/share/pymobiledevice3/remote_<UDID>.plist`,
 ya da bu klasör zaten varsa `~/.pymobiledevice3/`. İçinde bu bilgisayarın telefonla
-konuşmasını sağlayan anahtar var; ios-homescreen onu hiçbir yere kopyalamaz ve göndermez.
+konuşmasını sağlayan anahtar var; IconShuffle onu hiçbir yere kopyalamaz ve göndermez.
 `wifi off` telefondaki ayarı kapatır, `wifi off --forget` eşleşme dosyasını da siler.
 
 Telefona ağ üzerinden ulaşmanın eski yolu (62078 portundaki lockdown, `_apple-mobdev2._tcp`
@@ -396,6 +431,10 @@ olarak bulunur) kullanılmıyor: güncel iOS sürümleri bu bağlantıyı kabul 
 her servisi kapatıyor.
 
 ## Dosyalar ve ortam değişkenleri
+
+Aşağıdaki yollar Linux içindir. macOS'ta veriler `~/Library/Application Support/ios-homescreen`,
+önbellek `~/Library/Caches/ios-homescreen` altına gider. Windows'ta ikisi de
+`%LOCALAPPDATA%\ios-homescreen` altındadır, önbellek onun `Cache` klasöründe durur.
 
 | Ne | Varsayılan | Değiştirmek için |
 | --- | --- | --- |
@@ -446,7 +485,7 @@ yeniden düzene çevirir; `plan.change_list` değişiklikleri veri olarak tutar.
 
 - Gizli ana ekran sayfaları normal sayfa gibi okunur ve bir yazma onları yeniden görünür yapar:
   SpringBoard'un okuması sayfa gizli de olsa aynı geliyor (iOS 27.2'de denendi); bu yüzden
-  ios-homescreen gizli sayfayı ayırt edemez, gizli tutamaz ve sayfa gizleyemez.
+  IconShuffle gizli sayfayı ayırt edemez, gizli tutamaz ve sayfa gizleyemez.
 - Bugün görünümü ve Kilitli Ekran widget'ları ana ekran düzeninin parçası değil, kapsam dışında.
 - Widget taşınabilir ya da kaldırılabilir ama oluşturulamaz. Web kısayolu ve Safari web
   uygulaması yalnız taşınabilir; onları telefonda silin.
@@ -523,7 +562,7 @@ sunuluyor.
 
 ## Lisans
 
-[MIT](LICENSE). ios-homescreen, GPL-3.0-or-later lisanslı pymobiledevice3'e bağımlıdır; ikisini
+[MIT](LICENSE). IconShuffle, GPL-3.0-or-later lisanslı pymobiledevice3'e bağımlıdır; ikisini
 tek bir program olarak birlikte dağıtırsanız bu birleşim GPL kapsamına girer. Tarayıcı
 düzenleyicisi Preact (MIT) ve htm (Apache-2.0) kütüphanelerinin ve IBM Plex Sans yazı tipinin
 (SIL Open Font License 1.1) değiştirilmemiş kopyalarını içerir; lisansları yanlarında,

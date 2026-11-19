@@ -6,7 +6,7 @@ description: Rearrange a person's iPhone home screen with the ios-homescreen com
 # ios-homescreen
 
 The full guide is `docs/agent-guide.md` in the ios-homescreen repository
-(<https://github.com/YakupEmreYerli/ios-homescreen/blob/main/docs/agent-guide.md>). Read it
+(<https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md>). Read it
 before the first edit: it has setup, the layout rules and limits, the JSON shapes and what
 every error code means. This skill is the short version of the same workflow.
 
@@ -21,8 +21,8 @@ every error code means. This skill is the short version of the same workflow.
 
 ## Workflow
 
-1. Setup if needed: on Linux, usbmuxd; then
-   `uv tool install git+https://github.com/YakupEmreYerli/ios-homescreen`; the person
+1. Setup if needed: usbmuxd on Linux, Apple Devices on Windows (nothing on macOS); then
+   `uv tool install git+https://github.com/YakupEmreYerli/IconShuffle`; the person
    connects the iPhone by cable, unlocks it and taps Trust This Computer.
 2. `ios-homescreen pull --json` (add `--wifi` after `ios-homescreen wifi setup` was done
    once over USB). It writes `layout.toml`.

@@ -44,8 +44,8 @@ app = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YakupEmreYerli/ios-homescreen"
-Issues = "https://github.com/YakupEmreYerli/ios-homescreen/issues"
+Homepage = "https://github.com/YakupEmreYerli/IconShuffle"
+Issues = "https://github.com/YakupEmreYerli/IconShuffle/issues"
 
 [project.scripts]
 ios-homescreen = "ios_homescreen.cli:main"
