@@ -9,7 +9,7 @@ import { ChangesPanel, LibraryPanel } from "./panels.js";
 import { Phone } from "./phone.js";
 import { getState, setState, useStore } from "./store.js";
 
-const logo = html`<img class="logo" src="/static/logo.png" alt="" width="28" height="28" draggable="false" />`;
+const logo = html`<img class="logo" src="/static/favicon.svg" alt="" width="28" height="28" draggable="false" />`;
 
 function DeviceStatus() {
   const state = getState();

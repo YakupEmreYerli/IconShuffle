@@ -1,1 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="116" fill="#0f0d1a"/><g fill="#e9e6f5"><rect x="90" y="90" width="92" height="92" rx="24"/><rect x="210" y="90" width="92" height="92" rx="24"/><rect x="90" y="210" width="92" height="92" rx="24"/><rect x="210" y="210" width="92" height="92" rx="24"/><rect x="330" y="210" width="92" height="92" rx="24"/><rect x="90" y="330" width="92" height="92" rx="24"/><rect x="210" y="330" width="92" height="92" rx="24"/><rect x="330" y="330" width="92" height="92" rx="24"/></g><g transform="translate(386 112) rotate(5)"><rect x="-46" y="-46" width="92" height="92" rx="24" fill="#8b6cff"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9a82ff"/><stop offset="1" stop-color="#5a36e8"/>
+    </linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8f6bff"/><stop offset="1" stop-color="#4a22d9"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#hi)"/>
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="15.3" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>
+  <rect x="13" y="13" width="16" height="16" rx="5" fill="#f1ecff" fill-opacity=".92"/>
+  <rect x="13" y="35" width="16" height="16" rx="5" fill="url(#tile)" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+  <rect x="35" y="35" width="16" height="16" rx="5" fill="#f1ecff" fill-opacity=".92"/>
+  <rect class="slot" x="35.5" y="13.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1" stroke-dasharray="2.2 1.8"/>
+  <path class="arc" d="M27 33 C 34 31, 40 26, 42 19" fill="none" stroke="#ff9a4d" stroke-width="2.4" stroke-linecap="round"/>
+  <g transform="rotate(14 46 15)">
+    <rect x="38" y="7" width="17" height="17" rx="5" fill="url(#tile)" stroke="#fff" stroke-opacity=".7" stroke-width="1.2"/>
+  </g>
+</svg>
