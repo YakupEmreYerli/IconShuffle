@@ -237,6 +237,6 @@ checked on real phones. To bump it:
 
 - Commit messages in English, conventional style: `feat:`, `fix:`, `docs:`, `test:`, `ci:`,
   `refactor:`. Imperative subject; the body says why.
-- Keep pull requests focused. Update `README.md` and `README.tr.md` when commands, flags or the
-  layout format change.
+- Keep pull requests focused. Update `docs/reference.md` and `docs/reference.tr.md` (and the
+  READMEs if needed) when commands, flags or the layout format change.
 - Say whether you tested on a device, and which model and iOS version.

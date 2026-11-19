@@ -13,8 +13,17 @@ from ios_homescreen.planner import plan_layout
 
 ROOT = Path(__file__).resolve().parents[1]
 READMES = ["README.md", "README.tr.md"]
+REFERENCES = ["docs/reference.md", "docs/reference.tr.md"]
 AGENT_DOCS = ["docs/agent-guide.md", "skills/ios-homescreen/SKILL.md"]
-DOCS = [*READMES, *AGENT_DOCS, "CONTRIBUTING.md", "SECURITY.md", "examples/layout.toml", "llms.txt"]
+DOCS = [
+    *READMES,
+    *REFERENCES,
+    *AGENT_DOCS,
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "examples/layout.toml",
+    "llms.txt",
+]
 OLD_COMMANDS = re.compile(
     r"ios-homescreen (read|export|plan|apply|diff|ui)\b"
     r"|wifi (enable|disable)\b"
@@ -37,7 +46,7 @@ def _flags() -> set[str]:
     }
 
 
-@pytest.mark.parametrize("readme", READMES)
+@pytest.mark.parametrize("readme", [*READMES, *REFERENCES])
 def test_every_flag_in_the_readme_exists(readme):
     text = (ROOT / readme).read_text(encoding="utf-8")
     mentioned = set(re.findall(r"(?<![\w-])--[a-z][a-z-]+", text))
@@ -45,7 +54,7 @@ def test_every_flag_in_the_readme_exists(readme):
     assert mentioned - _flags() == set()
 
 
-@pytest.mark.parametrize("readme", READMES)
+@pytest.mark.parametrize("readme", REFERENCES)
 def test_every_command_is_documented(readme):
     text = (ROOT / readme).read_text(encoding="utf-8")
 
@@ -54,7 +63,7 @@ def test_every_command_is_documented(readme):
             assert f"| `{command}" in text
 
 
-@pytest.mark.parametrize("readme", READMES)
+@pytest.mark.parametrize("readme", REFERENCES)
 def test_readme_layout_example_plans(readme):
     from test_planner import example_read
 
@@ -67,7 +76,7 @@ def test_readme_layout_example_plans(readme):
 
 
 def test_documented_defaults_match_the_parser():
-    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    text = (ROOT / "docs/reference.md").read_text(encoding="utf-8")
     push = _parsers()["push"]
     defaults = {a.dest: a.default for a in push._actions}
 
