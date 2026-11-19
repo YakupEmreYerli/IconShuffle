@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 — unreleased
+## 0.3.0 — 2026-11-20
 
 - The repository is now github.com/YakupEmreYerli/IconShuffle; the old ios-homescreen address redirects to it, so existing installs and pinned links keep working. The command and the Python package stay `ios-homescreen`.
 - A new glass logo for the app, the installers and the editor, with a simplified drawing for 16 and 32 px.
