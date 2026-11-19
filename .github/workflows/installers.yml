@@ -39,7 +39,7 @@ jobs:
         run: |
           test -x ~/.local/bin/iconshuffle
           test -s ~/.local/share/icons/hicolor/512x512/apps/iconshuffle.png
-          grep -q "^Exec=$HOME/.local/bin/iconshuffle$" ~/.local/share/applications/iconshuffle.desktop
+          grep -qx "Exec=\"$HOME/.local/bin/iconshuffle\"" ~/.local/share/applications/iconshuffle.desktop
       - name: Self-test
         env:
           QT_QPA_PLATFORM: offscreen

@@ -89,7 +89,7 @@ cat > "$share/applications/iconshuffle.desktop" <<EOF
 Type=Application
 Name=IconShuffle
 Comment=Arrange your iPhone Home Screen
-Exec=$bin/iconshuffle
+Exec="$bin/iconshuffle"
 Icon=iconshuffle
 Categories=Utility;
 EOF
