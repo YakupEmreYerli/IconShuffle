@@ -31,6 +31,7 @@ import asyncio
 import contextlib
 import ipaddress
 import json
+import sys
 from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -111,6 +112,28 @@ class Backend(Protocol):
     async def pair_remote(self, lockdown: Any) -> None: ...
 
     async def reachable(self, udid: str, discovery_timeout: float) -> str | None: ...
+
+
+def usb_service_help(platform: str = sys.platform) -> tuple[str, str]:
+    """``(unreachable, restart)``: what to say when the service that reaches a phone over
+    USB does not answer, and how to restart it. That service is usbmuxd on Linux, part of
+    macOS, and Apple Mobile Device Service (from Apple Devices or iTunes) on Windows."""
+    if platform == "darwin":
+        return (
+            "cannot reach the iPhone connection service (usbmuxd, part of macOS). Unplug the "
+            "iPhone, plug it in again and try again; if it keeps failing, restart the Mac.",
+            "otherwise unplug the iPhone and plug it in again.",
+        )
+    if platform == "win32":
+        return (
+            "cannot reach Apple Mobile Device Service. Install Apple Devices from the "
+            "Microsoft Store (iTunes works too), then plug the iPhone in again.",
+            "otherwise restart Apple Mobile Device Service (in Services) and reconnect.",
+        )
+    return (
+        "cannot reach usbmuxd. Is it installed and running? (sudo systemctl start usbmuxd)",
+        "otherwise restart usbmuxd.",
+    )
 
 
 # --------------------------------------------------------------------------- finding the phone
@@ -296,7 +319,7 @@ class PymobiledeviceBackend:
             ) from exc
         except (ConnectionFailedToUsbmuxdError, FileNotFoundError, ConnectionRefusedError) as exc:
             raise TransportError(
-                "cannot reach usbmuxd. Is it installed and running? (sudo systemctl start usbmuxd)",
+                usb_service_help()[0],
                 code="usbmuxd_unreachable",
             ) from exc
 
@@ -497,7 +520,7 @@ async def connect(
         except TimeoutError as exc:
             raise TransportError(
                 f"USB connection timed out after {timeout:g} s. If the phone shows "
-                "'Trust This Computer', tap Trust and try again; otherwise restart usbmuxd.",
+                f"'Trust This Computer', tap Trust and try again; {usb_service_help()[1]}",
                 code="timeout",
             ) from exc
         except TransportError:

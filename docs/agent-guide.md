@@ -179,8 +179,8 @@ a failure adds `error: {code, message}`.
 | `error.code` | Meaning and next step |
 | --- | --- |
 | `no_usb_device` | No iPhone over USB: plug it in with a data cable, unlock it, tap Trust |
-| `usbmuxd_unreachable` | usbmuxd is not running: install and start it (Setup step 1) |
-| `timeout`, `connection_failed` | Unlock the phone and keep it awake; if it repeats, `sudo systemctl restart usbmuxd` and reconnect |
+| `usbmuxd_unreachable` | The USB service is not running: on Linux install and start usbmuxd (Setup step 1); on Windows install Apple Devices from the Microsoft Store; on macOS reconnect the phone |
+| `timeout`, `connection_failed` | Unlock the phone and keep it awake; if it repeats, restart the USB service (Linux: `sudo systemctl restart usbmuxd`; Windows: Apple Mobile Device Service) and reconnect |
 | `not_advertising` | Not found on Wi-Fi: phone awake, unlocked, same network; try again or use the cable |
 | `no_pair_record`, `stale_pair_record` | Wi-Fi not set up: over USB run `ios-homescreen wifi setup` |
 | `several_pair_records` | More than one phone is paired: add `--udid` (ask which) |
