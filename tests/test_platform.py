@@ -38,7 +38,7 @@ from ios_homescreen.transport import (
 from ios_homescreen.ui.errors import classify, friendly
 
 FAST = ["--verify-attempts", "2", "--verify-interval", "0", "--write-timeout", "1"]
-FOLDER = "Oyunlar ışığı ✨"  # noqa: RUF001
+FOLDER = "Oyunlar ışığı ✨"
 RENAMED = "Müzik 🎵 日本"
 IN_CI = bool(os.environ.get("CI"))
 
