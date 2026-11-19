@@ -290,15 +290,18 @@ class _Resolver:
 
 
 def load_layout(source: str | bytes | Path | Mapping[str, Any]) -> Mapping[str, Any]:
-    """Parse TOML text or a file; a mapping (already parsed, or from JSON) passes through."""
+    """Parse TOML text or a file; a mapping (already parsed, or from JSON) passes through.
+
+    A leading byte order mark is dropped: Windows editors such as Notepad can save one.
+    """
     if isinstance(source, Mapping):
         return source
     try:
         if isinstance(source, Path):
-            return tomllib.loads(source.read_text(encoding="utf-8"))
+            return tomllib.loads(source.read_text(encoding="utf-8-sig"))
         if isinstance(source, bytes):
-            source = source.decode("utf-8")
-        return tomllib.loads(source)
+            source = source.decode("utf-8-sig")
+        return tomllib.loads(source.removeprefix("\ufeff"))
     except tomllib.TOMLDecodeError as exc:
         raise _fail("invalid_toml", f"invalid TOML: {exc}") from exc
 
