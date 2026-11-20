@@ -261,7 +261,9 @@ class Service:
         found = app_places(read)
         wanted = (query or "").casefold()
         if wanted:
-            found = [a for a in found if wanted in a["name"].casefold() or wanted in a["id"]]
+            found = [
+                a for a in found if wanted in a["name"].casefold() or wanted in a["id"].casefold()
+            ]
         return {"pull": self.pull.name if self.pull else None, "apps": found}
 
     def list_backups(self, limit: int = BACKUPS_LISTED) -> dict[str, Any]:
