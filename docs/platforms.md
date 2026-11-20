@@ -18,6 +18,8 @@ that the cable (or the Wi-Fi link) to a real iPhone is the only part left untest
 | Wi-Fi: Bonjour lookup on the OS's real network stack, a remembered address that refuses | yes | yes | yes | `tests/test_platform.py` |
 | Editor server: token, cookie, start and stop on 127.0.0.1 | yes | yes | yes | `tests/test_ui_server.py`, `tests/test_desktop.py` |
 | Packaged app builds, and its self-test: page loads, one edit is read, applied and verified on the demo phone through the app's own server | yes | yes | yes | `apps.yml`, `smoke.yml` |
+| MCP server: every tool on fakes and the demo phone, refusals, rollback, and a real stdio process driven by the SDK's client | yes | yes | yes | `tests/test_mcp.py` |
+| Packaged app as an MCP server on the demo phone (`iconshuffle-mcp.exe` on Windows, the AppImage on Linux) | yes | yes | yes | `apps.yml` |
 | Packaged app installs and its window opens (demo mode, screenshot) | yes | yes | yes | `smoke.yml` |
 | One-line installers (`install.sh`, `install.ps1`) install the latest release and the app passes its self-test | yes | yes | yes | `installers.yml` |
 

@@ -95,6 +95,11 @@ için aynı akışı izleyen bir skill de var: [`skills/ios-homescreen`](skills/
 klasörünü `~/.claude` içindeki `skills` klasörüne (ya da projenin `.claude` klasöründeki
 `skills` klasörüne) kopyalayın.
 
+Claude Desktop, Claude Code, Codex, Cursor, VS Code ve diğer MCP istemcileri IconShuffle'ı
+bir **MCP sunucusu** olarak da kullanabilir; sunucu masaüstü uygulamasında (Python
+gerekmez) ve komut satırı aracında hazır: [kurulumu](docs/mcp.md) (İngilizce) izleyin
+ya da telefonsuz deneme moduyla deneyin.
+
 **Terminal.** Düzeniniz düz bir TOML dosyası. Okuyun, istediğiniz editörde düzenleyin, yazın:
 
 ```bash

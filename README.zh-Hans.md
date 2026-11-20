@@ -73,6 +73,8 @@ pipx install git+https://github.com/YakupEmreYerli/IconShuffle
 
 [智能体指南](docs/agent-guide.md)告诉智能体如何安装和使用这个工具，并要求它必须先把改动给你看、等你同意。连接手机和点“信任”仍然要你亲自来。Claude Code 还有一个流程相同的 skill：把 [`skills/ios-homescreen`](skills/ios-homescreen) 复制到 `~/.claude` 里的 `skills` 文件夹（或项目 `.claude` 文件夹里的 `skills` 文件夹）。
 
+Claude Desktop、Claude Code、Codex、Cursor、VS Code 等 MCP 客户端也可以把 IconShuffle 当作**MCP 服务器**使用，它已内置在桌面应用（无需 Python）和命令行工具中：[设置方法](docs/mcp.md)（英文），也可以在没有手机的演示模式下试用。
+
 **终端。** 你的布局就是一个普通的 TOML 文件。读取下来，用任意编辑器修改，再写回去：
 
 ```bash

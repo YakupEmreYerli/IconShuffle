@@ -7,6 +7,7 @@ AI agents helping someone rearrange their home screen: read the agent guide firs
 ## Docs
 
 - [Agent guide](https://raw.githubusercontent.com/YakupEmreYerli/IconShuffle/main/docs/agent-guide.md): everything an agent needs, in one page
+- [MCP server](https://raw.githubusercontent.com/YakupEmreYerli/IconShuffle/main/docs/mcp.md): `ios-homescreen mcp` for Claude Desktop, Claude Code, Codex, Cursor and VS Code; its tools, setup and demo mode
 - [README](https://raw.githubusercontent.com/YakupEmreYerli/IconShuffle/main/README.md): what the tool does, install and platforms
 - [Reference](https://raw.githubusercontent.com/YakupEmreYerli/IconShuffle/main/docs/reference.md): every command and option, the layout file and the safety model
 - [Example layout](https://raw.githubusercontent.com/YakupEmreYerli/IconShuffle/main/examples/layout.toml): a complete layout file

@@ -95,6 +95,11 @@ C'est toujours vous qui branchez le téléphone et touchez Se fier. Pour Claude 
 aussi un skill qui suit le même déroulement : copiez [`skills/ios-homescreen`](skills/ios-homescreen)
 dans le dossier `skills` de `~/.claude` (ou du dossier `.claude` d'un projet).
 
+Claude Desktop, Claude Code, Codex, Cursor, VS Code et les autres clients MCP peuvent
+aussi utiliser IconShuffle comme **serveur MCP**, intégré à l'application de bureau
+(sans Python) et à l'outil en ligne de commande : [le configurer](docs/mcp.md) (en
+anglais), ou l'essayer sans téléphone en mode démo.
+
 **Le terminal.** Votre disposition est un simple fichier TOML. Récupérez-la, modifiez-la dans
 n'importe quel éditeur, renvoyez-la :
 

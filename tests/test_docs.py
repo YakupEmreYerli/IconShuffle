@@ -191,3 +191,39 @@ def test_the_readme_links_and_images_resolve(readme):
     assert targets
     for target in targets:
         assert (ROOT / target).exists(), target
+
+
+# ------------------------------------------------------------------ the MCP server
+
+
+def test_the_mcp_guide_lists_exactly_the_servers_tools(tmp_path):
+    pytest.importorskip("mcp")
+    import asyncio
+
+    from ios_homescreen.mcp_server import build_server
+    from ios_homescreen.mcp_service import Service
+
+    text = (ROOT / "docs/mcp.md").read_text(encoding="utf-8")
+    documented = set(re.findall(r"^\| `([a-z_]+)` \|", text, re.M))
+    server = build_server(Service.demo(tmp_path, delay=0))
+    tools = {tool.name for tool in asyncio.run(server.list_tools())}
+
+    assert documented == tools
+
+
+def test_the_mcp_guide_names_real_commands_and_flags():
+    text = (ROOT / "docs/mcp.md").read_text(encoding="utf-8")
+    commands = set(re.findall(r"ios-homescreen ([a-z]+)", text))
+    flags = set(re.findall(r"(?<![\w-])--[a-z][a-z-]+", text))
+    mcp_flags = {o for a in _parsers()["mcp"]._actions for o in a.option_strings}
+    # Flags of the clients' own commands (uvx, claude mcp add).
+    theirs = {"--from", "--scope"}
+
+    assert commands - set(_parsers()) == set()
+    assert flags - mcp_flags - theirs == set()
+    assert OLD_COMMANDS.findall(text) == []
+
+
+@pytest.mark.parametrize("doc", [*READMES, "docs/agent-guide.md", "llms.txt", "CHANGELOG.md"])
+def test_the_mcp_guide_is_linked(doc):
+    assert "mcp.md" in (ROOT / doc).read_text(encoding="utf-8")

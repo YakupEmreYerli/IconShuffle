@@ -96,6 +96,11 @@ gibt es außerdem einen Skill mit demselben Ablauf: Kopier
 [`skills/ios-homescreen`](skills/ios-homescreen) in den Ordner `skills` in `~/.claude`
 (oder in den `.claude`-Ordner eines Projekts).
 
+Claude Desktop, Claude Code, Codex, Cursor, VS Code und andere MCP-Clients können
+IconShuffle auch als **MCP-Server** nutzen. Er steckt in der Desktop-App (kein Python
+nötig) und im Kommandozeilen-Tool: [so richten Sie ihn ein](docs/mcp.md) (Englisch),
+oder probieren Sie ihn im Demo-Modus ohne iPhone aus.
+
 **Das Terminal.** Dein Layout ist eine einfache TOML-Datei. Lies sie aus, bearbeite sie in
 einem beliebigen Editor und schreib sie zurück:
 

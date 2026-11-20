@@ -18,6 +18,9 @@ troubleshooting. The command is `ios-homescreen`.
 - Refuses to write when the phone was changed since it was read.
 - Has JSON output on every command, for scripts and agents, and a Python API
   (`ios_homescreen.api`) under the CLI.
+- Runs as an MCP server (`ios-homescreen mcp`, or the desktop app with `mcp`) so Claude
+  Desktop, Claude Code, Codex, Cursor and VS Code can rearrange the home screen with the
+  same safety steps; see [MCP server](mcp.md).
 - Keeps read snapshots and backups in its own data folder; only the layout file goes where
   you say.
 
@@ -69,13 +72,14 @@ ios-homescreen restore latest
 | `backups` | Lists the backups made before each write: when, which iPhone, what the layout held | No |
 | `restore BACKUP` | Writes a backup back (`latest`, a name from `backups`, or a file), with the same steps as `push` | Writes |
 | `wifi setup\|status\|off` | Sets up, checks or turns off Wi-Fi access to the phone | Yes |
+| `mcp` | Runs the MCP server on stdio for AI assistants such as Claude Desktop; see [MCP server](mcp.md) | Reads; writes only a plan the person said yes to |
 
 `pull` will not replace a layout file that has edits you have not pushed; pull into another
 file, or pass `--overwrite`. `check`, `sort` and `push` take `--allow-removal` (see the layout
 reference); `push` and `restore` take `--force` (see the safety model). `backups` shows the 20
 newest; `--all` lists every one. Every command except `wifi` takes `--data-dir DIR`;
-`push`, `restore`, `editor` and `backups` also take `--backup-dir DIR`. All commands but
-`editor` take `--json` and then print one JSON object on stdout, for scripts and agents;
+`push`, `restore`, `editor`, `mcp` and `backups` also take `--backup-dir DIR`. All commands but
+`editor` and `mcp` take `--json` and then print one JSON object on stdout, for scripts and agents;
 the [agent guide](agent-guide.md) describes it. With `--json`, `push` and `restore`
 never ask: without `--yes` they only report what would change.
 

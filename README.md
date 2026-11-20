@@ -92,6 +92,10 @@ and tap Trust yourself. For Claude Code there is also a skill with the same work
 [`skills/ios-homescreen`](skills/ios-homescreen) into the `skills` folder inside `~/.claude`
 (or inside a project's `.claude` folder).
 
+Claude Desktop, Claude Code, Codex, Cursor, VS Code and other MCP clients can also use
+IconShuffle as an **MCP server**, built into the desktop app (no Python needed) and the
+command line: [set it up](docs/mcp.md), or try it without a phone in demo mode.
+
 **The terminal.** Your layout is a plain TOML file. Pull it, edit it in any editor, push it:
 
 ```bash
