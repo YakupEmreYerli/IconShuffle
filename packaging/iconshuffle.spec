@@ -1,7 +1,8 @@
 # PyInstaller spec for the desktop app: `pyinstaller packaging/iconshuffle.spec`.
 # Builds IconShuffle.app on macOS and a one-folder app on Windows and Linux; the
-# workflow in .github/workflows/release-apps.yml wraps them into a .dmg, an installer
-# .exe and an AppImage.
+# workflow in .github/workflows/apps.yml wraps them into a .dmg, an installer
+# .exe and an AppImage. The app also runs the MCP server (`iconshuffle mcp`), so it
+# needs the `mcp` extra: `uv sync --extra app --extra mcp --group package`.
 import sys
 from pathlib import Path
 
@@ -81,7 +82,21 @@ exe = EXE(
     console=False,
     icon=ICON,
 )
-coll = COLLECT(exe, a.binaries, a.datas, name="iconshuffle")
+if sys.platform == "win32":
+    # The same program for the console subsystem, next to the app, for MCP clients: a
+    # GUI-subsystem exe cannot be relied on for stdin and stdout (see desktop._run_mcp).
+    mcp_exe = EXE(
+        pyz,
+        a.scripts,
+        [],
+        exclude_binaries=True,
+        name="iconshuffle-mcp",
+        console=True,
+        icon=ICON,
+    )
+    coll = COLLECT(exe, mcp_exe, a.binaries, a.datas, name="iconshuffle")
+else:
+    coll = COLLECT(exe, a.binaries, a.datas, name="iconshuffle")
 
 if sys.platform == "darwin":
     app = BUNDLE(

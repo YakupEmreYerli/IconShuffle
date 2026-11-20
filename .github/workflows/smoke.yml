@@ -47,7 +47,7 @@ jobs:
             libxcb-keysyms1 libxcb-shape0 libxcb-xinerama0 libnss3 libxcomposite1 \
             libxdamage1 libxrandr2 libxtst6 libasound2 libfuse2 xvfb imagemagick x11-utils
 
-      - run: uv sync --locked --extra app --group package
+      - run: uv sync --locked --extra app --extra mcp --group package
       - run: uv run python packaging/make_icons.py
       - run: uv run pyinstaller packaging/iconshuffle.spec --noconfirm
 
