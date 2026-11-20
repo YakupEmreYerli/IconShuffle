@@ -1,3 +1,5 @@
+<p align="center"><a href="README.md">English</a> · <b>Türkçe</b> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.zh-Hans.md">简体中文</a></p>
+
 <p align="center">
 <img src="docs/assets/logo.png" width="140" height="140" alt="IconShuffle logosu: yuvasından kalkan mor cam bir simge">
 </p>
@@ -22,7 +24,7 @@ Windows, macOS ve Linux · USB ya da Wi-Fi · Mac, jailbreak ya da hesap gerekme
 <a href="https://iconshuffle.app"><img src="https://img.shields.io/badge/site-iconshuffle.app-ff9a4d" alt="iconshuffle.app"></a>
 </p>
 
-<p align="center"><a href="https://iconshuffle.app">Web sitesi</a> · <a href="docs/agent-guide.md">Asistan rehberi</a> · <a href="README.md">English</a></p>
+<p align="center"><a href="https://iconshuffle.app">Web sitesi</a> · <a href="docs/agent-guide.md">Asistan rehberi</a></p>
 
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="docs/assets/demo-dark.gif">
@@ -71,8 +73,8 @@ bir kez sorabilir: **Ek bilgi → Yine de çalıştır**.
 ## Üç kullanım yolu
 
 **Uygulama.** IconShuffle'ı açın ve iPhone'u takın. Ana ekranınızı kendi simgeleri ve duvar
-kâğıdıyla görürsünüz. Uygulamaları sayfalar arasında ve dock'a sürükleyin, klasör yapmak
-için bir uygulamayı ötekinin üstüne bırakın, App Library'den uygulama çekin ya da
+kâğıdıyla görürsünüz. Uygulamaları sayfalar arasında ve Dock'a sürükleyin, klasör yapmak
+için bir uygulamayı ötekinin üstüne bırakın, Uygulama Arşivi'nden uygulama çekin ya da
 **A-Z sırala**'ya basın. Sağ taraf her değişikliği sade bir dille listeler. **Uygula**
 hepsini yazar.
 

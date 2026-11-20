@@ -12,7 +12,16 @@ from ios_homescreen.cli import build_parser
 from ios_homescreen.planner import plan_layout
 
 ROOT = Path(__file__).resolve().parents[1]
-READMES = ["README.md", "README.tr.md"]
+READMES = [
+    "README.md",
+    "README.tr.md",
+    "README.de.md",
+    "README.es.md",
+    "README.fr.md",
+    "README.ja.md",
+    "README.pt-BR.md",
+    "README.zh-Hans.md",
+]
 REFERENCES = ["docs/reference.md", "docs/reference.tr.md"]
 AGENT_DOCS = ["docs/agent-guide.md", "skills/ios-homescreen/SKILL.md"]
 DOCS = [
@@ -162,3 +171,23 @@ def test_the_readme_gives_agents_the_guide(readme):
 
     assert "https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md" in text
     assert "skills/ios-homescreen" in text
+
+
+@pytest.mark.parametrize("readme", READMES)
+def test_every_readme_starts_with_links_to_all_the_others(readme):
+    first = (ROOT / readme).read_text(encoding="utf-8").splitlines()[0]
+
+    assert first.startswith('<p align="center">')
+    for other in READMES:
+        assert (f'href="{other}"' in first) == (other != readme), other
+
+
+@pytest.mark.parametrize("readme", READMES)
+def test_the_readme_links_and_images_resolve(readme):
+    text = (ROOT / readme).read_text(encoding="utf-8")
+    links = re.findall(r'(?:href|src|srcset)="([^"]+)"', text) + re.findall(r"\]\(([^)]+)\)", text)
+    targets = [link.split("#")[0] for link in links if ":" not in link and not link.startswith("#")]
+
+    assert targets
+    for target in targets:
+        assert (ROOT / target).exists(), target

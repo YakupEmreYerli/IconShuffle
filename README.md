@@ -1,3 +1,5 @@
+<p align="center"><b>English</b> · <a href="README.tr.md">Türkçe</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.zh-Hans.md">简体中文</a></p>
+
 <p align="center">
 <img src="docs/assets/logo.png" width="140" height="140" alt="IconShuffle logo: a violet glass tile lifting out of its slot">
 </p>
@@ -22,7 +24,7 @@ Windows, macOS and Linux · USB or Wi-Fi · no Mac, no jailbreak, no account.
 <a href="https://iconshuffle.app"><img src="https://img.shields.io/badge/site-iconshuffle.app-ff9a4d" alt="iconshuffle.app"></a>
 </p>
 
-<p align="center"><a href="https://iconshuffle.app">Website</a> · <a href="docs/agent-guide.md">Agent guide</a> · <a href="README.tr.md">Türkçe</a></p>
+<p align="center"><a href="https://iconshuffle.app">Website</a> · <a href="docs/agent-guide.md">Agent guide</a></p>
 
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="docs/assets/demo-dark.gif">
