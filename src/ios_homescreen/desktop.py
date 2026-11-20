@@ -4,6 +4,9 @@ It runs the same server as ``ios-homescreen editor`` on a free local port, in a
 background thread, and shows the page in a pywebview window (WebKit on macOS, WebView2
 on Windows, Qt on Linux). Closing the window stops the server. Nobody picks USB or
 Wi-Fi here, so the app tries USB first and the network when no cable is in.
+
+Given ``mcp`` (or ``--mcp``), the same binary runs the MCP server on stdio instead, with
+no window: MCP clients can start the downloaded app without a Python install.
 """
 
 from __future__ import annotations
@@ -11,6 +14,7 @@ from __future__ import annotations
 import html
 import json
 import re
+import subprocess
 import sys
 import threading
 import time
@@ -25,6 +29,9 @@ from .ui import Options, serve
 from .workflow import Timing
 
 TITLE = "IconShuffle"
+MCP_ARGS = frozenset({"mcp", "--mcp"})
+MCP_COMPANION = "iconshuffle-mcp.exe"
+"""The Windows build's console twin of the app, for MCP clients; see :func:`_run_mcp`."""
 START_TIMEOUT = 30.0
 ICON = Path(__file__).parent / "ui" / "static" / "logo.png"
 
@@ -140,8 +147,40 @@ def _round_trip(browser: Any, base: str, page: bytes) -> str | None:
     return None
 
 
+def _mcp_mode(args: list[str]) -> bool:
+    """``mcp`` was asked for, or this is the Windows console twin (``iconshuffle-mcp.exe``),
+    which serves MCP without being told."""
+    return bool(MCP_ARGS & set(args)) or Path(sys.executable).stem.lower().endswith("-mcp")
+
+
+def _run_mcp(args: list[str]) -> int:
+    """The MCP server on stdio, with no window and nothing but the protocol on stdout.
+
+    Windows is the special case. The app is a GUI-subsystem program (no console window
+    when it is opened from the Start menu), and when such a program is started with pipes
+    Python can still be left without ``sys.stdin`` and ``sys.stdout``. So the Windows
+    build also ships ``iconshuffle-mcp.exe``: the same program, made for the console
+    subsystem, where the standard streams always work. MCP configurations point at that
+    one. If the app itself is started with ``mcp`` and has no streams, it runs the twin as
+    a child: the child gets the OS-level standard handles the client passed in (which
+    ``subprocess`` takes from the OS, not from ``sys``), without a console window, and its
+    exit code is passed on.
+    """
+    rest = [arg for arg in args if arg not in MCP_ARGS]
+    if sys.platform == "win32" and (sys.stdin is None or sys.stdout is None):
+        twin = Path(sys.executable).with_name(MCP_COMPANION)
+        if not getattr(sys, "frozen", False) or not twin.is_file():
+            return 2
+        return subprocess.call([str(twin), "mcp", *rest], creationflags=subprocess.CREATE_NO_WINDOW)
+    from .cli import main as cli_main
+
+    return cli_main(["mcp", *rest])
+
+
 def main(argv: list[str] | None = None) -> int:
     args = sys.argv[1:] if argv is None else argv
+    if _mcp_mode(args):
+        return _run_mcp(args)
     if "--self-test" in args:
         return _self_test()
 

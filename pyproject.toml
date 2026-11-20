@@ -42,6 +42,11 @@ app = [
   "pywebview>=5.4; sys_platform != 'linux'",
   "pywebview[qt]>=5.4; sys_platform == 'linux'",
 ]
+# The MCP server (`ios-homescreen mcp`): lets AI assistants read and rearrange the home
+# screen through the Model Context Protocol. Exact pin: the server is tested with it.
+mcp = [
+  "mcp==2.3.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/YakupEmreYerli/IconShuffle"
