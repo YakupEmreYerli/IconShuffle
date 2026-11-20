@@ -1,5 +1,5 @@
 ; Inno Setup script: wraps dist\iconshuffle into an installer in out\.
-; ISCC /DAppVersion=0.3.0 packaging\windows.iss
+; ISCC /DAppVersion=0.4.0 packaging\windows.iss
 #ifndef AppVersion
   #define AppVersion "0.0.0"
 #endif

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.0 — 2026-11-20
 
 - The editor speaks eight languages: English, Turkish, German, Spanish, French, Japanese, Brazilian Portuguese and Simplified Chinese. It opens in the system language (English when none of them matches), a menu in the top bar switches it, and the choice is remembered. Buttons, dialogs, the change list, refusals, connection errors and progress messages are all translated; the command line, logs, the agent guide, error codes and the API stay English.
 - The README is available in the same eight languages, with a language switcher at the top of each.
