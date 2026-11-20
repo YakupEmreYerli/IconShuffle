@@ -336,6 +336,50 @@ svg {
   display: none;
 }
 
+/* The language menu: a globe and the native select, styled like the toolbar buttons. */
+.lang-picker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 4px 0 10px;
+  border-radius: 8px;
+  color: var(--graphite);
+  cursor: pointer;
+}
+
+.lang-picker:hover {
+  background: var(--hover);
+}
+
+.lang-picker svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lang-picker select {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  max-width: 11em;
+  field-sizing: content;
+}
+
+.lang-picker select option {
+  color: var(--graphite);
+  background: var(--sheet);
+}
+
 .spin {
   animation: spin 0.9s linear infinite;
 }
@@ -2247,9 +2291,33 @@ body.is-dragging .lib-row:hover {
 
 /* ------------------------------------------------------------------ narrower windows */
 
+/* Longer languages need the room: the language menu shrinks to its globe first, then
+   Import, Export and Backups to their icons (their titles still say what they do). */
+@media (max-width: 1440px) {
+  /* Only the globe shows; the select covers it, so a click still opens the menu. */
+  .lang-picker {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .lang-picker select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    opacity: 0;
+  }
+}
+
 @media (max-width: 1360px) {
   .workspace {
     grid-template-columns: 270px minmax(0, 1fr) 310px;
+  }
+
+  .btn-group .btn span,
+  .backups-btn span {
+    display: none;
   }
 }
 
@@ -2262,10 +2330,17 @@ body.is-dragging .lib-row:hover {
     display: inline-flex;
   }
 
-  .btn-group .btn span,
-  .backups-btn span,
   .device-link {
     display: none;
+  }
+
+  /* Below this width the toolbar is icons only, in every language. */
+  .toolbar .btn span {
+    display: none;
+  }
+
+  .toolbar .btn {
+    padding: 0 9px;
   }
 
   .panel.library,
@@ -2308,14 +2383,6 @@ body.is-dragging .lib-row:hover {
 }
 
 @media (max-width: 860px) {
-  .toolbar .btn span {
-    display: none;
-  }
-
-  .toolbar .btn {
-    padding: 0 9px;
-  }
-
   .brand-name,
   .brand-note {
     display: none;
@@ -2345,6 +2412,13 @@ body.is-dragging .lib-row:hover {
 
   .device-name {
     display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .toolbar .btn,
+  .lang-picker {
+    width: 32px;
   }
 }
 

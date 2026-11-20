@@ -388,7 +388,15 @@ class Session:
                 if loaded.wallpaper is not None:
                     self.wallpaper = loaded.wallpaper
                 self._own_wallpaper = loaded.wallpaper is not None
-                job.emit(Event("showcase", f"Showing {path.name}; nothing is written.", 2, 2))
+                job.emit(
+                    Event(
+                        "showcase",
+                        f"Showing {path.name}; nothing is written.",
+                        2,
+                        2,
+                        data={"path": path},
+                    )
+                )
                 name = path.name
             else:
                 saved = self._keep_read(snapshot)

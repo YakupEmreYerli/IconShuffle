@@ -4,6 +4,7 @@
 import { html } from "./html.js";
 import { useEffect, useState } from "preact/hooks";
 import { iconUrl } from "./api.js";
+import { t } from "./i18n.js";
 import { getState } from "./store.js";
 
 function hash(text) {
@@ -88,9 +89,9 @@ export function FolderIcon({ item }) {
 
 // Badges for items that are not plain apps.
 export function Badge({ item }) {
-  if (item.offloaded) return html`<span class="badge badge-cloud" title="Offloaded: the app is not on the phone, only its icon">${cloud}</span>`;
-  if (item.type === "webclip") return html`<span class="badge" title="Web clip">${globe}</span>`;
-  if (item.type === "webapp" && !item.extra_icon) return html`<span class="badge" title="Web app">${globe}</span>`;
+  if (item.offloaded) return html`<span class="badge badge-cloud" title=${t("badge.offloaded")}>${cloud}</span>`;
+  if (item.type === "webclip") return html`<span class="badge" title=${t("badge.webclip")}>${globe}</span>`;
+  if (item.type === "webapp" && !item.extra_icon) return html`<span class="badge" title=${t("badge.webapp")}>${globe}</span>`;
   return null;
 }
 
@@ -113,7 +114,6 @@ export function widgetLabel(item) {
   return shownWidget(item).name || item.name;
 }
 
-const SIZE_NAMES = { small: "Small", medium: "Medium", large: "Large", extraLarge: "Extra large" };
 
 // The phone does not say what a widget shows, so the tile does not pretend to: it has
 // the widget's real size and corners, its app's icon, and the widget's name when the
@@ -123,8 +123,9 @@ export function WidgetTile({ item }) {
   const shown = shownWidget(item);
   const stack = widgets.length > 1;
   const title = shown.kind || shown.name || item.name;
-  let note = `${SIZE_NAMES[item.size] || "Small"} widget`;
-  if (stack) note = `Stack of ${widgets.length}`;
+  const size = ["small", "medium", "large", "extraLarge"].includes(item.size) ? item.size : "small";
+  let note = t(`widget.${size}`);
+  if (stack) note = t("widget.stack", { count: widgets.length });
   else if (shown.kind && shown.name) note = shown.name;
   return html`<div class=${`widget widget-${item.size}${stack ? " is-stack" : ""}`}>
     ${stack ? html`<div class="widget-behind" aria-hidden="true"></div>` : null}

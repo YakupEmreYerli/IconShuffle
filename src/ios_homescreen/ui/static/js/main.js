@@ -5,6 +5,7 @@ import { useEffect, useRef } from "preact/hooks";
 import * as actions from "./actions.js";
 import { ContextMenu, Dialogs, Toasts } from "./dialogs.js";
 import { html } from "./html.js";
+import { LANGUAGES, initialLanguage, language, setLanguage, t } from "./i18n.js";
 import { ChangesPanel, LibraryPanel } from "./panels.js";
 import { Phone } from "./phone.js";
 import { getState, setState, useStore } from "./store.js";
@@ -17,8 +18,8 @@ function DeviceStatus() {
   const device = server.device;
   const running = state.job?.state === "running";
   const error = server.error && !server.demo && !running;
-  const name = device?.name || (server.demo ? "Demo iPhone" : "iPhone");
-  const link = server.demo ? "pretend phone" : server.connection?.kind === "wifi" ? "Wi-Fi" : "USB";
+  const name = device?.name || (server.demo ? t("device.demo_name") : "iPhone");
+  const link = server.demo ? t("device.pretend") : server.connection?.kind === "wifi" ? "Wi-Fi" : "USB";
   const tone = running ? "busy" : error ? "error" : server.read ? "ok" : "idle";
   const details = [device?.model, device?.ios_version && `iOS ${device.ios_version}`].filter(Boolean).join(", ");
   return html`<div class=${`device tone-${tone}`} title=${details || undefined}>
@@ -43,13 +44,30 @@ function LayoutFileButtons() {
         if (file) actions.importLayout(file);
       }}
     />
-    <button class="btn btn-ghost" disabled=${!state.draft} title="Load a TOML layout file into the editor" onClick=${() => input.current.click()}>
-      <svg viewBox="0 0 20 20"><path d="M10 13V3M6 7l4-4 4 4M4 13v3h12v-3" /></svg><span>Import</span>
+    <button class="btn btn-ghost" disabled=${!state.draft} title=${t("top.import_title")} onClick=${() => input.current.click()}>
+      <svg viewBox="0 0 20 20"><path d="M10 13V3M6 7l4-4 4 4M4 13v3h12v-3" /></svg><span>${t("top.import")}</span>
     </button>
-    <button class="btn btn-ghost" disabled=${!state.draft} title="Save the edited layout as a TOML file" onClick=${actions.exportLayout}>
-      <svg viewBox="0 0 20 20"><path d="M10 3v10M6 9l4 4 4-4M4 13v3h12v-3" /></svg><span>Export</span>
+    <button class="btn btn-ghost" disabled=${!state.draft} title=${t("top.export_title")} onClick=${actions.exportLayout}>
+      <svg viewBox="0 0 20 20"><path d="M10 3v10M6 9l4 4 4-4M4 13v3h12v-3" /></svg><span>${t("top.export")}</span>
     </button>
   </div>`;
+}
+
+// The editor opens in the system language; a choice made here is remembered.
+function LanguagePicker() {
+  return html`<label class="lang-picker" title=${t("top.language")}>
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" /><path d="M3 10h14M10 3c-2.2 2-2.2 12 0 14M10 3c2.2 2 2.2 12 0 14" /></svg>
+    <select
+      aria-label=${t("top.language")}
+      value=${language()}
+      onChange=${async (e) => {
+        const code = await setLanguage(e.currentTarget.value, { remember: true });
+        setState({ language: code });
+      }}
+    >
+      ${LANGUAGES.map(({ code, name }) => html`<option value=${code} lang=${code}>${name}</option>`)}
+    </select>
+  </label>`;
 }
 
 function TopBar() {
@@ -59,30 +77,31 @@ function TopBar() {
   return html`<header class="topbar">
     <div class="brand">
       ${logo}<span class="brand-name">IconShuffle</span>
-      ${state.server?.demo && !state.server?.showcase ? html`<span class="brand-note">demo mode</span>` : null}
+      ${state.server?.demo && !state.server?.showcase ? html`<span class="brand-note">${t("top.demo_mode")}</span>` : null}
     </div>
     <div class="toolbar">
       <button class="btn btn-ghost narrow-only" onClick=${() => setState({ drawer: state.drawer === "library" ? null : "library" })}>
         <svg viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1.6" /><rect x="11" y="3" width="6" height="6" rx="1.6" /><rect x="3" y="11" width="6" height="6" rx="1.6" /><rect x="11" y="11" width="6" height="6" rx="1.6" /></svg>
-        <span>Library</span>
+        <span>${t("top.library")}</span>
       </button>
       <${DeviceStatus} />
-      <button class="btn btn-ghost" disabled=${running} title="Read the home screen from the phone again" onClick=${() => actions.readFromPhone()}>
+      <button class="btn btn-ghost" disabled=${running} title=${t("top.read_title")} onClick=${() => actions.readFromPhone()}>
         <svg viewBox="0 0 20 20" class=${running && state.job.kind === "read" ? "spin" : ""}><path d="M16 10a6 6 0 1 1-1.8-4.3M16 3.5v3.7h-3.7" /></svg>
-        <span>Read from phone</span>
+        <span>${t("top.read")}</span>
       </button>
       <${LayoutFileButtons} />
-      <button class="btn btn-ghost" disabled=${!state.draft || running} title="Sort every page's apps and folders A-Z; the dock, folder contents and widgets keep their places" onClick=${actions.sortAZ}>
+      <button class="btn btn-ghost" disabled=${!state.draft || running} title=${t("top.sort_title")} onClick=${actions.sortAZ}>
         <svg viewBox="0 0 20 20"><path d="M4 5h12M4 10h9M4 15h6" /></svg>
-        <span>Sort A-Z</span>
+        <span>${t("top.sort")}</span>
       </button>
-      <button class="btn btn-ghost backups-btn" title="Backups made before each write" onClick=${actions.openBackups}>
+      <button class="btn btn-ghost backups-btn" title=${t("top.backups_title")} onClick=${actions.openBackups}>
         <svg viewBox="0 0 20 20"><ellipse cx="10" cy="5" rx="6" ry="2.5" /><path d="M4 5v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5M4 10v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5" /></svg>
-        <span>Backups</span>
+        <span>${t("top.backups")}</span>
       </button>
+      <${LanguagePicker} />
       <button class="btn btn-ghost narrow-only" onClick=${() => setState({ drawer: state.drawer === "changes" ? null : "changes" })}>
         <svg viewBox="0 0 20 20"><path d="M4 5h12M4 10h12M4 15h8" /></svg>
-        <span>Changes${changes ? ` (${changes})` : ""}</span>
+        <span>${changes ? t("top.changes_count", { count: changes }) : t("top.changes")}</span>
       </button>
     </div>
   </header>`;
@@ -136,7 +155,7 @@ function App() {
     <${TopBar} />
     <main class="workspace">
       <${LibraryPanel} />
-      <section class="center" aria-label="Home screen">
+      <section class="center" aria-label=${t("phone.home_screen")}>
         <${Phone} />
       </section>
       <${ChangesPanel} />
@@ -148,4 +167,5 @@ function App() {
   </div>`;
 }
 
+await setLanguage(initialLanguage());
 render(html`<${App} />`, document.getElementById("app"));

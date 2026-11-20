@@ -3,7 +3,8 @@
 import { ApiError, followJob, get, post } from "./api.js";
 import { configureDrag } from "./drag.js";
 import { MAX_PAGES, PAGE_CELLS, pageCells } from "./layout.js";
-import { refusalText } from "./messages.js";
+import { t } from "./i18n.js";
+import { apiErrorText, refusalText } from "./messages.js";
 import * as ops from "./ops.js";
 import { getState, initState, setState } from "./store.js";
 
@@ -54,7 +55,7 @@ export function toast(text, options = {}) {
 }
 
 export function dismissToast(id) {
-  setState((state) => ({ toasts: state.toasts.filter((t) => t.id !== id) }));
+  setState((state) => ({ toasts: state.toasts.filter((entry) => entry.id !== id) }));
 }
 
 function explain(problem) {
@@ -87,7 +88,7 @@ export function commit(draft, { removed, label } = {}) {
     menu: null,
   });
   scheduleCheck();
-  if (label) toast(label, { action: { label: "Undo", run: undo } });
+  if (label) toast(label, { action: { label: t("action.undo"), run: undo } });
 }
 
 export function undo() {
@@ -125,7 +126,7 @@ export function redo() {
 export function discardChanges() {
   const state = getState();
   if (!state.baseline) return;
-  commit(ops.fromView(state.baseline), { removed: [], label: "Changes discarded." });
+  commit(ops.fromView(state.baseline), { removed: [], label: t("toast.discarded") });
   setState({ page: 0, dialog: null });
 }
 
@@ -151,7 +152,7 @@ async function runCheck() {
   } catch (error) {
     if (seq === checkSeq) {
       setState((s) => ({ check: { ...s.check, pending: false } }));
-      if (error.code !== "no_read") toast(error.message, { tone: "error" });
+      if (error.code !== "no_read") toast(apiErrorText(error), { tone: "error" });
     }
   }
 }
@@ -207,7 +208,7 @@ export async function boot() {
     // The editor starts the first read itself, so it is often still running here.
     if (server.job && server.job.state === "running") await settle(server.job);
   } catch (error) {
-    setState({ boot: "ready", server: { error: { title: "Cannot reach the server", steps: [], detail: error.message } } });
+    setState({ boot: "ready", server: { error: { title: t("error.no_server"), steps: [], detail: error.message } } });
   }
 }
 
@@ -242,8 +243,8 @@ async function settle(job) {
       server: {
         ...(state.server || {}),
         error: {
-          title: "Cannot reach the server",
-          steps: ["Check that IconShuffle is still running, then reload this page."],
+          title: t("error.no_server"),
+          steps: [t("error.no_server_step")],
           detail: error.message,
         },
       },
@@ -275,11 +276,11 @@ async function runRead() {
   try {
     ({ job } = await post("/api/read"));
   } catch (error) {
-    toast(error.message, { tone: "error" });
+    toast(apiErrorText(error), { tone: "error" });
     return;
   }
   const finished = await settle(job);
-  if (finished?.state === "done") toast("Read the home screen from the phone.", { tone: "success" });
+  if (finished?.state === "done") toast(t("toast.read_done"), { tone: "success" });
 }
 
 export function openApply() {
@@ -300,9 +301,9 @@ export async function startApply({ force = false } = {}) {
   } catch (error) {
     if (error instanceof ApiError && error.data.issues) {
       setState({ check: { ...state.check, ok: false, issues: error.data.issues }, dialog: null });
-      toast("The layout has problems; see Changes.", { tone: "error" });
+      toast(t("toast.apply_issues"), { tone: "error" });
     } else {
-      toast(error.message, { tone: "error" });
+      toast(apiErrorText(error), { tone: "error" });
     }
     return;
   }
@@ -315,7 +316,7 @@ export async function restoreBackup(name) {
   try {
     ({ job } = await post("/api/backups/restore", { name }));
   } catch (error) {
-    toast(error.message, { tone: "error" });
+    toast(apiErrorText(error), { tone: "error" });
     return;
   }
   setState({ dialog: { kind: "job", jobKind: "restore", backup: name } });
@@ -328,7 +329,7 @@ export async function openBackups() {
     const { backups } = await get("/api/backups");
     setState((state) => (state.dialog?.kind === "backups" ? { dialog: { ...state.dialog, backups } } : null));
   } catch (error) {
-    toast(error.message, { tone: "error" });
+    toast(apiErrorText(error), { tone: "error" });
   }
 }
 
@@ -347,10 +348,10 @@ export async function exportLayout() {
     link.click();
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-    toast("Saved layout.toml.", { tone: "success" });
+    toast(t("toast.exported", { file: "layout.toml" }), { tone: "success" });
   } catch (error) {
-    if (error.data?.issues) toast("Fix the problems listed under Changes before exporting.", { tone: "error" });
-    else toast(error.message, { tone: "error" });
+    if (error.data?.issues) toast(t("toast.export_issues"), { tone: "error" });
+    else toast(apiErrorText(error), { tone: "error" });
   }
 }
 
@@ -359,7 +360,7 @@ export async function importLayout(file) {
   try {
     text = await file.text();
   } catch {
-    toast("Could not read that file.", { tone: "error" });
+    toast(t("toast.file_unreadable"), { tone: "error" });
     return;
   }
   try {
@@ -373,7 +374,7 @@ export async function importLayout(file) {
     if (error.data?.issues) {
       setState({ dialog: { kind: "import-issues", issues: error.data.issues, file: file.name } });
     } else {
-      toast(error.message, { tone: "error" });
+      toast(apiErrorText(error), { tone: "error" });
     }
   }
 }
@@ -381,7 +382,7 @@ export async function importLayout(file) {
 export function useImported(result) {
   const state = getState();
   const removed = [...new Set([...state.removed, ...result.removed.map((x) => x.id)])];
-  commit(ops.fromView(result.view), { removed, label: "Imported the layout file." });
+  commit(ops.fromView(result.view), { removed, label: t("toast.imported") });
   setState({ dialog: null, page: 0 });
 }
 
@@ -394,9 +395,9 @@ export async function sortAZ() {
   if (!state.draft || state.drag) return;
   try {
     const { layout } = await post("/api/sort", { layout: ops.toLayout(state.draft) });
-    commit(ops.fromView(layout), { label: "Sorted A-Z." });
+    commit(ops.fromView(layout), { label: t("toast.sorted") });
   } catch (error) {
-    toast(error.message, { tone: "error" });
+    toast(apiErrorText(error), { tone: "error" });
   }
 }
 
@@ -405,11 +406,11 @@ export function dropItem(source, target, base) {
   if (target.zone === "library") {
     if (ops.STUCK.has(item.type)) return stuckHint(item);
     if (ops.REMOVABLE.has(item.type)) return askRemove(item, base);
-    return commit(base, { label: `${item.name} goes to the App Library.` });
+    return commit(base, { label: t("toast.to_library", { name: item.name }) });
   }
   if (target.zone === "merge") {
     const target_ = ops.locate(base, target.targetId)?.item;
-    const { draft, folderId } = ops.mergeInto(base, target.targetId, item);
+    const { draft, folderId } = ops.mergeInto(base, target.targetId, item, t("folder.new_name"));
     if (!folderId) return;
     commit(draft);
     if (target_ && target_.type !== "folder") {
@@ -441,7 +442,7 @@ export function confirmRemove() {
   setState({ dialog: null });
   commit(next, {
     removed: [...new Set([...state.removed, item.id])],
-    label: `The ${item.name} widget will be removed.`,
+    label: t("toast.widget_removed", { name: item.name }),
   });
 }
 
@@ -451,16 +452,16 @@ export function sendAway(item) {
   if (item.type === "folder") {
     const stuck = item.pages.flat().find((x) => ops.STUCK.has(x.type));
     if (stuck) {
-      toast(`${item.name} holds ${stuck.name}, which can't be removed from here. Take it out of the folder first, or unpack the folder.`, { tone: "warning", duration: 7000 });
+      toast(t("toast.folder_stuck", { folder: item.name, name: stuck.name }), { tone: "warning", duration: 7000 });
       return;
     }
     return commit(ops.removeId(getState().draft, item.id).draft, {
-      label: `Folder ${item.name}: its apps go to the App Library.`,
+      label: t("toast.folder_to_library", { name: item.name }),
     });
   }
   if (ops.STUCK.has(item.type)) return stuckHint(item);
   if (ops.REMOVABLE.has(item.type)) return askRemove(item);
-  commit(ops.removeId(getState().draft, item.id).draft, { label: `${item.name} goes to the App Library.` });
+  commit(ops.removeId(getState().draft, item.id).draft, { label: t("toast.to_library", { name: item.name }) });
 }
 
 export function addFromLibrary(app) {
@@ -490,7 +491,7 @@ export function intoNewFolder(item) {
   const state = getState();
   const where = ops.locate(state.draft, item.id);
   if (!where || where.c.s === "folder") return;
-  const folder = { type: "folder", id: ops.newFolderId(), name: "New Folder", cells: 1, pages: [[item]] };
+  const folder = { type: "folder", id: ops.newFolderId(), name: t("folder.new_name"), cells: 1, pages: [[item]] };
   const list = [...ops.getList(state.draft, where.c)];
   list[where.i] = folder;
   commit(ops.setList(state.draft, where.c, list));
@@ -521,10 +522,10 @@ export function ungroupFolder(item) {
   const state = getState();
   const next = ops.ungroup(state.draft, item.id);
   if (!next) {
-    toast(`There is no room to unpack ${item.name} here.`, { tone: "warning" });
+    toast(t("toast.no_room_unpack", { name: item.name }), { tone: "warning" });
     return;
   }
-  commit(next, { label: `Unpacked the folder ${item.name}.` });
+  commit(next, { label: t("toast.unpacked", { name: item.name }) });
 }
 
 export function addPage() {

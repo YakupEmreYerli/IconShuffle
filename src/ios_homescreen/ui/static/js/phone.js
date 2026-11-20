@@ -9,6 +9,8 @@ import { html } from "./html.js";
 import * as L from "./layout.js";
 import { findFolder } from "./ops.js";
 import { displayed } from "./preview.js";
+import { t } from "./i18n.js";
+import { errorText, eventText } from "./messages.js";
 import { getState, setState, useStore } from "./store.js";
 import { Badge, Visual, widgetLabel } from "./visuals.js";
 
@@ -46,7 +48,7 @@ function HomeItem({ item, box, where, inDock = false, merge = false }) {
     }
   };
   const label = item.type === "widget" ? widgetLabel(item) : item.name;
-  const title = item.type === "widget" ? `${label} widget` : item.name;
+  const title = item.type === "widget" ? t("phone.widget_label", { name: label }) : item.name;
   return html`<div
     class=${`item item-${item.type}${flash ? " is-flash" : ""}${merge ? " is-merge" : ""}${inDock ? " in-dock" : ""}`}
     style=${style}
@@ -71,7 +73,7 @@ function HomeItem({ item, box, where, inDock = false, merge = false }) {
     <button
       class="minus"
       tabindex="-1"
-      aria-label=${`Options for ${item.name}`}
+      aria-label=${t("phone.options", { name: item.name })}
       onPointerDown=${(e) => e.stopPropagation()}
       onClick=${(e) => openMenu(e, item)}
     >
@@ -140,7 +142,7 @@ function FolderTitle({ folder }) {
     class="folder-title"
     value=${value}
     maxlength="40"
-    aria-label="Folder name"
+    aria-label=${t("phone.folder_name")}
     spellcheck="false"
     onInput=${(e) => setValue(e.currentTarget.value)}
     onBlur=${save}
@@ -187,7 +189,7 @@ function FolderOverlay({ draft }) {
             (_, i) =>
               html`<button
                 class=${`dot${i === page ? " is-current" : ""}`}
-                aria-label=${`Folder page ${i + 1}`}
+                aria-label=${t("phone.folder_page", { page: i + 1 })}
                 onClick=${() => setState({ openFolder: { ...open, page: i } })}
               ></button>`,
           )}
@@ -242,7 +244,7 @@ function ScreenMessage() {
   const state = getState();
   const job = state.job;
   const reading = job && job.kind === "read" && job.state === "running";
-  const error = state.server?.error;
+  const error = errorText(state.server?.error);
   if (state.draft && !reading) return null;
   if (state.draft && reading) return null;
   if (reading || state.boot === "loading") {
@@ -251,9 +253,9 @@ function ScreenMessage() {
       <${Skeleton} />
       <div class="screen-card">
         <div class="spinner"></div>
-        <div class="screen-card-title">Reading your iPhone</div>
-        <div class="screen-card-text">${last?.message || "Connecting..."}</div>
-        <div class="screen-card-note">Read-only. Nothing is written until you press Apply.</div>
+        <div class="screen-card-title">${t("phone.reading")}</div>
+        <div class="screen-card-text">${eventText(last, actions.nameOf) || t("status.connecting")}</div>
+        <div class="screen-card-note">${t("phone.read_only")}</div>
       </div>
     </div>`;
   }
@@ -265,8 +267,8 @@ function ScreenMessage() {
         ${error.steps?.length
           ? html`<ol class="screen-steps">${error.steps.map((step) => html`<li>${renderCode(step)}</li>`)}</ol>`
           : null}
-        <button class="btn btn-primary" onClick=${() => actions.readFromPhone({ confirmed: true })}>Try again</button>
-        ${error.detail ? html`<details class="screen-detail"><summary>Details</summary><code>${error.detail}</code></details>` : null}
+        <button class="btn btn-primary" onClick=${() => actions.readFromPhone({ confirmed: true })}>${t("action.try_again")}</button>
+        ${error.detail ? html`<details class="screen-detail"><summary>${t("error.details")}</summary><code>${error.detail}</code></details>` : null}
       </div>
     </div>`;
   }
@@ -290,7 +292,7 @@ function PageControls({ pageCount, page, draft }) {
     <div class="pager">
       <button
         class="round-btn"
-        aria-label="Previous page"
+        aria-label=${t("phone.prev_page")}
         data-zone="flip"
         data-flip="prev"
         disabled=${page <= 0}
@@ -298,13 +300,13 @@ function PageControls({ pageCount, page, draft }) {
       >
         <svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5" /></svg>
       </button>
-      <div class="dots" role="tablist" aria-label="Pages">
+      <div class="dots" role="tablist" aria-label=${t("phone.pages")}>
         ${Array.from({ length: pageCount }, (_, i) => {
           const isNew = draft && i >= draft.pages.length;
           return html`<button
             role="tab"
             aria-selected=${i === page}
-            aria-label=${isNew ? "New page" : `Page ${i + 1}`}
+            aria-label=${isNew ? t("phone.new_page") : t("phone.page", { page: i + 1 })}
             class=${`dot${i === page ? " is-current" : ""}${issuePages.has(i) ? " has-issue" : ""}${isNew ? " is-new" : ""}`}
             data-zone="flip"
             data-flip=${String(i)}
@@ -314,7 +316,7 @@ function PageControls({ pageCount, page, draft }) {
       </div>
       <button
         class="round-btn"
-        aria-label="Next page"
+        aria-label=${t("phone.next_page")}
         data-zone="flip"
         data-flip="next"
         disabled=${page >= pageCount - 1}
@@ -326,14 +328,14 @@ function PageControls({ pageCount, page, draft }) {
     ${draft
       ? html`<div class="page-tools">
           <span class=${`page-info${used > L.PAGE_CELLS ? " is-over" : ""}`}>
-            Page ${page + 1} of ${draft.pages.length}, ${used} of ${L.PAGE_CELLS} cells used
+            ${t("phone.page_info", { page: page + 1, pages: draft.pages.length, used, cells: L.PAGE_CELLS })}
           </span>
-          <button class="chip-btn" onClick=${actions.addPage} title="Add an empty page after this one">
-            <svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" /></svg>Add page
+          <button class="chip-btn" onClick=${actions.addPage} title=${t("phone.add_page_title")}>
+            <svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" /></svg>${t("phone.add_page")}
           </button>
           ${empty && draft.pages.length > 1
-            ? html`<button class="chip-btn" onClick=${actions.removePage} title="Remove this empty page">
-                <svg viewBox="0 0 16 16"><path d="M3 8h10" /></svg>Remove page
+            ? html`<button class="chip-btn" onClick=${actions.removePage} title=${t("phone.remove_page_title")}>
+                <svg viewBox="0 0 16 16"><path d="M3 8h10" /></svg>${t("phone.remove_page")}
               </button>`
             : null}
         </div>`
