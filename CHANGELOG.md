@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- MCP server: `ios-homescreen mcp` lets Claude Desktop, Claude Code, Codex, Cursor, VS Code and other MCP clients read the home screen, plan changes and, after the person's explicit yes, write them. The tools are `find_phone`, `read_home_screen`, `list_apps`, `plan_layout`, `sort_pages`, `apply_layout`, `list_backups`, `plan_restore` and `restore_backup`; a write needs the id of a plan the server made and `confirm: true`, and goes through the same backup, read-back and automatic rollback as `push`. Works on Windows, macOS and Linux, from the command-line install (new `mcp` extra) or from the desktop app with no Python: `iconshuffle mcp` on macOS and Linux, `iconshuffle-mcp.exe` on Windows. `--demo` serves the pretend iPhone. Setup for each client is in [docs/mcp.md](docs/mcp.md).
+- Only one write runs at a time: when the editor, `push`, `restore` or the MCP server is writing to the phone, another one stops with `busy` before it reads or writes anything.
+
 ## 0.4.0 — 2026-11-20
 
 - The editor speaks eight languages: English, Turkish, German, Spanish, French, Japanese, Brazilian Portuguese and Simplified Chinese. It opens in the system language (English when none of them matches), a menu in the top bar switches it, and the choice is remembered. Buttons, dialogs, the change list, refusals, connection errors and progress messages are all translated; the command line, logs, the agent guide, error codes and the API stay English.
