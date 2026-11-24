@@ -5,6 +5,13 @@ command-line tool. It reads the home screen into a text file (`layout.toml`), yo
 file, and it writes the result back to the phone over USB or Wi-Fi. This page is everything
 you need. Source: <https://github.com/YakupEmreYerli/IconShuffle>.
 
+**If you have the IconShuffle MCP tools** (`find_phone`, `read_home_screen`, `plan_layout`,
+`apply_layout` and the rest), use them instead of the commands below: they need no layout
+file. The rules here still hold. Show the person the change list `plan_layout` returns, wait
+for their explicit yes, and only then call `apply_layout` with its `plan_id` and
+`confirm: true`. To set the tools up, see [the MCP guide](mcp.md); `ios-homescreen mcp`
+runs the server.
+
 ## Rules
 
 1. **Never write to the phone without the person's explicit yes.** Before `push` or
@@ -22,8 +29,9 @@ you need. Source: <https://github.com/YakupEmreYerli/IconShuffle>.
 4. Never write the home screen any other way: no `pymobiledevice3 springboard` commands, no
    `set_icon_state` or `reload_icon_state`, no other tools or scripts, and never a
    list-form layout. SpringBoard then puts every installed app that is not on the list back
-   on the home screen, archived apps included. Only `ios-homescreen push`, `restore` and
-   the browser editor write, and they back up, verify and roll back.
+   on the home screen, archived apps included. Only `ios-homescreen push`, `restore`, the browser
+   editor and the MCP tools `apply_layout` and `restore_backup` write, and they back up,
+   verify and roll back.
 5. Never edit or delete the `[pull]` table in a layout file, and never delete anything in
    the data directory (`~/.local/share/ios-homescreen`): it holds the backups.
 6. Never copy, print or upload the Wi-Fi pairing files

@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Awaitable, Mapping
+import contextlib
+import sys
+from collections.abc import Awaitable, Iterator, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Protocol
@@ -27,6 +29,8 @@ ROLLED_BACK = "rolled-back"
 ROLLBACK_FAILED = "rollback-failed"
 
 STEPS = 5
+
+LOCK_FILE = ".write.lock"
 
 
 class WorkflowError(RuntimeError):
@@ -126,6 +130,44 @@ async def _write(device: HomeScreen, payload: dict[str, Any], seconds: float) ->
         return True
 
 
+@contextlib.contextmanager
+def write_lock(directory: Path) -> Iterator[None]:
+    """One write at a time per backup directory, across processes.
+
+    The editor, ``push``, ``restore`` and the MCP server can run side by side; two writes
+    at once would each take the other's layout for a failed write and roll back over it.
+    The second one fails here with ``busy`` before it reads or writes anything. The lock
+    is the operating system's, so it goes away with the process that held it: a crash
+    leaves nothing stale behind.
+    """
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    with open(directory / LOCK_FILE, "a+b") as handle:
+        try:
+            if sys.platform == "win32":
+                import msvcrt
+
+                handle.seek(0)
+                msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as exc:
+            raise WorkflowError(
+                "another IconShuffle window, command or agent is writing to the iPhone right "
+                "now; nothing was written. Try again when it has finished.",
+                code="busy",
+            ) from exc
+        try:
+            yield
+        finally:
+            if sys.platform == "win32":
+                handle.seek(0)
+                with contextlib.suppress(OSError):
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+
+
 async def apply_state(
     device: HomeScreen,
     target: Mapping[str, Any],
@@ -139,8 +181,24 @@ async def apply_state(
 
     ``target`` is a plan payload (with a source fingerprint) or a plain state to restore.
     The backup records the layout as read and the device's ``info`` when it has one.
-    Raises :class:`WorkflowError` before anything is written if a precondition fails.
+    Raises :class:`WorkflowError` before anything is written if a precondition fails,
+    including ``busy`` while another process writes with the same backup directory.
     """
+    with write_lock(backup_dir):
+        return await _apply_state(
+            device, target, backup_dir=backup_dir, force=force, timing=timing, on_event=on_event
+        )
+
+
+async def _apply_state(
+    device: HomeScreen,
+    target: Mapping[str, Any],
+    *,
+    backup_dir: Path,
+    force: bool,
+    timing: Timing | None,
+    on_event: EventSink,
+) -> ApplyResult:
     timing = timing or Timing()
     events: list[Event] = []
 

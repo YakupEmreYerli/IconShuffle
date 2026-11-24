@@ -73,6 +73,8 @@ iPhoneに何か書き込む前にすべての変更を見せて、私のOKを待
 
 [エージェント向けガイド](docs/agent-guide.md)には、ツールのインストール方法と使い方、そして変更を必ず見せてあなたのOKを待つことがエージェント向けに書かれています。iPhoneをつないで「信頼」をタップするのは、あなた自身です。Claude Code向けには同じ流れのスキルもあります：[`skills/ios-homescreen`](skills/ios-homescreen)を`~/.claude`内の`skills`フォルダ（またはプロジェクトの`.claude`フォルダ内）にコピーしてください。
 
+Claude Desktop、Claude Code、Codex、Cursor、VS CodeなどのMCPクライアントからは、IconShuffleを**MCPサーバー**として使うこともできます。デスクトップアプリ（Python不要）とコマンドラインツールに組み込まれています：[設定方法](docs/mcp.md)（英語）。iPhoneがなくてもデモモードで試せます。
+
 **ターミナル。** レイアウトはただのTOMLファイルです。読み込んで、好きなエディタで編集し、書き戻します：
 
 ```bash

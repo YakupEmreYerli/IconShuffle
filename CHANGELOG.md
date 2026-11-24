@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- MCP server: `ios-homescreen mcp` lets Claude Desktop, Claude Code, Codex, Cursor, VS Code and other MCP clients read the home screen, plan changes and, after the person's explicit yes, write them. The tools are `find_phone`, `read_home_screen`, `list_apps`, `plan_layout`, `sort_pages`, `apply_layout`, `list_backups`, `plan_restore` and `restore_backup`; a write needs the id of a plan the server made and `confirm: true`, and goes through the same backup, read-back and automatic rollback as `push`. Works on Windows, macOS and Linux, from the command-line install (new `mcp` extra) or from the desktop app with no Python: `iconshuffle mcp` on macOS and Linux, `iconshuffle-mcp.exe` on Windows. `--demo` serves the pretend iPhone. Setup for each client is in [docs/mcp.md](docs/mcp.md).
+- Only one write runs at a time: when the editor, `push`, `restore` or the MCP server is writing to the phone, another one stops with `busy` before it reads or writes anything.
 - macOS USB has one real-iPhone report: IconShuffle 0.4.0 on macOS 27.0.1, over USB, with an iPhone 15 Pro on iOS 27.0. The user read the layout, previewed a TOML plan, applied it and read the phone back ([#6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)). macOS stays beta; this is one device, and it is a user report rather than a test we ran. The platform page records it.
 
 ## 0.4.0 — 2026-11-20

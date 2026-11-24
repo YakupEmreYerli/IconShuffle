@@ -23,7 +23,9 @@ uv run pytest
 CI runs the tests on Python 3.11, 3.12 and 3.13. To try another version locally:
 `uv run --python 3.11 pytest`.
 
-To try the browser editor without a phone: `uv run ios-homescreen editor --demo`.
+To try the browser editor without a phone: `uv run ios-homescreen editor --demo`. The MCP
+server the same way: `uv run python packaging/mcp_smoke.py uv run ios-homescreen mcp --demo`
+drives it with the MCP SDK's client.
 
 ## Layout of the code
 
@@ -40,6 +42,7 @@ To try the browser editor without a phone: `uv run ios-homescreen editor --demo`
 | `transport.py` | USB connection, or Wi-Fi through RemotePairing and pymobiledevice3's userspace tunnel |
 | `api.py` | The Python API; no printing, progress through `Event` callbacks |
 | `cli.py` | argparse, printing and the y/N question on top of `api.py` |
+| `mcp_service.py`, `mcp_server.py` | The MCP server: what each tool does (plans with ids, writes only through `api.push` and `api.restore`), and its registration with the MCP SDK |
 | `ui/` | The browser editor: `session.py` (jobs, icons, planning), `app.py` (HTTP API), `security.py` (token, Host and Origin checks), `demo.py` (the pretend phone), `static/` (the page) |
 
 The core never prints. If you need to report progress, emit an `Event` with a stable `code`.

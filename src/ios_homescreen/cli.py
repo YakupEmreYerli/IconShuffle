@@ -1,4 +1,4 @@
-"""Command line interface: pull, check, push, editor, backups, restore, apps, wifi.
+"""Command line interface: pull, check, push, editor, backups, restore, apps, wifi, mcp.
 
 With ``--json`` a command prints exactly one JSON object on stdout (the schema is in
 ``docs/agent-guide.md``); its progress and messages go to stderr, and the exit codes stay
@@ -468,6 +468,27 @@ def build_parser() -> argparse.ArgumentParser:
         help="with off: also delete this computer's Wi-Fi pairing with the phone",
     )
     _json(wifi)
+
+    mcp = commands.add_parser(
+        "mcp",
+        parents=[connection, files_and_backups, writing],
+        usage="%(prog)s [--demo] [options]",
+        formatter_class=_Formatter,
+        help="run the MCP server for AI assistants (stdio)",
+        description=(
+            "Run IconShuffle as an MCP server on stdin and stdout, for Claude Desktop,\n"
+            "Claude Code, Codex, Cursor, VS Code and other MCP clients; the client starts\n"
+            "it. Its tools read the home screen, plan changes and, after the person's yes,\n"
+            "write them with the same backup, check and rollback as push. It connects over\n"
+            "USB when a cable is in and over Wi-Fi otherwise (only Wi-Fi with --wifi).\n"
+            "Setup: docs/mcp.md."
+        ),
+    )
+    mcp.add_argument(
+        "--demo",
+        action="store_true",
+        help="serve a pretend iPhone; nothing connects to a phone",
+    )
     return parser
 
 
@@ -1022,6 +1043,28 @@ def _editor(args: argparse.Namespace) -> int:
         return EXIT_ERROR
 
 
+def _mcp(args: argparse.Namespace) -> int:
+    try:
+        import mcp  # noqa: F401
+    except ImportError:
+        warn(
+            "error: the MCP server needs the MCP SDK: pip install 'ios-homescreen[mcp]' "
+            "(or uv tool install, pipx install), or use the desktop app"
+        )
+        return EXIT_ERROR
+    from .mcp_server import main
+    from .mcp_service import Settings
+
+    settings = Settings(
+        data_dir=_data_dir(args),
+        backup_dir=_backup_dir(args),
+        timing=_timing(args),
+        transport=_transport(args),
+        auto=not args.wifi,
+    )
+    return main(settings, demo=args.demo)
+
+
 def _run(args: argparse.Namespace, opener: Opener, backend: Any = None) -> int:
     if args.command == "pull":
         return asyncio.run(_pull(args, opener))
@@ -1041,6 +1084,8 @@ def _run(args: argparse.Namespace, opener: Opener, backend: Any = None) -> int:
         return _apps(args)
     if args.command == "wifi":
         return asyncio.run(_wifi(args, opener, backend))
+    if args.command == "mcp":
+        return _mcp(args)
     raise AssertionError(f"unhandled command {args.command!r}")
 
 

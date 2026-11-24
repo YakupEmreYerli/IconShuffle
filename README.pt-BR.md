@@ -92,6 +92,11 @@ tocar em Confiar continua sendo com você. O Claude Code também tem uma skill c
 mesmo fluxo: copie [`skills/ios-homescreen`](skills/ios-homescreen) para a pasta `skills`
 dentro de `~/.claude` (ou dentro da pasta `.claude` de um projeto).
 
+Claude Desktop, Claude Code, Codex, Cursor, VS Code e outros clientes MCP também podem
+usar o IconShuffle como **servidor MCP**, que vem no app para desktop (sem Python) e na
+ferramenta de linha de comando: [veja como configurar](docs/mcp.md) (em inglês), ou
+experimente sem celular no modo demo.
+
 **O terminal.** O seu layout é um arquivo TOML simples. Puxe, edite em qualquer editor e envie:
 
 ```bash

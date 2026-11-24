@@ -70,14 +70,15 @@ ios-homescreen restore latest
 | `backups` | Her yazmadan önce alınan yedekleri listeler: ne zaman, hangi iPhone, düzende ne vardı | Hayır |
 | `restore BACKUP` | Bir yedeği (`latest`, `backups` listesindeki bir ad ya da bir dosya) `push` ile aynı adımlarla geri yazar | Yazar |
 | `wifi setup\|status\|off` | Telefona Wi-Fi erişimini kurar, denetler ya da kapatır | Evet |
+| `mcp` | Claude Desktop gibi yapay zekâ asistanları için MCP sunucusunu stdio üzerinde çalıştırır; ayrıntı [MCP sunucusu](mcp.md) (İngilizce) | Okur; yalnız kişinin onayladığı planı yazar |
 
 `pull`, henüz telefona yazmadığınız değişiklikler taşıyan bir düzen dosyasının üstüne yazmaz;
 başka bir dosyaya çekin ya da `--overwrite` verin. `check`, `sort` ve `push` komutları
 `--allow-removal` alır (düzen dosyası bölümüne bakın); `push` ve `restore` komutları
 `--force` alır (güvenlik bölümüne bakın). `backups` en yeni 20 yedeği gösterir, `--all`
 hepsini listeler. `wifi` dışındaki bütün komutlar `--data-dir DIR` alır; `push`,
-`restore`, `editor` ve `backups` ayrıca `--backup-dir DIR` alır. `editor` dışındaki bütün
-komutlar `--json` alır ve stdout'a tek bir JSON nesnesi yazar; betikler ve asistanlar için
+`restore`, `editor`, `mcp` ve `backups` ayrıca `--backup-dir DIR` alır. `editor` ve `mcp`
+dışındaki bütün komutlar `--json` alır ve stdout'a tek bir JSON nesnesi yazar; betikler ve asistanlar için
 olan bu çıktıyı [asistan rehberi](agent-guide.md) anlatır. `--json` ile `push` ve
 `restore` hiçbir şey sormaz: `--yes` yoksa yalnız neyin değişeceğini bildirir.
 

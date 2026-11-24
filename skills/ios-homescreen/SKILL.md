@@ -10,6 +10,11 @@ The full guide is `docs/agent-guide.md` in the ios-homescreen repository
 before the first edit: it has setup, the layout rules and limits, the JSON shapes and what
 every error code means. This skill is the short version of the same workflow.
 
+If the IconShuffle MCP tools are available (`read_home_screen`, `plan_layout`,
+`apply_layout`...), use them instead of the commands below, with the same rules: show the
+plan's change list, wait for a yes, then `apply_layout` with its `plan_id` and
+`confirm: true`. Setup: `docs/mcp.md` in the repository.
+
 ## Rules that are never bent
 
 - Write to the phone only after the person said yes to the change list you showed them,
