@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- macOS USB has one real-iPhone report: IconShuffle 0.4.0 on macOS 27.0.1, over USB, with an iPhone 15 Pro on iOS 27.0. The user read the layout, previewed a TOML plan, applied it and read the phone back ([#6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)). macOS stays beta; this is one device, and it is a user report rather than a test we ran. The platform page records it.
+
 ## 0.4.0 — 2026-11-20
 
 - The editor speaks eight languages: English, Turkish, German, Spanish, French, Japanese, Brazilian Portuguese and Simplified Chinese. It opens in the system language (English when none of them matches), a menu in the top bar switches it, and the choice is remembered. Buttons, dialogs, the change list, refusals, connection errors and progress messages are all translated; the command line, logs, the agent guide, error codes and the API stay English.

@@ -129,10 +129,11 @@ Ayrıntılar [güvenlik modeli](docs/reference.tr.md#güvenlik-modeli) bölümü
 | **Linux** | Kurulu ve çalışan `usbmuxd` (`sudo apt install usbmuxd`, `sudo dnf install usbmuxd`, `sudo pacman -S usbmuxd`) | Kararlı |
 
 Motor her sistemde aynı ve testleri üç sistemde de çalışıyor. Windows ve macOS'u beta diye
-işaretledik, çünkü henüz çok sayıda gerçek iPhone'la buluşmadılar. IconShuffle'ı bu
-sistemlerde denerseniz, çalıştığını (ya da çalışmadığını) anlatan bir
-[issue](https://github.com/YakupEmreYerli/IconShuffle/issues) çok işe yarar. Her sistemde neyin otomatik
-denendiği [docs/platforms.md](docs/platforms.md) sayfasında.
+işaretledik, çünkü henüz çok sayıda gerçek iPhone'la buluşmadılar. Bir kişi macOS
+uygulamasını USB ile iPhone 15 Pro'da kullanıp neyin çalıştığını yazdı
+([issue #6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)); sizin denemeniz de
+aynı ölçüde işe yarar. Her sistemde neyin otomatik denendiği
+[docs/platforms.md](docs/platforms.md) sayfasında.
 
 Her sistemde gereken tek şey bilgisayara güvenen bir iPhone: telefonu bir kez kabloyla
 bağlayın, kilidini açın, **Bu Bilgisayara Güven**'e dokunun ve parolanızı girin. Wi-Fi,

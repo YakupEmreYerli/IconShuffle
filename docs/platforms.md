@@ -23,12 +23,24 @@ that the cable (or the Wi-Fi link) to a real iPhone is the only part left untest
 
 ## What is not verified
 
-- **A real iPhone on macOS and Windows.** The USB cable through macOS's own usbmuxd or
-  Windows' Apple Mobile Device Service, and the RemotePairing Wi-Fi link, have only been
-  exercised against fakes there. On Linux they are used with a real iPhone.
-- Trusting the computer on the phone, and the phone's own answers on those systems.
-- Gatekeeper on a Mac that downloaded the app in a browser (the app is not signed yet).
+- **A real iPhone on macOS and Windows.** On Linux the USB cable and the RemotePairing
+  Wi-Fi link are used with a real iPhone. On Windows both have only been exercised against
+  fakes. On macOS, Wi-Fi has only been exercised against a fake; USB has one report from a
+  user, below. That is one device, so macOS stays beta.
+- **macOS Gatekeeper** on a Mac that downloaded the app in a browser (the app is not signed
+  yet).
 - Intel Macs, 32-bit Windows and Linux on ARM: there are no builds for them.
+
+## Reported by users
+
+These are what users wrote after trying IconShuffle on their own phone. They are not
+automated tests and we have not repeated them here.
+
+| When | System | Phone | What they did | Report |
+| --- | --- | --- | --- | --- |
+| 2026-11-24 | macOS 27.0.1, IconShuffle 0.4.0, USB | iPhone 15 Pro, iOS 27.0 | Read the layout, drafted a TOML plan with Codex, previewed a few versions, applied one, and read the phone back to check the result | [issue #6](https://github.com/YakupEmreYerli/IconShuffle/issues/6): seven Home Screen pages became two (15 apps and 24 folders) |
+
+Still unverified on macOS and Windows: trusting the computer on the phone, and the phone's own answers beyond the one report above.
 
 ## How to help as a beta tester
 

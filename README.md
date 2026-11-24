@@ -126,9 +126,10 @@ The details are in [how the safety model works](docs/reference.md#how-the-safety
 | **Linux** | `usbmuxd`, installed and running (`sudo apt install usbmuxd`, `sudo dnf install usbmuxd`, `sudo pacman -S usbmuxd`) | Stable |
 
 The engine is the same on every system and its tests run on all three. Windows and macOS
-are marked beta because they have not met many real iPhones yet: if you try IconShuffle
-there, an [issue](https://github.com/YakupEmreYerli/IconShuffle/issues) saying it worked
-(or didn't) helps a lot. [docs/platforms.md](docs/platforms.md) lists what is tested
+are marked beta because they have not met many real iPhones yet. One person has used the
+macOS app over USB with an iPhone 15 Pro and written up what worked
+([issue #6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)); a report from you
+helps just as much. [docs/platforms.md](docs/platforms.md) lists what is tested
 automatically on each system.
 
 On every system: an iPhone that trusts the computer (connect it with a cable once, unlock

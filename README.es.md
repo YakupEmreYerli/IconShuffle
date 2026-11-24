@@ -129,10 +129,10 @@ Los detalles están en [cómo funciona el modelo de seguridad](docs/reference.md
 | **Linux** | `usbmuxd`, instalado y en ejecución (`sudo apt install usbmuxd`, `sudo dnf install usbmuxd`, `sudo pacman -S usbmuxd`) | Estable |
 
 El motor es el mismo en todos los sistemas y sus pruebas se ejecutan en los tres. Windows y
-macOS están marcados como beta porque todavía no se han encontrado con muchos iPhone reales:
-si pruebas IconShuffle en ellos, una [issue](https://github.com/YakupEmreYerli/IconShuffle/issues)
-contando que funcionó (o que no) ayuda muchísimo. [docs/platforms.md](docs/platforms.md)
-enumera lo que se prueba automáticamente en cada sistema.
+macOS están marcados como beta porque todavía no se han encontrado con muchos iPhone reales.
+Una persona usó la app de macOS por USB con un iPhone 15 Pro y contó qué funcionó
+([issue #6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)); tu prueba ayuda igual.
+[docs/platforms.md](docs/platforms.md) enumera lo que se prueba automáticamente en cada sistema.
 
 En todos los sistemas: un iPhone que confíe en el ordenador (conéctalo una vez con un cable,
 desbloquéalo, toca **Confiar en este ordenador** e introduce el código). El Wi-Fi funciona con

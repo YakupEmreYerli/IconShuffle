@@ -101,7 +101,7 @@ ios-homescreen push        # 询问、备份、写入、校验，必要时回滚
 | **macOS**（Apple 芯片） | 无需额外安装 | 测试版 |
 | **Linux** | 已安装并正在运行的 `usbmuxd`（`sudo apt install usbmuxd`、`sudo dnf install usbmuxd`、`sudo pacman -S usbmuxd`） | 稳定版 |
 
-各个系统上的引擎都一样，测试也在三个系统上运行。Windows 和 macOS 之所以标为测试版，是因为还没有在很多真实的 iPhone 上用过：如果你在这两个系统上试用了 IconShuffle，提一个 [issue](https://github.com/YakupEmreYerli/IconShuffle/issues) 告诉我们能用（或不能用），会很有帮助。[docs/platforms.md](docs/platforms.md) 列出了每个系统上自动测试的内容。
+各个系统上的引擎都一样，测试也在三个系统上运行。Windows 和 macOS 之所以标为测试版，是因为还没有在很多真实的 iPhone 上用过。有人在 macOS 上通过 USB 把应用用在了一部 iPhone 15 Pro 上，并写下了哪些地方能用（[issue #6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)）；你的试用同样很有帮助。[docs/platforms.md](docs/platforms.md) 列出了每个系统上自动测试的内容。
 
 所有系统都需要：一部信任这台电脑的 iPhone（用数据线连接一次，解锁手机，点 **信任此电脑** 并输入密码）。完成一次 USB 设置后，iOS 17 及以上版本就可以通过 Wi-Fi 使用。不需要 root，也不需要开发者模式。
 

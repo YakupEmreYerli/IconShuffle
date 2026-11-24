@@ -101,7 +101,7 @@ ios-homescreen push        # 確認、バックアップ、書き込み、検証
 | **macOS**（Appleシリコン） | 追加のものは不要 | ベータ |
 | **Linux** | `usbmuxd`をインストールして起動しておくこと（`sudo apt install usbmuxd`、`sudo dnf install usbmuxd`、`sudo pacman -S usbmuxd`） | 安定版 |
 
-エンジンはどのシステムでも同じで、テストは3つすべてで実行しています。WindowsとmacOSをベータとしているのは、まだ実機のiPhoneでの実績が少ないためです。これらのシステムでIconShuffleを試したら、動いた（または動かなかった）ことを[issue](https://github.com/YakupEmreYerli/IconShuffle/issues)で知らせてもらえるととても助かります。各システムで自動テストしている内容は[docs/platforms.md](docs/platforms.md)にまとめています。
+エンジンはどのシステムでも同じで、テストは3つすべてで実行しています。WindowsとmacOSをベータとしているのは、まだ実機のiPhoneでの実績が少ないためです。1人の方がmacOSアプリをUSBでiPhone 15 Proに使い、動いた内容を書いてくれました（[issue #6](https://github.com/YakupEmreYerli/IconShuffle/issues/6)）。あなたが試した結果も同じくらい助かります。各システムで自動テストしている内容は[docs/platforms.md](docs/platforms.md)にまとめています。
 
 どのシステムでも、パソコンを信頼済みのiPhoneが必要です（一度ケーブルでつなぎ、ロックを解除して、「このコンピュータを信頼しますか?」で**信頼**をタップし、パスコードを入力します）。Wi-Fi接続は、USBで一度だけ設定すればiOS 17以降で使えます。rootもデベロッパモードも不要です。
 
