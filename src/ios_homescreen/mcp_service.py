@@ -457,28 +457,45 @@ class Service:
         return out
 
     async def _write(
-        self, plan_id: str, pending: _Pending, write: Callable[..., Awaitable[api.ApplyResult]]
+        self,
+        plan_id: str,
+        kind: str,
+        confirm: bool,
+        write: Callable[..., Awaitable[api.ApplyResult]],
     ) -> dict[str, Any]:
+        """Claim the plan and write it while holding the phone lock.
+
+        The claim happens before the connection yields. Two applies of one plan
+        can otherwise both pass the check while the phone is opening, then both
+        write.
+        """
         events: list[Event] = []
-        async with self._phone() as device:
-            self.pending.pop(plan_id, None)  # one write per plan, whatever happens next
-            result = await write(device, events.append)
-            out = self._result(result, events)
+        async with self._busy:
+            pending = self._take(plan_id, kind, confirm)
+            device = await self._open()
             try:
-                snapshot = await api.read_device(device)
-            except Exception as exc:
-                out["new_pull"] = None
-                log.warning("reading the phone after the write failed: %s", exc)
-            else:
-                self._keep(snapshot)
-                out["new_pull"] = self.pull.name if self.pull else None
-        return out
+                self.pending.pop(plan_id, None)  # one write per plan, whatever happens next
+                result = await write(device, pending, events.append)
+                out = self._result(result, events)
+                try:
+                    snapshot = await api.read_device(device)
+                except Exception as exc:
+                    out["new_pull"] = None
+                    log.warning("reading the phone after the write failed: %s", exc)
+                else:
+                    self._keep(snapshot)
+                    out["new_pull"] = self.pull.name if self.pull else None
+                return out
+            finally:
+                if not self.settings.demo:
+                    await device.close()
 
     async def apply_layout(self, plan_id: str, confirm: bool = False) -> dict[str, Any]:
-        pending = self._take(plan_id, "layout", confirm)
         settings = self.settings
 
-        async def write(device: Any, emit: Callable[[Event], None]) -> api.ApplyResult:
+        async def write(
+            device: Any, pending: _Pending, emit: Callable[[Event], None]
+        ) -> api.ApplyResult:
             # api.push refuses (layout_changed) when the phone changed since the read the
             # plan was made against: then the change list the person saw is not the truth.
             return await api.push(
@@ -489,13 +506,14 @@ class Service:
                 on_event=emit,
             )
 
-        return await self._write(plan_id, pending, write)
+        return await self._write(plan_id, "layout", confirm, write)
 
     async def restore_backup(self, plan_id: str, confirm: bool = False) -> dict[str, Any]:
-        pending = self._take(plan_id, "restore", confirm)
         settings = self.settings
 
-        async def write(device: Any, emit: Callable[[Event], None]) -> api.ApplyResult:
+        async def write(
+            device: Any, pending: _Pending, emit: Callable[[Event], None]
+        ) -> api.ApplyResult:
             # A restore overwrites on purpose (api.restore has no drift check), so check here
             # that the phone still shows what the change list was made against.
             current = await device.read_state()
@@ -513,7 +531,7 @@ class Service:
                 on_event=emit,
             )
 
-        return await self._write(plan_id, pending, write)
+        return await self._write(plan_id, "restore", confirm, write)
 
 
 # --------------------------------------------------------------------------- errors

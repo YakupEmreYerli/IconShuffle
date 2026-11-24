@@ -258,6 +258,37 @@ def test_a_plan_is_written_once(tmp_path):
     assert len(device.writes) == 1
 
 
+def test_a_plan_applied_twice_at_once_is_written_once(tmp_path):
+    device = FakeSpringBoard(samples.home_screen(), samples.installed_apps())
+
+    async def opener():
+        await asyncio.sleep(0)  # a real connection yields while it opens
+        return device
+
+    service = Service(
+        Settings(data_dir=tmp_path, backup_dir=tmp_path / "backups", timing=FAST),
+        opener=opener,
+    )
+    plan = run(service.plan_layout(reversed_dock(service)))
+
+    async def both():
+        return await asyncio.gather(
+            service.apply_layout(plan["plan_id"], confirm=True),
+            service.apply_layout(plan["plan_id"], confirm=True),
+            return_exceptions=True,
+        )
+
+    results = run(both())
+    refused = [item for item in results if isinstance(item, Refused)]
+    applied = [item for item in results if isinstance(item, dict)]
+
+    assert len(applied) == 1
+    assert applied[0]["status"] == "applied"
+    assert len(refused) == 1
+    assert refused[0].code == "unknown_plan"
+    assert len(device.writes) == 1
+
+
 def test_a_restore_plan_id_does_not_apply_a_layout(tmp_path):
     service, device = fake_service(tmp_path)
     first = run(service.plan_layout(reversed_dock(service)))
