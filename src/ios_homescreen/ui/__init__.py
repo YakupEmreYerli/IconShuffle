@@ -1,4 +1,4 @@
-"""Browser UI: ``ios-homescreen editor`` serves an editor on 127.0.0.1 and opens it.
+"""Browser UI: ``iconshuffle editor`` serves an editor on 127.0.0.1 and opens it.
 
 Starlette and uvicorn are imported only here, when the UI starts; the CLI and the
 Python API do not need them. The page itself is plain JavaScript modules with a
@@ -50,7 +50,7 @@ def _require() -> None:
     except ImportError as exc:
         raise UIUnavailable(
             "the browser editor needs Starlette and uvicorn: "
-            "pip install 'ios-homescreen[ui]' (or uv tool install, pipx install)"
+            "pip install 'iconshuffle[ui]' (or uv tool install, pipx install)"
         ) from exc
 
 
@@ -142,9 +142,9 @@ def serve(
             if server.started:
                 session.start_read()
                 if options.demo:
-                    say("ios-homescreen editor, demo mode: a pretend iPhone, no phone is contacted")
+                    say("iconshuffle editor, demo mode: a pretend iPhone, no phone is contacted")
                 else:
-                    say("ios-homescreen editor")
+                    say("iconshuffle editor")
                 if options.showcase is not None:
                     say(
                         f"Showcase mode: showing {options.showcase.name}. It looks like the "

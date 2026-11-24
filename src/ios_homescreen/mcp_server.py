@@ -1,4 +1,4 @@
-"""The MCP server: ``ios-homescreen mcp`` lets AI assistants rearrange the home screen.
+"""The MCP server: ``iconshuffle mcp`` lets AI assistants rearrange the home screen.
 
 It speaks the Model Context Protocol over stdio, so Claude Desktop, Claude Code, Codex,
 Cursor, VS Code and other MCP clients start it as a subprocess. stdout carries only the
@@ -7,7 +7,7 @@ protocol; logs go to stderr. The tools are thin wrappers around
 writes (``apply_layout``, ``restore_backup``) that need a plan id and ``confirm``.
 
 This module needs the MCP SDK (the optional ``mcp`` extra); the CLI imports it only for
-``ios-homescreen mcp``.
+``iconshuffle mcp``.
 """
 
 from __future__ import annotations
@@ -61,7 +61,7 @@ LAYOUT_HELP = (
     "go to the App Library and stay installed. Pass this or toml, not both."
 )
 TOML_HELP = (
-    "The same layout as TOML text in the format of `ios-homescreen pull` (read_home_screen "
+    "The same layout as TOML text in the format of `iconshuffle pull` (read_home_screen "
     "with include_toml=true returns it). A [pull] table in it is ignored: the plan is always "
     "made against the last read. Pass this or layout, not both."
 )
@@ -167,7 +167,7 @@ def build_server(service: Service) -> Any:
         allow_removal: Removal = False,
     ) -> dict[str, Any]:
         """Plan every page's apps, folders, web clips and web apps in A-Z name order, the same
-        rules as `ios-homescreen sort` and the editor's Sort A-Z: the dock, folder contents
+        rules as `iconshuffle sort` and the editor's Sort A-Z: the dock, folder contents
         and widgets keep their places, each page keeps its size. Writes nothing. Returns the
         sorted layout, the change list and a plan_id for apply_layout (after the person's
         yes)."""
@@ -259,7 +259,7 @@ def serve(service: Service) -> int:
 
 
 def main(settings: Settings, *, demo: bool = False) -> int:
-    """``ios-homescreen mcp``: serve the phone ``settings`` describe, or with ``demo`` the
+    """``iconshuffle mcp``: serve the phone ``settings`` describe, or with ``demo`` the
     pretend one (then ``settings`` is not used)."""
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
     if demo:

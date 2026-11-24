@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "Cet ordinateur n'est pas jumelé à l'iPhone pour le Wi-Fi",
   "error.no_pair_record.steps": [
-    "Connectez l'iPhone une fois par câble et lancez `ios-homescreen wifi setup`.",
+    "Connectez l'iPhone une fois par câble et lancez `iconshuffle wifi setup`.",
     "Puis relancez l'éditeur avec `--wifi`."
   ],
   "error.stale_pair_record.title": "Le jumelage Wi-Fi doit être refait",
   "error.stale_pair_record.steps": [
-    "Connectez l'iPhone une fois par câble et lancez `ios-homescreen wifi setup`.",
+    "Connectez l'iPhone une fois par câble et lancez `iconshuffle wifi setup`.",
     "Puis relancez l'éditeur avec `--wifi`."
   ],
   "error.not_advertising.title": "L'iPhone n'a pas répondu sur le réseau",
   "error.not_advertising.steps": [
     "Gardez l'iPhone allumé et déverrouillé, sur le même réseau que cet ordinateur.",
     "Les réseaux invités et l'isolation des clients séparent le téléphone de l'ordinateur, et les pare-feu doivent laisser passer mDNS (UDP 5353).",
-    "Vérifiez avec `ios-homescreen wifi status` en USB, ou utilisez le câble."
+    "Vérifiez avec `iconshuffle wifi status` en USB, ou utilisez le câble."
   ],
   "error.several_devices.title": "Plusieurs iPhone ont répondu",
   "error.several_devices.steps": [

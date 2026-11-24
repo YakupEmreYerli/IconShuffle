@@ -2,7 +2,7 @@
 
 Everything the [README](../README.md) leaves out: the command line, the layout file, the
 editor, how a write is kept safe, Wi-Fi, files, the Python API, limitations and
-troubleshooting. The command is `ios-homescreen`.
+troubleshooting. The command is `iconshuffle`.
 
 ## Features
 
@@ -18,15 +18,15 @@ troubleshooting. The command is `ios-homescreen`.
 - Refuses to write when the phone was changed since it was read.
 - Has JSON output on every command, for scripts and agents, and a Python API
   (`ios_homescreen.api`) under the CLI.
-- Runs as an MCP server (`ios-homescreen mcp`, or the desktop app with `mcp`) so Claude
+- Runs as an MCP server (`iconshuffle mcp`, or the desktop app with `mcp`) so Claude
   Desktop, Claude Code, Codex, Cursor and VS Code can rearrange the home screen with the
   same safety steps; see [MCP server](mcp.md).
 - Keeps read snapshots and backups in its own data folder; only the layout file goes where
   you say.
 
-The command is `ios-homescreen` and the Python package `ios_homescreen`: those names come
-from the project's first months and stay, so existing scripts and tools built on it keep
-working.
+The command is `iconshuffle`. `ios-homescreen` still runs the same program, so scripts
+that call the old command keep working. The Python import stays `ios_homescreen`, and
+backups stay in the folder they already use.
 
 From a clone, for development:
 
@@ -34,29 +34,29 @@ From a clone, for development:
 git clone https://github.com/YakupEmreYerli/IconShuffle
 cd IconShuffle
 uv sync
-uv run ios-homescreen --help
+uv run iconshuffle --help
 ```
 
 ## Quick start
 
 ```bash
 # 1. Read the phone into layout.toml. Read-only; nothing is written to the phone.
-ios-homescreen pull
+iconshuffle pull
 
 # 2. Edit it: move lines around, add apps from the list at the end, make folders.
 $EDITOR layout.toml
 
 # 3. See what would change. Offline.
-ios-homescreen check
+iconshuffle check
 
 # 4. Write it. push shows the changes and asks; then backup, write, verify, roll back if needed.
-ios-homescreen push
+iconshuffle push
 ```
 
 To undo a push, write back the backup it made:
 
 ```bash
-ios-homescreen restore latest
+iconshuffle restore latest
 ```
 
 ## Commands
@@ -194,7 +194,7 @@ Changes compared with the pull from iPhone (iPhone 15, iOS 27.0) on 2026-10-10 1
 <img src="assets/ui-light.png" alt="The IconShuffle editor in demo mode after Sort A-Z: the App Library on the left, the phone in the middle, the list of changes and the Apply button on the right">
 </picture>
 
-The desktop app opens the editor in its own window; `ios-homescreen editor` opens the same
+The desktop app opens the editor in its own window; `iconshuffle editor` opens the same
 editor in your browser. It reads the phone and shows it with the
 phone's app icons and, where the phone sends it, its wallpaper. Drag apps, folders and widgets around, between pages and
 into the dock. Drop an app on another one to
@@ -215,8 +215,8 @@ TOML layout file, so you can switch between the editor and a text editor; an exp
 works with `check` and `push`.
 
 ```bash
-ios-homescreen editor          # over USB; add --wifi for Wi-Fi
-ios-homescreen editor --demo   # a pretend iPhone with made-up apps
+iconshuffle editor          # over USB; add --wifi for Wi-Fi
+iconshuffle editor --demo   # a pretend iPhone with made-up apps
 ```
 
 | Option | Meaning |
@@ -272,8 +272,8 @@ that JSON would lose.
 Wi-Fi needs iOS 17 or later. Set it up once, with the phone connected over USB:
 
 ```bash
-ios-homescreen wifi setup      # over USB, once
-ios-homescreen wifi status     # the setting, the pairing, and whether the phone answers on Wi-Fi
+iconshuffle wifi setup      # over USB, once
+iconshuffle wifi status     # the setting, the pairing, and whether the phone answers on Wi-Fi
 ```
 
 `wifi setup` turns on the phone's Wi-Fi connections setting and pairs this computer for
@@ -404,10 +404,10 @@ answers. Guest networks and client isolation keep the two apart, and firewalls m
 `wifi setup` over USB again.
 
 The browser says the page needs the address from the terminal: open the full address that
-`ios-homescreen editor` printed. The key in it changes every time the editor starts.
+`iconshuffle editor` printed. The key in it changes every time the editor starts.
 
 `the iPhone's layout changed since layout.toml was pulled`: the phone was edited after your
-`pull`. Pull into a new file (`ios-homescreen pull new.toml`), carry your edits over and push
+`pull`. Pull into a new file (`iconshuffle pull new.toml`), carry your edits over and push
 that, or use `--force` if you want your file to win.
 
 `there is no terminal to ask in`: `push` and `restore` ask before writing. In a script, add

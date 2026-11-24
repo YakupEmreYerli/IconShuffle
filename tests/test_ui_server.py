@@ -592,7 +592,7 @@ def test_export_and_import_round_trip(make_api):
     toml = api.post("/api/export", {"layout": layout}).json()["toml"]
     imported = api.post("/api/import", {"toml": toml}).json()
 
-    assert toml.startswith("# ios-homescreen layout")
+    assert toml.startswith("# iconshuffle layout")
     assert 'name = "Getting around"' in toml
     assert imported["removed"] == []
     again = api.post("/api/plan", {"layout": layout_of_pages(imported["view"])}).json()

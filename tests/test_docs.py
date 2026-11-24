@@ -23,7 +23,7 @@ READMES = [
     "README.zh-Hans.md",
 ]
 REFERENCES = ["docs/reference.md", "docs/reference.tr.md"]
-AGENT_DOCS = ["docs/agent-guide.md", "skills/ios-homescreen/SKILL.md"]
+AGENT_DOCS = ["docs/agent-guide.md", "skills/iconshuffle/SKILL.md"]
 DOCS = [
     *READMES,
     *REFERENCES,
@@ -34,7 +34,7 @@ DOCS = [
     "llms.txt",
 ]
 OLD_COMMANDS = re.compile(
-    r"ios-homescreen (read|export|plan|apply|diff|ui)\b"
+    r"iconshuffle (read|export|plan|apply|diff|ui)\b"
     r"|wifi (enable|disable)\b"
     r"|`(read|apply|export|diff)`"
 )
@@ -111,7 +111,7 @@ def test_every_command_and_flag_an_agent_is_told_about_exists(doc):
     text = (ROOT / doc).read_text(encoding="utf-8")
     # Commands as written in code: inline spans and fenced blocks, not prose.
     code = re.findall(r"```.*?```|`[^`\n]+`", text, re.S)
-    commands = {c for span in code for c in re.findall(r"ios-homescreen ([a-z]+)", span)}
+    commands = {c for span in code for c in re.findall(r"iconshuffle ([a-z]+)", span)}
     flags = set(re.findall(r"(?<![\w-])--[a-z][a-z-]+", text))
 
     assert {"pull", "check", "push", "apps", "restore", "backups"} <= commands
@@ -142,12 +142,12 @@ def test_the_error_codes_in_the_guide_are_real():
 
 
 def test_the_skill_is_a_valid_agent_skill_that_points_to_the_guide():
-    text = (ROOT / "skills/ios-homescreen/SKILL.md").read_text(encoding="utf-8")
+    text = (ROOT / "skills/iconshuffle/SKILL.md").read_text(encoding="utf-8")
     front = re.match(r"---\n(.*?)\n---\n", text, re.S).group(1)
     fields = dict(line.split(": ", 1) for line in front.splitlines())
 
     assert set(fields) == {"name", "description"}
-    assert fields["name"] == "ios-homescreen"
+    assert fields["name"] == "iconshuffle"
     assert 50 < len(fields["description"]) <= 1024
     assert "docs/agent-guide.md" in text
 
@@ -170,7 +170,7 @@ def test_the_readme_gives_agents_the_guide(readme):
     text = (ROOT / readme).read_text(encoding="utf-8")
 
     assert "https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md" in text
-    assert "skills/ios-homescreen" in text
+    assert "skills/iconshuffle" in text
 
 
 @pytest.mark.parametrize("readme", READMES)
@@ -213,7 +213,7 @@ def test_the_mcp_guide_lists_exactly_the_servers_tools(tmp_path):
 
 def test_the_mcp_guide_names_real_commands_and_flags():
     text = (ROOT / "docs/mcp.md").read_text(encoding="utf-8")
-    commands = set(re.findall(r"ios-homescreen ([a-z]+)", text))
+    commands = set(re.findall(r"iconshuffle ([a-z]+)", text))
     flags = set(re.findall(r"(?<![\w-])--[a-z][a-z-]+", text))
     mcp_flags = {o for a in _parsers()["mcp"]._actions for o in a.option_strings}
     # Flags of the clients' own commands (uvx, claude mcp add).

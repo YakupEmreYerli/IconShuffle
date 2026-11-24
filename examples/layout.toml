@@ -1,7 +1,7 @@
-# Example ios-homescreen layout, using Apple's stock apps.
+# Example iconshuffle layout, using Apple's stock apps.
 #
 # Start from your own phone instead of this file:
-#   ios-homescreen pull
+#   iconshuffle pull
 #
 # The widget, web clip and web app ids below are placeholders. Real ids come from
 # your phone and are already filled in by `pull`.

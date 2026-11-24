@@ -23,8 +23,8 @@ uv run pytest
 CI runs the tests on Python 3.11, 3.12 and 3.13. To try another version locally:
 `uv run --python 3.11 pytest`.
 
-To try the browser editor without a phone: `uv run ios-homescreen editor --demo`. The MCP
-server the same way: `uv run python packaging/mcp_smoke.py uv run ios-homescreen mcp --demo`
+To try the browser editor without a phone: `uv run iconshuffle editor --demo`. The MCP
+server the same way: `uv run python packaging/mcp_smoke.py uv run iconshuffle mcp --demo`
 drives it with the MCP SDK's client.
 
 ## Layout of the code
@@ -50,7 +50,7 @@ The core never prints. If you need to report progress, emit an `Event` with a st
 ## For AI agents
 
 `docs/agent-guide.md` is written for AI coding agents that set up and use the tool for
-someone; `llms.txt` points to it, and `skills/ios-homescreen/SKILL.md` is the same workflow
+someone; `llms.txt` points to it, and `skills/iconshuffle/SKILL.md` is the same workflow
 as a Claude Code skill that defers to the guide. When a command, flag, JSON field or error
 code changes, update the guide (and the skill if it names it). `tests/test_docs.py` checks
 that every command and flag they mention exists, that the error codes in the guide are
@@ -117,7 +117,7 @@ items = ["Phone", "Safari", "Messages", "Camera"]
 
 [[pages]]
 items = [
-  { type = "widget", id = "..." },   # widget ids from `ios-homescreen pull`
+  { type = "widget", id = "..." },   # widget ids from `iconshuffle pull`
   "Calendar", "Photos", "Mail", "Maps",
   { type = "folder", name = "Utilities", items = ["Calculator", "Voice Memos"] },
 ]
@@ -131,8 +131,8 @@ items = [
 - A showcase layout may leave out widgets, web clips and web apps.
 
 ```bash
-uv run ios-homescreen editor --showcase showcase.toml          # add --wifi for Wi-Fi
-uv run ios-homescreen editor --demo --showcase showcase.toml   # the same on the demo phone
+uv run iconshuffle editor --showcase showcase.toml          # add --wifi for Wi-Fi
+uv run iconshuffle editor --demo --showcase showcase.toml   # the same on the demo phone
 ```
 
 Read from phone loads the files again, so they can be adjusted while the editor runs. Take

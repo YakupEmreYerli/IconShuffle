@@ -115,10 +115,10 @@ def positive_integer(text: str) -> int:
 
 EPILOG = """\
 A session:
-  ios-homescreen pull       read the phone into layout.toml
+  iconshuffle pull       read the phone into layout.toml
   $EDITOR layout.toml       move things around
-  ios-homescreen check      see what would change (offline)
-  ios-homescreen push       write it: asks first, backs up, verifies, rolls back
+  iconshuffle check      see what would change (offline)
+  iconshuffle push       write it: asks first, backs up, verifies, rolls back
 
 Exit codes: 0 done; 1 error, nothing was written; 2 usage error, or the write was
 not confirmed; 3 the new layout did not verify and the backup was written back;
@@ -255,7 +255,7 @@ def _allow_removal(parser: argparse.ArgumentParser) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="ios-homescreen",
+        prog="iconshuffle",
         description=(
             "Pull an iPhone home screen into a text file, edit it, and push it back\n"
             "safely, over USB or Wi-Fi. Or edit it in the browser."
@@ -416,7 +416,7 @@ def build_parser() -> argparse.ArgumentParser:
     restore.add_argument(
         "backup",
         metavar="BACKUP",
-        help="'latest', a name from 'ios-homescreen backups', or a backup file",
+        help="'latest', a name from 'iconshuffle backups', or a backup file",
     )
     _yes(restore, "restore")
     restore.add_argument(
@@ -540,7 +540,7 @@ def _default_opener(transport: Transport) -> Awaitable[Any]:
 
 def _command(name: str, layout: Path) -> str:
     target = "" if layout == Path(DEFAULT_LAYOUT) else f" {layout}"
-    return f"ios-homescreen {name}{target}"
+    return f"iconshuffle {name}{target}"
 
 
 def _interactive() -> bool:
@@ -619,7 +619,7 @@ async def _pull(args: argparse.Namespace, opener: Opener) -> int:
         if reason:
             raise Refused(
                 f"{layout} already exists and {reason}. Pull into another file "
-                f"(ios-homescreen pull new.toml), or add --overwrite to replace it.",
+                f"(iconshuffle pull new.toml), or add --overwrite to replace it.",
                 code="unpushed_edits",
             )
     device = await opener(_transport(args))
@@ -726,7 +726,7 @@ def _sort(args: argparse.Namespace) -> int:
 def _drift_message(args: argparse.Namespace, path: Path) -> str:
     return (
         f"the iPhone's layout changed since {args.layout} was pulled ({path.name}), so nothing "
-        "was written. Pull into a new file (ios-homescreen pull new.toml), carry your edits "
+        "was written. Pull into a new file (iconshuffle pull new.toml), carry your edits "
         f"over and push that, or add --force to write {args.layout} over the phone's changes."
     )
 
@@ -866,7 +866,7 @@ def _backups(args: argparse.Namespace) -> int:
     if len(found) > len(shown):
         say(f"  ...and {len(found) - len(shown)} older ones (--all lists them).")
     say()
-    say("Restore one with: ios-homescreen restore latest   (or a name from the last column)")
+    say("Restore one with: iconshuffle restore latest   (or a name from the last column)")
     return EXIT_OK
 
 
@@ -1048,7 +1048,7 @@ def _mcp(args: argparse.Namespace) -> int:
         import mcp  # noqa: F401
     except ImportError:
         warn(
-            "error: the MCP server needs the MCP SDK: pip install 'ios-homescreen[mcp]' "
+            "error: the MCP server needs the MCP SDK: pip install 'iconshuffle[mcp]' "
             "(or uv tool install, pipx install), or use the desktop app"
         )
         return EXIT_ERROR
@@ -1123,7 +1123,7 @@ def main(
         code = EXIT_INTERRUPTED
         message = (
             "interrupted. If a write was running, look at the phone; "
-            "'ios-homescreen restore latest' writes back the backup made before it."
+            "'iconshuffle restore latest' writes back the backup made before it."
         )
         warn("\n" + message)
         failed("interrupted", message)

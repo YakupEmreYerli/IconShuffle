@@ -66,21 +66,21 @@ pipx install git+https://github.com/YakupEmreYerli/IconShuffle
 
 ```text
 https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md を読んで、
-ios-homescreen でiPhoneのホーム画面の並べ替えを手伝ってください。必要ならインストールし、
+iconshuffle でiPhoneのホーム画面の並べ替えを手伝ってください。必要ならインストールし、
 iPhoneに何か書き込む前にすべての変更を見せて、私のOKを待ってください。やりたいこと：
 仕事用のAppを1つのフォルダにまとめて、ゲームを2ページ目に移動する。
 ```
 
-[エージェント向けガイド](docs/agent-guide.md)には、ツールのインストール方法と使い方、そして変更を必ず見せてあなたのOKを待つことがエージェント向けに書かれています。iPhoneをつないで「信頼」をタップするのは、あなた自身です。Claude Code向けには同じ流れのスキルもあります：[`skills/ios-homescreen`](skills/ios-homescreen)を`~/.claude`内の`skills`フォルダ（またはプロジェクトの`.claude`フォルダ内）にコピーしてください。
+[エージェント向けガイド](docs/agent-guide.md)には、ツールのインストール方法と使い方、そして変更を必ず見せてあなたのOKを待つことがエージェント向けに書かれています。iPhoneをつないで「信頼」をタップするのは、あなた自身です。Claude Code向けには同じ流れのスキルもあります：[`skills/iconshuffle`](skills/iconshuffle)を`~/.claude`内の`skills`フォルダ（またはプロジェクトの`.claude`フォルダ内）にコピーしてください。
 
 Claude Desktop、Claude Code、Codex、Cursor、VS CodeなどのMCPクライアントからは、IconShuffleを**MCPサーバー**として使うこともできます。デスクトップアプリ（Python不要）とコマンドラインツールに組み込まれています：[設定方法](docs/mcp.md)（英語）。iPhoneがなくてもデモモードで試せます。
 
 **ターミナル。** レイアウトはただのTOMLファイルです。読み込んで、好きなエディタで編集し、書き戻します：
 
 ```bash
-ios-homescreen pull        # iPhoneを読み込んでlayout.tomlに保存（読み取りのみ）
-ios-homescreen check       # 何が変わるかを確認（オフライン）
-ios-homescreen push        # 確認、バックアップ、書き込み、検証、必要ならロールバック
+iconshuffle pull        # iPhoneを読み込んでlayout.tomlに保存（読み取りのみ）
+iconshuffle check       # 何が変わるかを確認（オフライン）
+iconshuffle push        # 確認、バックアップ、書き込み、検証、必要ならロールバック
 ```
 
 ## 安全を最優先した設計
@@ -89,7 +89,7 @@ ios-homescreen push        # 確認、バックアップ、書き込み、検証
 
 - **まずバックアップ。** 書き込みのたびに、何かに触れる前にiPhoneの現在のレイアウトを保存します。
 - **毎回読み直して確認。** 書き込んだあとにiPhoneをもう一度読み込み、アイコン1つずつ計画と照らし合わせます。
-- **自動で元に戻す。** iPhoneが計画と一致しなければ、バックアップを自動で書き戻します。`ios-homescreen restore latest`を使えば、あとからどの書き込みでも元に戻せます。
+- **自動で元に戻す。** iPhoneが計画と一致しなければ、バックアップを自動で書き戻します。`iconshuffle restore latest`を使えば、あとからどの書き込みでも元に戻せます。
 - **書き込む前に確認。** アプリ、ターミナル、エージェントのどれを使っても、変更の一覧をすべて見てからあなたがOKを出します。
 - **パソコンの中だけで完結。** エディタは127.0.0.1でのみ待ち受け、レイアウト、アイコン、バックアップがパソコンの外に出ることはありません。アカウントもテレメトリもありません。
 

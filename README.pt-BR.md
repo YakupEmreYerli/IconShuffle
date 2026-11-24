@@ -81,7 +81,7 @@ o trabalho todo por você. Cole isto, com o seu pedido no final:
 
 ```text
 Leia https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md e me
-ajude a organizar a tela inicial do meu iPhone com o ios-homescreen. Instale se precisar,
+ajude a organizar a tela inicial do meu iPhone com o iconshuffle. Instale se precisar,
 me mostre cada mudança antes de gravar qualquer coisa no celular e espere o meu sim. O que
 eu quero: colocar meus apps de trabalho numa pasta e mover os jogos para a página 2.
 ```
@@ -89,7 +89,7 @@ eu quero: colocar meus apps de trabalho numa pasta e mover os jogos para a pági
 O [guia para agentes](docs/agent-guide.md) explica ao agente como instalar e usar a
 ferramenta, e que ele precisa mostrar as mudanças e esperar o seu sim. Conectar o celular e
 tocar em Confiar continua sendo com você. O Claude Code também tem uma skill com o
-mesmo fluxo: copie [`skills/ios-homescreen`](skills/ios-homescreen) para a pasta `skills`
+mesmo fluxo: copie [`skills/iconshuffle`](skills/iconshuffle) para a pasta `skills`
 dentro de `~/.claude` (ou dentro da pasta `.claude` de um projeto).
 
 Claude Desktop, Claude Code, Codex, Cursor, VS Code e outros clientes MCP também podem
@@ -100,9 +100,9 @@ experimente sem celular no modo demo.
 **O terminal.** O seu layout é um arquivo TOML simples. Puxe, edite em qualquer editor e envie:
 
 ```bash
-ios-homescreen pull        # lê o celular para o layout.toml (só leitura)
-ios-homescreen check       # mostra o que mudaria (offline)
-ios-homescreen push        # pergunta, faz backup, grava, confere e desfaz se precisar
+iconshuffle pull        # lê o celular para o layout.toml (só leitura)
+iconshuffle check       # mostra o que mudaria (offline)
+iconshuffle push        # pergunta, faz backup, grava, confere e desfaz se precisar
 ```
 
 ## Seguro por padrão
@@ -114,7 +114,7 @@ confia numa gravação que não consegue ver:
 - **Confere toda vez.** Depois de gravar, o celular é lido de novo e comparado com o plano,
   ícone por ícone.
 - **Desfaz sozinho.** Se o celular não bater com o plano, o backup volta automaticamente.
-  `ios-homescreen restore latest` desfaz qualquer gravação depois.
+  `iconshuffle restore latest` desfaz qualquer gravação depois.
 - **Pergunta antes de gravar.** Você vê a lista completa de mudanças e dá o seu sim, seja no
   app, no terminal ou com um agente.
 - **Fica no seu computador.** O editor só escuta em 127.0.0.1; layouts, ícones e backups

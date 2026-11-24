@@ -81,7 +81,7 @@ hacerlo todo por ti. Pega esto, con tu propio deseo al final:
 
 ```text
 Lee https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md y
-ayúdame a reorganizar la pantalla de inicio de mi iPhone con ios-homescreen. Instálalo si
+ayúdame a reorganizar la pantalla de inicio de mi iPhone con iconshuffle. Instálalo si
 hace falta, enséñame cada cambio antes de escribir nada en el teléfono y espera a que te
 diga que sí. Lo que quiero: pon mis apps del trabajo en una carpeta y mueve los juegos a la
 página 2.
@@ -90,7 +90,7 @@ página 2.
 La [guía para agentes](docs/agent-guide.md) le explica al agente cómo instalar y manejar la
 herramienta, y que debe enseñarte los cambios y esperar tu sí. Conectar el teléfono y tocar
 Confiar sigue siendo cosa tuya. Claude Code también tiene un skill con el mismo flujo:
-copia [`skills/ios-homescreen`](skills/ios-homescreen) en la carpeta `skills` dentro de
+copia [`skills/iconshuffle`](skills/iconshuffle) en la carpeta `skills` dentro de
 `~/.claude` (o dentro de la carpeta `.claude` de un proyecto).
 
 Claude Desktop, Claude Code, Codex, Cursor, VS Code y otros clientes MCP también pueden
@@ -102,9 +102,9 @@ pruébalo sin teléfono en el modo demo.
 cualquier editor y vuelve a escribirla:
 
 ```bash
-ios-homescreen pull        # lee el teléfono en layout.toml (solo lectura)
-ios-homescreen check       # muestra qué cambiaría (sin conexión)
-ios-homescreen push        # pregunta, respalda, escribe, verifica, revierte si hace falta
+iconshuffle pull        # lee el teléfono en layout.toml (solo lectura)
+iconshuffle check       # muestra qué cambiaría (sin conexión)
+iconshuffle push        # pregunta, respalda, escribe, verifica, revierte si hace falta
 ```
 
 ## Seguro desde el diseño
@@ -117,7 +117,7 @@ IconShuffle nunca se fía de una escritura que no puede comprobar:
 - **Se vuelve a leer, siempre.** Después de escribir, el teléfono se lee de nuevo y se compara
   con el plan, icono por icono.
 - **Se revierte solo.** Si el teléfono no coincide, la copia de seguridad se restaura
-  automáticamente. `ios-homescreen restore latest` deshace cualquier escritura más adelante.
+  automáticamente. `iconshuffle restore latest` deshace cualquier escritura más adelante.
 - **Pregunta antes de escribir.** Ves la lista completa de cambios y das tu sí, tanto si usas
   la app como la terminal o un agente.
 - **Se queda en tu ordenador.** El editor solo escucha en 127.0.0.1; las disposiciones, los

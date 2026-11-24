@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "Este computador não está pareado com o iPhone para Wi-Fi",
   "error.no_pair_record.steps": [
-    "Conecte o iPhone com um cabo uma vez e rode `ios-homescreen wifi setup`.",
+    "Conecte o iPhone com um cabo uma vez e rode `iconshuffle wifi setup`.",
     "Depois reinicie o editor com `--wifi`."
   ],
   "error.stale_pair_record.title": "O pareamento por Wi-Fi precisa ser refeito",
   "error.stale_pair_record.steps": [
-    "Conecte o iPhone com um cabo uma vez e rode `ios-homescreen wifi setup`.",
+    "Conecte o iPhone com um cabo uma vez e rode `iconshuffle wifi setup`.",
     "Depois reinicie o editor com `--wifi`."
   ],
   "error.not_advertising.title": "O iPhone não respondeu na rede",
   "error.not_advertising.steps": [
     "Deixe o iPhone ativo e desbloqueado, na mesma rede deste computador.",
     "Redes de convidados e isolamento de clientes separam o celular do computador, e firewalls precisam deixar passar mDNS (UDP 5353).",
-    "Confira com `ios-homescreen wifi status` por USB, ou use o cabo."
+    "Confira com `iconshuffle wifi status` por USB, ou use o cabo."
   ],
   "error.several_devices.title": "Mais de um iPhone respondeu",
   "error.several_devices.steps": [

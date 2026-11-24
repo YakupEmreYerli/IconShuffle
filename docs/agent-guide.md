@@ -1,6 +1,6 @@
-# IconShuffle (`ios-homescreen`): guide for AI agents
+# IconShuffle: guide for AI agents
 
-You are helping a person rearrange their iPhone home screen with `ios-homescreen`, a
+You are helping a person rearrange their iPhone home screen with `iconshuffle`, a
 command-line tool. It reads the home screen into a text file (`layout.toml`), you edit that
 file, and it writes the result back to the phone over USB or Wi-Fi. This page is everything
 you need. Source: <https://github.com/YakupEmreYerli/IconShuffle>.
@@ -9,7 +9,7 @@ you need. Source: <https://github.com/YakupEmreYerli/IconShuffle>.
 `apply_layout` and the rest), use them instead of the commands below: they need no layout
 file. The rules here still hold. Show the person the change list `plan_layout` returns, wait
 for their explicit yes, and only then call `apply_layout` with its `plan_id` and
-`confirm: true`. To set the tools up, see [the MCP guide](mcp.md); `ios-homescreen mcp`
+`confirm: true`. To set the tools up, see [the MCP guide](mcp.md); `iconshuffle mcp`
 runs the server.
 
 ## Rules
@@ -29,7 +29,7 @@ runs the server.
 4. Never write the home screen any other way: no `pymobiledevice3 springboard` commands, no
    `set_icon_state` or `reload_icon_state`, no other tools or scripts, and never a
    list-form layout. SpringBoard then puts every installed app that is not on the list back
-   on the home screen, archived apps included. Only `ios-homescreen push`, `restore`, the browser
+   on the home screen, archived apps included. Only `iconshuffle push`, `restore`, the browser
    editor and the MCP tools `apply_layout` and `restore_backup` write, and they back up,
    verify and roll back.
 5. Never edit or delete the `[pull]` table in a layout file, and never delete anything in
@@ -54,32 +54,32 @@ is needed.
    ```bash
    uv tool install git+https://github.com/YakupEmreYerli/IconShuffle
    # or: pipx install git+https://github.com/YakupEmreYerli/IconShuffle
-   ios-homescreen --version
+   iconshuffle --version
    ```
 
 3. **Trust.** The person connects the iPhone with a cable, unlocks it, taps **Trust This
    Computer** and enters the passcode. Only they can do this; tell them when to.
-4. **First pull**, over USB: `ios-homescreen pull`. It is read-only and writes
+4. **First pull**, over USB: `iconshuffle pull`. It is read-only and writes
    `layout.toml` in the current directory.
-5. **Wi-Fi (optional, iOS 17 or later).** Once, over USB: `ios-homescreen wifi setup`. After
+5. **Wi-Fi (optional, iOS 17 or later).** Once, over USB: `iconshuffle wifi setup`. After
    that, add `--wifi` to `pull`, `push` and `restore` while the phone is awake, unlocked and on
-   the same network. `ios-homescreen wifi status --json` shows whether it answers.
+   the same network. `iconshuffle wifi status --json` shows whether it answers.
 
-To use this workflow as a Claude Code skill, copy the repository's `skills/ios-homescreen`
+To use this workflow as a Claude Code skill, copy the repository's `skills/iconshuffle`
 folder into the `skills` folder inside `~/.claude` (or inside a project's `.claude` folder).
 
 ## Commands
 
 | Command | Does | Phone |
 | --- | --- | --- |
-| `ios-homescreen pull [LAYOUT]` | Read the home screen into `LAYOUT` (default `layout.toml`); refuses to overwrite a file with unpushed edits unless `--overwrite` | Reads |
-| `ios-homescreen apps [QUERY]` | Installed apps, their bundle ids and where each one is, from the newest pull | No |
-| `ios-homescreen check [LAYOUT]` | Validate the file and list what `push` would change | No |
-| `ios-homescreen sort [LAYOUT]` | Sort every page's apps and folders A-Z in the file; dock, folder contents and widgets keep their places | No |
-| `ios-homescreen push [LAYOUT] --yes` | Back up, write, verify, roll back on failure. Without `--yes` it asks at a terminal; with `--json` it only reports the changes | Writes |
-| `ios-homescreen backups` | Backups made before each write, newest first | No |
-| `ios-homescreen restore latest --yes` | Write a backup back (`latest`, a name from `backups`, or a file), same safety steps | Writes |
-| `ios-homescreen wifi setup\|status\|off` | Wi-Fi access | Yes |
+| `iconshuffle pull [LAYOUT]` | Read the home screen into `LAYOUT` (default `layout.toml`); refuses to overwrite a file with unpushed edits unless `--overwrite` | Reads |
+| `iconshuffle apps [QUERY]` | Installed apps, their bundle ids and where each one is, from the newest pull | No |
+| `iconshuffle check [LAYOUT]` | Validate the file and list what `push` would change | No |
+| `iconshuffle sort [LAYOUT]` | Sort every page's apps and folders A-Z in the file; dock, folder contents and widgets keep their places | No |
+| `iconshuffle push [LAYOUT] --yes` | Back up, write, verify, roll back on failure. Without `--yes` it asks at a terminal; with `--json` it only reports the changes | Writes |
+| `iconshuffle backups` | Backups made before each write, newest first | No |
+| `iconshuffle restore latest --yes` | Write a backup back (`latest`, a name from `backups`, or a file), same safety steps | Writes |
+| `iconshuffle wifi setup\|status\|off` | Wi-Fi access | Yes |
 
 Add `--json` to `pull`, `apps`, `check`, `sort`, `push`, `backups`, `restore` and `wifi` to get one
 JSON object on stdout (messages go to stderr). Other flags: `--wifi`, `--udid UDID`,
@@ -134,20 +134,20 @@ items = ["Health", "Wallet"]
 
 ## Turning a request into edits
 
-1. `ios-homescreen pull --json` (add `--wifi` if set up). If `layout.toml` holds unpushed
-   edits, pull into a new file, for example `ios-homescreen pull fresh.toml`.
-2. `ios-homescreen apps --json` to see every app, its id and where it is now.
+1. `iconshuffle pull --json` (add `--wifi` if set up). If `layout.toml` holds unpushed
+   edits, pull into a new file, for example `iconshuffle pull fresh.toml`.
+2. `iconshuffle apps --json` to see every app, its id and where it is now.
 3. Work out which apps the request means. The tool knows no categories: decide "games",
    "work apps" or "social" from the names and what you know, and when unsure, list your
    picks and ask. Match the person's words to `name` or `id`; ask when several match.
 4. Edit the layout file as text. Move entries; do not drop any widget, web clip or web app
    entry. Keep the dock to 4 items and pages within 24 cells; if a page would overflow, put
    the rest on the next page or a new `[[pages]]` table.
-5. `ios-homescreen check --json`. Fix every issue in `error.issues` (each has a `code`, a
+5. `iconshuffle check --json`. Fix every issue in `error.issues` (each has a `code`, a
    `location` and a `message`) and run it again until `valid` is true.
 6. Show the person the change list in plain words (from `changes`, or the text `check`
    prints) and ask: "Write this to your iPhone? A backup is saved first."
-7. Only after a yes: `ios-homescreen push --yes --json`. Report `status` (`applied`,
+7. Only after a yes: `iconshuffle push --yes --json`. Report `status` (`applied`,
    `unchanged`, `rolled-back`, `rollback-failed`) and the `backup` file.
 
 Examples: "put my work apps in one folder" becomes one folder entry holding those apps,
@@ -157,9 +157,9 @@ the App Library and stay installed.
 
 ## Undo
 
-`ios-homescreen backups --json` lists the backups (every push and restore makes one
+`iconshuffle backups --json` lists the backups (every push and restore makes one
 first). To undo the last push, show the person what will change and, after a yes, run
-`ios-homescreen restore latest --yes --json`. A restore backs up the current layout too.
+`iconshuffle restore latest --yes --json`. A restore backs up the current layout too.
 
 ## JSON results
 
@@ -192,15 +192,15 @@ a failure adds `error: {code, message}`.
 | `usbmuxd_unreachable` | The USB service is not running: on Linux install and start usbmuxd (Setup step 1); on Windows install Apple Devices from the Microsoft Store; on macOS reconnect the phone |
 | `timeout`, `connection_failed` | Unlock the phone and keep it awake; if it repeats, restart the USB service (Linux: `sudo systemctl restart usbmuxd`; Windows: Apple Mobile Device Service) and reconnect |
 | `not_advertising` | Not found on Wi-Fi: phone awake, unlocked, same network; try again or use the cable |
-| `no_pair_record`, `stale_pair_record` | Wi-Fi not set up: over USB run `ios-homescreen wifi setup` |
+| `no_pair_record`, `stale_pair_record` | Wi-Fi not set up: over USB run `iconshuffle wifi setup` |
 | `several_pair_records` | More than one phone is paired: add `--udid` (ask which) |
 | `layout_invalid` | Fix every entry in `error.issues`, then `check` again |
 | `layout_changed` | The phone was edited since the pull. Pull into a new file, redo the edits there, check and ask again. `--force` would overwrite the phone's changes |
 | `unpushed_edits` | `pull` would overwrite edits: pull into another file, or ask before `--overwrite` |
-| `no_pull`, `pull_missing` | Run `ios-homescreen pull` (into a new file if needed) |
+| `no_pull`, `pull_missing` | Run `iconshuffle pull` (into a new file if needed) |
 | `confirmation_needed`, `not_confirmed` | Nothing was written; show the changes and ask |
 | `rolled_back` (exit 3) | The phone did not take the layout and was put back as it was. Retry later, or with `--verify-attempts 10 --verify-interval 5` |
-| `rollback_failed` (exit 4) | Tell the person now: look at the phone, then restore the `backup` file with `ios-homescreen restore <file> --yes` after their yes |
+| `rollback_failed` (exit 4) | Tell the person now: look at the phone, then restore the `backup` file with `iconshuffle restore <file> --yes` after their yes |
 | `other_device` | That backup is from another iPhone; ask before `--force` |
 | `no_backup` | No such backup; list them with `backups` |
 

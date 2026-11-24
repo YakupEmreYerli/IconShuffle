@@ -355,7 +355,7 @@ class Service:
             else:
                 document = self._document(layout, toml)
                 state = api.plan_layout(document, read, allow_removal=allow_removal).payload
-            # The same steps as `ios-homescreen sort`: sort, write as a layout, plan that.
+            # The same steps as `iconshuffle sort`: sort, write as a layout, plan that.
             text = api.export_layout({"state": api.sort_state(state), "apps": apps})
             plan = api.plan_layout(text, read, allow_removal=allow_removal)
         except LayoutError as error:

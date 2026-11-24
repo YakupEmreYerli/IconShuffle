@@ -26,7 +26,7 @@ and rolled back automatically if the phone does not show it.
 
 There is also an `organize_home_screen` prompt that walks the assistant through the safe
 flow. Wi-Fi setup is not a tool yet: do it once in the app or with
-`ios-homescreen wifi setup` over USB, and the server then finds the phone on the network
+`iconshuffle wifi setup` over USB, and the server then finds the phone on the network
 when no cable is in.
 
 ## Before you start
@@ -60,16 +60,16 @@ everywhere, so write the full path.
 [uv](https://docs.astral.sh/uv/)). `uvx` fetches IconShuffle with its MCP extra:
 
 - Command: `uvx`
-- Arguments: `--from`, `ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle`, `ios-homescreen`, `mcp`
+- Arguments: `--from`, `iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle`, `iconshuffle`, `mcp`
 
 **Already installed with pip, pipx or `uv tool install`:** add the extra
-(`uv tool install 'ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle'`
-or `pipx install 'ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle'`),
-then the command is `ios-homescreen` with the argument `mcp`.
+(`uv tool install 'iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle'`
+or `pipx install 'iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle'`),
+then the command is `iconshuffle` with the argument `mcp`.
 
-`ios-homescreen mcp` takes the usual options: `--udid UDID` to pick a phone, `--wifi` to
+`iconshuffle mcp` takes the usual options: `--udid UDID` to pick a phone, `--wifi` to
 use only Wi-Fi, `--data-dir DIR` for the backups and snapshots. Run
-`ios-homescreen mcp --help` for the list.
+`iconshuffle mcp --help` for the list.
 
 ## Claude Desktop
 
@@ -116,8 +116,8 @@ Any system, with uv:
       "command": "uvx",
       "args": [
         "--from",
-        "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle",
-        "ios-homescreen",
+        "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle",
+        "iconshuffle",
         "mcp"
       ]
     }
@@ -134,7 +134,7 @@ If Claude Desktop cannot find `uvx`, give its full path (`which uvx` on macOS an
 # desktop app on macOS
 claude mcp add iconshuffle -- /Applications/IconShuffle.app/Contents/MacOS/iconshuffle mcp
 # or with uv, on any system
-claude mcp add iconshuffle -- uvx --from "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle" ios-homescreen mcp
+claude mcp add iconshuffle -- uvx --from "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle" iconshuffle mcp
 ```
 
 Add `--scope user` to have it in every project. `claude mcp list` shows whether it connects.
@@ -142,7 +142,7 @@ Add `--scope user` to have it in every project. `claude mcp list` shows whether 
 ## Codex
 
 ```bash
-codex mcp add iconshuffle -- uvx --from "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle" ios-homescreen mcp
+codex mcp add iconshuffle -- uvx --from "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle" iconshuffle mcp
 ```
 
 Or in `~/.codex/config.toml`:
@@ -150,7 +150,7 @@ Or in `~/.codex/config.toml`:
 ```toml
 [mcp_servers.iconshuffle]
 command = "uvx"
-args = ["--from", "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle", "ios-homescreen", "mcp"]
+args = ["--from", "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle", "iconshuffle", "mcp"]
 # A write waits until the phone shows the new layout (up to about half a minute).
 tool_timeout_sec = 120
 ```
@@ -169,8 +169,8 @@ In `~/.cursor/mcp.json` (every project) or `.cursor/mcp.json` (one project):
       "command": "uvx",
       "args": [
         "--from",
-        "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle",
-        "ios-homescreen",
+        "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle",
+        "iconshuffle",
         "mcp"
       ]
     }
@@ -190,8 +190,8 @@ In `.vscode/mcp.json`, or through **MCP: Add Server** in the command palette:
       "command": "uvx",
       "args": [
         "--from",
-        "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle",
-        "ios-homescreen",
+        "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle",
+        "iconshuffle",
         "mcp"
       ]
     }
@@ -211,7 +211,7 @@ temporary folder that is deleted when the server stops, and nothing connects to 
 phone.
 
 ```bash
-claude mcp add iconshuffle-demo -- uvx --from "ios-homescreen[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle" ios-homescreen mcp --demo
+claude mcp add iconshuffle-demo -- uvx --from "iconshuffle[mcp] @ git+https://github.com/YakupEmreYerli/IconShuffle" iconshuffle mcp --demo
 ```
 
 With the desktop app: `iconshuffle mcp --demo` (macOS, Linux) or
@@ -240,5 +240,5 @@ home screen A-Z" or "put the games on page 2".
   computer.
 
 Undo any write with "restore the last backup": the assistant uses `plan_restore`, shows you
-what changes, and calls `restore_backup` after your yes. `ios-homescreen restore latest`
+what changes, and calls `restore_backup` after your yes. `iconshuffle restore latest`
 does the same from a terminal.

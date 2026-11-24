@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "Este ordenador no está emparejado con el iPhone para Wi-Fi",
   "error.no_pair_record.steps": [
-    "Conecta el iPhone una vez con un cable y ejecuta `ios-homescreen wifi setup`.",
+    "Conecta el iPhone una vez con un cable y ejecuta `iconshuffle wifi setup`.",
     "Después reinicia el editor con `--wifi`."
   ],
   "error.stale_pair_record.title": "Hay que volver a emparejar por Wi-Fi",
   "error.stale_pair_record.steps": [
-    "Conecta el iPhone una vez con un cable y ejecuta `ios-homescreen wifi setup`.",
+    "Conecta el iPhone una vez con un cable y ejecuta `iconshuffle wifi setup`.",
     "Después reinicia el editor con `--wifi`."
   ],
   "error.not_advertising.title": "El iPhone no respondió en la red",
   "error.not_advertising.steps": [
     "Mantén el iPhone activo y desbloqueado, en la misma red que este ordenador.",
     "Las redes de invitados y el aislamiento de clientes separan el teléfono del ordenador, y los cortafuegos deben dejar pasar mDNS (UDP 5353).",
-    "Compruébalo con `ios-homescreen wifi status` por USB, o usa el cable."
+    "Compruébalo con `iconshuffle wifi status` por USB, o usa el cable."
   ],
   "error.several_devices.title": "Respondió más de un iPhone",
   "error.several_devices.steps": [

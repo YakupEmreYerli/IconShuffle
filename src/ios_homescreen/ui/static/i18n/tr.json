@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "Bu bilgisayar iPhone ile Wi-Fi için eşlenmemiş",
   "error.no_pair_record.steps": [
-    "iPhone'u bir kez kabloyla bağla ve `ios-homescreen wifi setup` komutunu çalıştır.",
+    "iPhone'u bir kez kabloyla bağla ve `iconshuffle wifi setup` komutunu çalıştır.",
     "Sonra düzenleyiciyi `--wifi` ile yeniden başlat."
   ],
   "error.stale_pair_record.title": "Wi-Fi eşlemesinin yeniden yapılması gerekiyor",
   "error.stale_pair_record.steps": [
-    "iPhone'u bir kez kabloyla bağla ve `ios-homescreen wifi setup` komutunu çalıştır.",
+    "iPhone'u bir kez kabloyla bağla ve `iconshuffle wifi setup` komutunu çalıştır.",
     "Sonra düzenleyiciyi `--wifi` ile yeniden başlat."
   ],
   "error.not_advertising.title": "iPhone ağda yanıt vermedi",
   "error.not_advertising.steps": [
     "iPhone'u uyanık ve kilidi açık tut; bu bilgisayarla aynı ağda olsun.",
     "Misafir ağları ve istemci yalıtımı telefonla bilgisayarı birbirinden ayırır; güvenlik duvarı da mDNS'e (UDP 5353) izin vermeli.",
-    "USB üzerinden `ios-homescreen wifi status` ile kontrol et ya da kablo kullan."
+    "USB üzerinden `iconshuffle wifi status` ile kontrol et ya da kablo kullan."
   ],
   "error.several_devices.title": "Birden fazla iPhone yanıt verdi",
   "error.several_devices.steps": [

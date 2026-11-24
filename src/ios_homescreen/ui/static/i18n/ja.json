@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "このコンピュータはiPhoneとWi-Fiでペアリングされていません",
   "error.no_pair_record.steps": [
-    "一度iPhoneをケーブルで接続し、`ios-homescreen wifi setup`を実行してください。",
+    "一度iPhoneをケーブルで接続し、`iconshuffle wifi setup`を実行してください。",
     "その後、`--wifi`を付けてエディタを再起動してください。"
   ],
   "error.stale_pair_record.title": "Wi-Fiのペアリングをやり直す必要があります",
   "error.stale_pair_record.steps": [
-    "一度iPhoneをケーブルで接続し、`ios-homescreen wifi setup`を実行してください。",
+    "一度iPhoneをケーブルで接続し、`iconshuffle wifi setup`を実行してください。",
     "その後、`--wifi`を付けてエディタを再起動してください。"
   ],
   "error.not_advertising.title": "iPhoneがネットワーク上で応答しませんでした",
   "error.not_advertising.steps": [
     "iPhoneをスリープさせずロック解除したまま、このコンピュータと同じネットワークに接続してください。",
     "ゲストネットワークやクライアント分離機能があるとiPhoneとコンピュータが通信できません。また、ファイアウォールでmDNS（UDP 5353）を許可する必要があります。",
-    "USB接続で`ios-homescreen wifi status`を実行して確認するか、ケーブルで接続してください。"
+    "USB接続で`iconshuffle wifi status`を実行して確認するか、ケーブルで接続してください。"
   ],
   "error.several_devices.title": "複数のiPhoneが応答しました",
   "error.several_devices.steps": [

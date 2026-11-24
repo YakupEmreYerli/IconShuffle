@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "Dieser Computer ist nicht für Wi-Fi mit dem iPhone gekoppelt",
   "error.no_pair_record.steps": [
-    "Verbinde das iPhone einmal per Kabel und führ `ios-homescreen wifi setup` aus.",
+    "Verbinde das iPhone einmal per Kabel und führ `iconshuffle wifi setup` aus.",
     "Starte den Editor dann mit `--wifi` neu."
   ],
   "error.stale_pair_record.title": "Die Wi-Fi-Kopplung muss neu eingerichtet werden",
   "error.stale_pair_record.steps": [
-    "Verbinde das iPhone einmal per Kabel und führ `ios-homescreen wifi setup` aus.",
+    "Verbinde das iPhone einmal per Kabel und führ `iconshuffle wifi setup` aus.",
     "Starte den Editor dann mit `--wifi` neu."
   ],
   "error.not_advertising.title": "Das iPhone hat im Netzwerk nicht geantwortet",
   "error.not_advertising.steps": [
     "Halt das iPhone wach und entsperrt, im selben Netzwerk wie dieser Computer.",
     "Gastnetzwerke und Client-Isolation trennen iPhone und Computer, und Firewalls müssen mDNS (UDP 5353) durchlassen.",
-    "Prüf es mit `ios-homescreen wifi status` über USB oder nimm das Kabel."
+    "Prüf es mit `iconshuffle wifi status` über USB oder nimm das Kabel."
   ],
   "error.several_devices.title": "Mehr als ein iPhone hat geantwortet",
   "error.several_devices.steps": [

@@ -58,11 +58,11 @@ from the phone; nothing is written to it.
 4. If you also have [uv](https://docs.astral.sh/uv/), try the command line:
 
    ```
-   uv tool install git+https://github.com/YakupEmreYerli/ios-homescreen
-   ios-homescreen --version
-   ios-homescreen pull test-layout.toml
-   ios-homescreen check test-layout.toml
-   ios-homescreen wifi status
+   uv tool install git+https://github.com/YakupEmreYerli/IconShuffle
+   iconshuffle --version
+   iconshuffle pull test-layout.toml
+   iconshuffle check test-layout.toml
+   iconshuffle wifi status
    ```
 
    `pull` writes `test-layout.toml` and a snapshot on your computer only. If a command

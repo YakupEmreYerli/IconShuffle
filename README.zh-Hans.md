@@ -67,20 +67,20 @@ pipx install git+https://github.com/YakupEmreYerli/IconShuffle
 
 ```text
 请阅读 https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md，
-用 ios-homescreen 帮我整理 iPhone 主屏幕。需要的话先安装；在向手机写入任何内容之前，
+用 iconshuffle 帮我整理 iPhone 主屏幕。需要的话先安装；在向手机写入任何内容之前，
 把每一项改动都列给我看，等我同意。我想要的是：把工作类 App 放进一个文件夹，把游戏移到第 2 页。
 ```
 
-[智能体指南](docs/agent-guide.md)告诉智能体如何安装和使用这个工具，并要求它必须先把改动给你看、等你同意。连接手机和点“信任”仍然要你亲自来。Claude Code 还有一个流程相同的 skill：把 [`skills/ios-homescreen`](skills/ios-homescreen) 复制到 `~/.claude` 里的 `skills` 文件夹（或项目 `.claude` 文件夹里的 `skills` 文件夹）。
+[智能体指南](docs/agent-guide.md)告诉智能体如何安装和使用这个工具，并要求它必须先把改动给你看、等你同意。连接手机和点“信任”仍然要你亲自来。Claude Code 还有一个流程相同的 skill：把 [`skills/iconshuffle`](skills/iconshuffle) 复制到 `~/.claude` 里的 `skills` 文件夹（或项目 `.claude` 文件夹里的 `skills` 文件夹）。
 
 Claude Desktop、Claude Code、Codex、Cursor、VS Code 等 MCP 客户端也可以把 IconShuffle 当作**MCP 服务器**使用，它已内置在桌面应用（无需 Python）和命令行工具中：[设置方法](docs/mcp.md)（英文），也可以在没有手机的演示模式下试用。
 
 **终端。** 你的布局就是一个普通的 TOML 文件。读取下来，用任意编辑器修改，再写回去：
 
 ```bash
-ios-homescreen pull        # 把手机上的布局读入 layout.toml（只读）
-ios-homescreen check       # 查看会有哪些改动（离线）
-ios-homescreen push        # 询问、备份、写入、校验，必要时回滚
+iconshuffle pull        # 把手机上的布局读入 layout.toml（只读）
+iconshuffle check       # 查看会有哪些改动（离线）
+iconshuffle push        # 询问、备份、写入、校验，必要时回滚
 ```
 
 ## 安全是设计的出发点
@@ -89,7 +89,7 @@ ios-homescreen push        # 询问、备份、写入、校验，必要时回滚
 
 - **先备份。** 每次写入在动手之前，都会先保存手机当前的布局。
 - **每次都读回核对。** 写入后会重新读取手机，逐个图标与计划比对。
-- **自动回滚。** 如果手机上的结果与计划不符，会自动恢复备份。之后也可以用 `ios-homescreen restore latest` 撤销任何一次写入。
+- **自动回滚。** 如果手机上的结果与计划不符，会自动恢复备份。之后也可以用 `iconshuffle restore latest` 撤销任何一次写入。
 - **写入前先询问。** 无论用的是应用程序、终端还是智能体，你都会看到完整的改动列表，由你点头同意。
 - **数据留在你的电脑上。** 编辑器只监听 127.0.0.1；布局、图标和备份都不会离开你的电脑。无需账户，没有遥测。
 

@@ -3,7 +3,7 @@
     python packaging/mcp_smoke.py COMMAND [ARGS...]
 
 For example ``dist/iconshuffle/iconshuffle mcp --demo`` (the frozen desktop app) or
-``ios-homescreen mcp --demo``. It lists the tools, reads the home screen, plans an A-Z
+``iconshuffle mcp --demo``. It lists the tools, reads the home screen, plans an A-Z
 sort, applies it and reads again. Exits 0 when every step worked.
 """
 

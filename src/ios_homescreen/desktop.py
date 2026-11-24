@@ -1,6 +1,6 @@
 """The desktop app: the browser editor in its own window, without a terminal.
 
-It runs the same server as ``ios-homescreen editor`` on a free local port, in a
+It runs the same server as ``iconshuffle editor`` on a free local port, in a
 background thread, and shows the page in a pywebview window (WebKit on macOS, WebView2
 on Windows, Qt on Linux). Closing the window stops the server. Nobody picks USB or
 Wi-Fi here, so the app tries USB first and the network when no cable is in.
@@ -200,7 +200,7 @@ def main(argv: list[str] | None = None) -> int:
             found["error"] = exc
             started.set()
 
-    server = threading.Thread(target=run, name="ios-homescreen-server", daemon=True)
+    server = threading.Thread(target=run, name="iconshuffle-server", daemon=True)
     server.start()
     if not started.wait(START_TIMEOUT) or "error" in found:
         message = str(found.get("error") or "the editor did not start")

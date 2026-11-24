@@ -324,19 +324,19 @@
   ],
   "error.no_pair_record.title": "此电脑尚未通过 Wi-Fi 与 iPhone 配对",
   "error.no_pair_record.steps": [
-    "用线缆连接 iPhone 一次，并运行 `ios-homescreen wifi setup`。",
+    "用线缆连接 iPhone 一次，并运行 `iconshuffle wifi setup`。",
     "然后用 `--wifi` 重新启动编辑器。"
   ],
   "error.stale_pair_record.title": "需要重新进行 Wi-Fi 配对",
   "error.stale_pair_record.steps": [
-    "用线缆连接 iPhone 一次，并运行 `ios-homescreen wifi setup`。",
+    "用线缆连接 iPhone 一次，并运行 `iconshuffle wifi setup`。",
     "然后用 `--wifi` 重新启动编辑器。"
   ],
   "error.not_advertising.title": "iPhone 没有在网络上响应",
   "error.not_advertising.steps": [
     "让 iPhone 保持唤醒和解锁，并与这台电脑连接到同一网络。",
     "访客网络和客户端隔离会让手机与电脑无法互通；防火墙必须放行 mDNS（UDP 5353）。",
-    "通过 USB 运行 `ios-homescreen wifi status` 检查，或改用线缆连接。"
+    "通过 USB 运行 `iconshuffle wifi status` 检查，或改用线缆连接。"
   ],
   "error.several_devices.title": "有多部 iPhone 响应",
   "error.several_devices.steps": [

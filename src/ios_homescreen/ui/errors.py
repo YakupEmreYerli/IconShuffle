@@ -33,11 +33,11 @@ _WIFI_STEPS = [
     "Keep the iPhone awake and unlocked, on the same network as this computer.",
     "Guest networks and client isolation keep the phone and the computer apart, and "
     "firewalls must let mDNS (UDP 5353) through.",
-    "Check with `ios-homescreen wifi status` over USB, or use the cable.",
+    "Check with `iconshuffle wifi status` over USB, or use the cable.",
 ]
 
 _WIFI_SETUP = [
-    "Connect the iPhone with a cable once and run `ios-homescreen wifi setup`.",
+    "Connect the iPhone with a cable once and run `iconshuffle wifi setup`.",
     "Then restart the editor with `--wifi`.",
 ]
 

@@ -1,4 +1,4 @@
-"""A pretend iPhone for ``ios-homescreen editor --demo``.
+"""A pretend iPhone for ``iconshuffle editor --demo``.
 
 Every app, widget and web clip here is invented, with ``com.example.*`` ids and the
 generated icons from :mod:`.demo_icons`. The wallpaper is a drawing made for the

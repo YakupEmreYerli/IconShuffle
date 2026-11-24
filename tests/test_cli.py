@@ -86,7 +86,7 @@ def test_every_help_page_works(argv, capsys):
 
     text = capsys.readouterr().out
     assert exit_.value.code == 0
-    assert text.startswith("usage: ios-homescreen")
+    assert text.startswith("usage: iconshuffle")
 
 
 @pytest.mark.parametrize("command", ["pull", "push", "restore", "wifi", "editor"])
@@ -112,7 +112,7 @@ def test_version(capsys):
     with pytest.raises(SystemExit):
         main(["--version"])
 
-    assert capsys.readouterr().out.strip() == f"ios-homescreen {__version__}"
+    assert capsys.readouterr().out.strip() == f"iconshuffle {__version__}"
 
 
 def test_help_does_not_load_the_device_stack():
@@ -158,8 +158,8 @@ def test_pull_writes_the_layout_file_and_keeps_the_snapshot_in_the_data_dir(home
     assert sorted(p.name for p in Path.cwd().iterdir()) == ["layout.toml"]
     out = capsys.readouterr().out
     assert "Wrote layout.toml: dock 4 items, 2 pages, 31 apps only in the App Library." in out
-    assert "Next: edit layout.toml, then run\n  ios-homescreen check  to see what" in out
-    assert "  ios-homescreen push   to write it to the phone" in out
+    assert "Next: edit layout.toml, then run\n  iconshuffle check  to see what" in out
+    assert "  iconshuffle push   to write it to the phone" in out
 
 
 def test_pull_records_a_failed_format_3_read(home):
@@ -176,8 +176,8 @@ def test_pull_records_a_failed_format_3_read(home):
 def test_pull_into_a_named_file(home, capsys):
     pull(home, None, "phones/mine.toml")
 
-    assert Path("phones/mine.toml").read_text().startswith("# ios-homescreen layout.")
-    assert f"  ios-homescreen check {Path('phones/mine.toml')}  to see" in (capsys.readouterr().out)
+    assert Path("phones/mine.toml").read_text().startswith("# iconshuffle layout.")
+    assert f"  iconshuffle check {Path('phones/mine.toml')}  to see" in (capsys.readouterr().out)
 
 
 def test_data_dir_flag_and_env_override_the_default(home, tmp_path, monkeypatch):
@@ -263,7 +263,7 @@ def test_check_lists_what_push_would_change(home, capsys):
     assert "  tips    comes from the App Library to page 2, position 2\n" in out
     assert "1 moved and 1 added.\n" in out
     assert "30 apps will be only in the App Library." in out
-    assert "Write it with: ios-homescreen push" in out
+    assert "Write it with: iconshuffle push" in out
 
 
 def test_check_of_an_unedited_file(home, capsys):
@@ -531,7 +531,7 @@ def test_backups_lists_the_newest_first_with_the_iphone_and_a_summary(home, caps
     assert "33 items" in rows[0]
     assert "2026-10-09 09:12:00  Test iPhone     dock 0, 1 pages, 1 items" in rows[1]
     assert "unknown iPhone" in rows[2]
-    assert lines[-1].startswith("Restore one with: ios-homescreen restore latest")
+    assert lines[-1].startswith("Restore one with: iconshuffle restore latest")
 
 
 def test_backups_shows_the_newest_twenty_unless_asked(home, capsys):
@@ -638,7 +638,7 @@ def test_restore_of_an_unknown_name_explains(home, capsys):
     _backup(home, "20261010-144400-000000")
 
     assert main(["restore", "backup-nope", "--yes"], open_device=must_not_connect) == 1
-    assert "ios-homescreen backups" in capsys.readouterr().err
+    assert "iconshuffle backups" in capsys.readouterr().err
 
 
 @pytest.mark.parametrize("bad", [[], ["not a page"], {"state": "nope"}])

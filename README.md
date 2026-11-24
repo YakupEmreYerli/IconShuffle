@@ -81,7 +81,7 @@ for you. Paste this, with your own wish at the end:
 
 ```text
 Read https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md and
-help me rearrange my iPhone home screen with ios-homescreen. Install it if needed, show me
+help me rearrange my iPhone home screen with iconshuffle. Install it if needed, show me
 every change before anything is written to the phone, and wait for my yes. What I want:
 put my work apps in one folder and move the games to page 2.
 ```
@@ -89,7 +89,7 @@ put my work apps in one folder and move the games to page 2.
 The [agent guide](docs/agent-guide.md) tells the agent how to install and drive the tool,
 and that it must show you the changes and wait for your yes. You still plug in the phone
 and tap Trust yourself. For Claude Code there is also a skill with the same workflow: copy
-[`skills/ios-homescreen`](skills/ios-homescreen) into the `skills` folder inside `~/.claude`
+[`skills/iconshuffle`](skills/iconshuffle) into the `skills` folder inside `~/.claude`
 (or inside a project's `.claude` folder).
 
 Claude Desktop, Claude Code, Codex, Cursor, VS Code and other MCP clients can also use
@@ -99,9 +99,9 @@ command line: [set it up](docs/mcp.md), or try it without a phone in demo mode.
 **The terminal.** Your layout is a plain TOML file. Pull it, edit it in any editor, push it:
 
 ```bash
-ios-homescreen pull        # read the phone into layout.toml (read-only)
-ios-homescreen check       # see what would change (offline)
-ios-homescreen push        # asks, backs up, writes, verifies, rolls back if needed
+iconshuffle pull        # read the phone into layout.toml (read-only)
+iconshuffle check       # see what would change (offline)
+iconshuffle push        # asks, backs up, writes, verifies, rolls back if needed
 ```
 
 ## Safe by design
@@ -113,7 +113,7 @@ write it cannot see:
 - **Read back, every time.** After writing, the phone is read again and compared with the plan,
   icon by icon.
 - **Rolls itself back.** If the phone doesn't match, the backup goes back on automatically.
-  `ios-homescreen restore latest` undoes any write later.
+  `iconshuffle restore latest` undoes any write later.
 - **Asks before it writes.** You see the full list of changes and say yes, whether you use the
   app, the terminal or an agent.
 - **Stays on your computer.** The editor listens on 127.0.0.1 only; layouts, icons and backups

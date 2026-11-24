@@ -63,7 +63,7 @@ def newest_pull(data_dir: Path) -> Path:
     if found is None:
         raise StateError(
             f"nothing has been pulled yet (no snapshot in {Path(data_dir) / PULLS}); "
-            "run 'ios-homescreen pull' first",
+            "run 'iconshuffle pull' first",
             code="no_pull",
         )
     return found
@@ -221,6 +221,6 @@ def find_backup(directory: Path, ref: str, *, allow_paths: bool = True) -> Path:
         if path.is_file():
             return path
     raise StateError(
-        f"there is no backup named {ref} in {directory} (list them with 'ios-homescreen backups')",
+        f"there is no backup named {ref} in {directory} (list them with 'iconshuffle backups')",
         code="no_backup",
     )

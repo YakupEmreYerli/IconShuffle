@@ -83,7 +83,7 @@ für dich erledigen. Füg das hier ein und schreib deinen eigenen Wunsch ans End
 
 ```text
 Lies https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md und
-hilf mir, den Home-Bildschirm meines iPhones mit ios-homescreen neu zu ordnen. Installier
+hilf mir, den Home-Bildschirm meines iPhones mit iconshuffle neu zu ordnen. Installier
 es, falls nötig, zeig mir jede Änderung, bevor etwas auf das iPhone geschrieben wird, und
 warte auf mein Ja. Was ich will: Leg meine Arbeits-Apps in einen Ordner und verschieb die
 Spiele auf Seite 2.
@@ -93,7 +93,7 @@ Die [Anleitung für Agenten](docs/agent-guide.md) erklärt dem Agenten, wie er d
 installiert und bedient, und dass er dir die Änderungen zeigen und auf dein Ja warten muss.
 Das iPhone anschließen und auf „Vertrauen“ tippen musst du weiterhin selbst. Für Claude Code
 gibt es außerdem einen Skill mit demselben Ablauf: Kopier
-[`skills/ios-homescreen`](skills/ios-homescreen) in den Ordner `skills` in `~/.claude`
+[`skills/iconshuffle`](skills/iconshuffle) in den Ordner `skills` in `~/.claude`
 (oder in den `.claude`-Ordner eines Projekts).
 
 Claude Desktop, Claude Code, Codex, Cursor, VS Code und andere MCP-Clients können
@@ -105,9 +105,9 @@ oder probieren Sie ihn im Demo-Modus ohne iPhone aus.
 einem beliebigen Editor und schreib sie zurück:
 
 ```bash
-ios-homescreen pull        # iPhone in layout.toml einlesen (nur lesen)
-ios-homescreen check       # sehen, was sich ändern würde (offline)
-ios-homescreen push        # fragt, sichert, schreibt, prüft, macht bei Bedarf rückgängig
+iconshuffle pull        # iPhone in layout.toml einlesen (nur lesen)
+iconshuffle check       # sehen, was sich ändern würde (offline)
+iconshuffle push        # fragt, sichert, schreibt, prüft, macht bei Bedarf rückgängig
 ```
 
 ## Von Grund auf sicher
@@ -120,7 +120,7 @@ Deshalb vertraut IconShuffle keinem Schreibvorgang, den es nicht überprüfen ka
 - **Jedes Mal zurückgelesen.** Nach dem Schreiben wird das iPhone erneut ausgelesen und Icon
   für Icon mit dem Plan verglichen.
 - **Macht sich selbst rückgängig.** Passt das iPhone nicht, wird das Backup automatisch
-  wiederhergestellt. `ios-homescreen restore latest` macht jeden Schreibvorgang auch später
+  wiederhergestellt. `iconshuffle restore latest` macht jeden Schreibvorgang auch später
   noch rückgängig.
 - **Fragt, bevor es schreibt.** Du siehst die komplette Liste der Änderungen und sagst Ja,
   egal ob du die App, das Terminal oder einen Agenten nutzt.

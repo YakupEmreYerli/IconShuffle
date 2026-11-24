@@ -1,5 +1,5 @@
 [project]
-name = "ios-homescreen"
+name = "iconshuffle"
 dynamic = ["version"]
 description = "Read, plan and safely rewrite an iPhone home screen layout from Linux, over USB or Wi-Fi."
 readme = "README.md"
@@ -28,13 +28,13 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# The browser editor (`ios-homescreen editor`). pymobiledevice3 already pulls both in; they are
+# The browser editor (`iconshuffle editor`). pymobiledevice3 already pulls both in; they are
 # listed here so the UI keeps working if it ever stops doing so.
 ui = [
   "starlette>=0.40",
   "uvicorn>=0.30",
 ]
-# The desktop app (`ios-homescreen-app`): the editor in its own window. pywebview uses the
+# The desktop app (`iconshuffle-app`): the editor in its own window. pywebview uses the
 # system web view on macOS (WebKit) and Windows (WebView2); Linux gets Qt's.
 app = [
   "starlette>=0.40",
@@ -42,7 +42,7 @@ app = [
   "pywebview>=5.4; sys_platform != 'linux'",
   "pywebview[qt]>=5.4; sys_platform == 'linux'",
 ]
-# The MCP server (`ios-homescreen mcp`): lets AI assistants read and rearrange the home
+# The MCP server (`iconshuffle mcp`): lets AI assistants read and rearrange the home
 # screen through the Model Context Protocol. Exact pin: the server is tested with it.
 mcp = [
   "mcp==2.3.0",
@@ -53,9 +53,11 @@ Homepage = "https://github.com/YakupEmreYerli/IconShuffle"
 Issues = "https://github.com/YakupEmreYerli/IconShuffle/issues"
 
 [project.scripts]
+iconshuffle = "ios_homescreen.cli:main"
 ios-homescreen = "ios_homescreen.cli:main"
 
 [project.gui-scripts]
+iconshuffle-app = "ios_homescreen.desktop:main"
 ios-homescreen-app = "ios_homescreen.desktop:main"
 
 [dependency-groups]

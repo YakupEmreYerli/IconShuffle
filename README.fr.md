@@ -83,7 +83,7 @@ tout faire à votre place. Collez ceci, avec votre propre souhait à la fin :
 
 ```text
 Lis https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md et
-aide-moi à réorganiser l'écran d'accueil de mon iPhone avec ios-homescreen. Installe-le si
+aide-moi à réorganiser l'écran d'accueil de mon iPhone avec iconshuffle. Installe-le si
 nécessaire, montre-moi chaque modification avant que quoi que ce soit soit écrit sur le
 téléphone, et attends mon accord. Ce que je veux : mets mes apps de travail dans un seul
 dossier et déplace les jeux en page 2.
@@ -92,7 +92,7 @@ dossier et déplace les jeux en page 2.
 Le [guide pour agents](docs/agent-guide.md) explique à l'agent comment installer et piloter
 l'outil, et lui indique qu'il doit vous montrer les modifications et attendre votre accord.
 C'est toujours vous qui branchez le téléphone et touchez Se fier. Pour Claude Code, il existe
-aussi un skill qui suit le même déroulement : copiez [`skills/ios-homescreen`](skills/ios-homescreen)
+aussi un skill qui suit le même déroulement : copiez [`skills/iconshuffle`](skills/iconshuffle)
 dans le dossier `skills` de `~/.claude` (ou du dossier `.claude` d'un projet).
 
 Claude Desktop, Claude Code, Codex, Cursor, VS Code et les autres clients MCP peuvent
@@ -104,9 +104,9 @@ anglais), ou l'essayer sans téléphone en mode démo.
 n'importe quel éditeur, renvoyez-la :
 
 ```bash
-ios-homescreen pull        # lit le téléphone dans layout.toml (lecture seule)
-ios-homescreen check       # montre ce qui changerait (hors connexion)
-ios-homescreen push        # demande, sauvegarde, écrit, vérifie, annule si besoin
+iconshuffle pull        # lit le téléphone dans layout.toml (lecture seule)
+iconshuffle check       # montre ce qui changerait (hors connexion)
+iconshuffle push        # demande, sauvegarde, écrit, vérifie, annule si besoin
 ```
 
 ## Sûr par conception
@@ -119,7 +119,7 @@ ne fait jamais confiance à une écriture qu'il ne peut pas vérifier :
 - **Relu à chaque fois.** Après l'écriture, le téléphone est relu et comparé au plan, icône
   par icône.
 - **Revient en arrière tout seul.** Si le téléphone ne correspond pas, la sauvegarde est remise
-  en place automatiquement. `ios-homescreen restore latest` annule n'importe quelle écriture,
+  en place automatiquement. `iconshuffle restore latest` annule n'importe quelle écriture,
   même plus tard.
 - **Demande avant d'écrire.** Vous voyez la liste complète des modifications et donnez votre
   accord, que vous passiez par l'application, le terminal ou un agent.

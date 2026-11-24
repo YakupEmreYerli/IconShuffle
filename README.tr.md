@@ -83,7 +83,7 @@ bütün işi sizin yerinize yapabilir. Şunu yapıştırın, sonuna kendi isteğ
 
 ```text
 https://github.com/YakupEmreYerli/IconShuffle/blob/main/docs/agent-guide.md dosyasını oku
-ve ios-homescreen ile iPhone ana ekranımı düzenlememe yardım et. Gerekiyorsa kur, telefona
+ve iconshuffle ile iPhone ana ekranımı düzenlememe yardım et. Gerekiyorsa kur, telefona
 bir şey yazmadan önce her değişikliği bana göster ve onayımı bekle. İstediğim: iş
 uygulamalarımı tek bir klasöre koy, oyunları 2. sayfaya taşı.
 ```
@@ -91,7 +91,7 @@ uygulamalarımı tek bir klasöre koy, oyunları 2. sayfaya taşı.
 [Asistan rehberi](docs/agent-guide.md) asistana aracı nasıl kurup kullanacağını anlatır;
 telefona bir şey yazmadan önce değişiklikleri size göstermesi ve onayınızı beklemesi
 gerektiğini de söyler. Telefonu takmak ve Güven'e dokunmak yine size kalır. Claude Code
-için aynı akışı izleyen bir skill de var: [`skills/ios-homescreen`](skills/ios-homescreen)
+için aynı akışı izleyen bir skill de var: [`skills/iconshuffle`](skills/iconshuffle)
 klasörünü `~/.claude` içindeki `skills` klasörüne (ya da projenin `.claude` klasöründeki
 `skills` klasörüne) kopyalayın.
 
@@ -103,9 +103,9 @@ ya da telefonsuz deneme moduyla deneyin.
 **Terminal.** Düzeniniz düz bir TOML dosyası. Okuyun, istediğiniz editörde düzenleyin, yazın:
 
 ```bash
-ios-homescreen pull        # telefonu layout.toml dosyasına okur (yalnız okur)
-ios-homescreen check       # neyin değişeceğini gösterir (bağlantısız)
-ios-homescreen push        # sorar, yedekler, yazar, doğrular, gerekirse geri alır
+iconshuffle pull        # telefonu layout.toml dosyasına okur (yalnız okur)
+iconshuffle check       # neyin değişeceğini gösterir (bağlantısız)
+iconshuffle push        # sorar, yedekler, yazar, doğrular, gerekirse geri alır
 ```
 
 ## Güvenlik baştan düşünüldü
@@ -117,7 +117,7 @@ yazmaya asla güvenmez:
 - **Her seferinde geri okuma.** Yazmadan sonra telefon yeniden okunur ve simge simge planla
   karşılaştırılır.
 - **Kendini geri alır.** Telefon planla uyuşmazsa yedek kendiliğinden geri yüklenir.
-  `ios-homescreen restore latest` herhangi bir yazmayı sonradan da geri alır.
+  `iconshuffle restore latest` herhangi bir yazmayı sonradan da geri alır.
 - **Yazmadan önce sorar.** Uygulamada, terminalde ya da asistanla, değişikliklerin tam
   listesini görürsünüz ve onayınız olmadan hiçbir şey yazılmaz.
 - **Bilgisayarınızda kalır.** Düzenleyici yalnız 127.0.0.1 üzerinde çalışır; düzenler,

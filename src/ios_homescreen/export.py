@@ -21,8 +21,8 @@ from .state import (
 )
 
 HEADER = """\
-# ios-homescreen layout. Edit it, then run `ios-homescreen check` to see what would
-# change and `ios-homescreen push` to write it to the iPhone.
+# iconshuffle layout. Edit it, then run `iconshuffle check` to see what would
+# change and `iconshuffle push` to write it to the iPhone.
 #
 # Items are in home screen order: left to right, top to bottom.
 # Apps: "bundle.id" or the app's name. Apps you leave out go to the App Library; the

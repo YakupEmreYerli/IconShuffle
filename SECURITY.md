@@ -18,16 +18,16 @@ Only the latest release gets security fixes.
 
 In scope:
 
-- Anything that makes ios-homescreen write to the phone without the user's yes (`y` at the
+- Anything that makes iconshuffle write to the phone without the user's yes (`y` at the
   prompt, `--yes`, or Apply in the browser editor), skip the backup, skip verification or
   rollback, or send a payload other than the validated `{buttonBar, iconLists, ignored}`
   dictionary.
 - Leaking or copying pairing records. They contain the private key that lets a computer
-  access the phone. ios-homescreen has pymobiledevice3 create the Wi-Fi (RemotePairing)
+  access the phone. iconshuffle has pymobiledevice3 create the Wi-Fi (RemotePairing)
   record on `wifi setup`, deletes it on `wifi off --forget`, and otherwise only reads
   it; it must never copy or send it anywhere.
 - Anything that lets another website, another origin or another machine use the browser
-  editor (`ios-homescreen editor`), read its icons, wallpaper, backups or layout, or write
+  editor (`iconshuffle editor`), read its icons, wallpaper, backups or layout, or write
   to the phone without the user pressing Apply or Restore and confirming.
 - Anything that makes `editor --showcase` write to the phone, or put apps on the page that
   the showcase file does not name.

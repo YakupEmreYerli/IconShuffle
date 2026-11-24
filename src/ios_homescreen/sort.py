@@ -1,4 +1,4 @@
-"""A-Z sorting of home-screen pages, shared by ``ios-homescreen sort`` and the editor.
+"""A-Z sorting of home-screen pages, shared by ``iconshuffle sort`` and the editor.
 
 Sorting redeals every movable item over all pages: each page keeps its length and
 widgets keep their cells, while apps, folders, web clips and web apps fill the free

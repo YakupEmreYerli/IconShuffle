@@ -147,7 +147,7 @@ def test_find_backup_takes_latest_a_name_or_a_path(tmp_path, monkeypatch):
     assert find_backup(tmp_path, older.name) == older
     assert find_backup(tmp_path, str(elsewhere)) == elsewhere
     assert find_backup(tmp_path, os.path.relpath(elsewhere)) == Path(os.path.relpath(elsewhere))
-    with pytest.raises(StateError, match="ios-homescreen backups"):
+    with pytest.raises(StateError, match="iconshuffle backups"):
         find_backup(tmp_path, "backup-nope")
 
 

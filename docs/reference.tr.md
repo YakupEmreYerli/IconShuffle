@@ -2,7 +2,7 @@
 
 [README](../README.tr.md)'de olmayan her şey: komut satırı, düzen dosyası, düzenleyici,
 bir yazmanın nasıl güvende tutulduğu, Wi-Fi, dosyalar, Python API'si, sınırlar ve sorun
-giderme. Komutun adı `ios-homescreen`.
+giderme. Komutun adı `iconshuffle`.
 
 ## Özellikler
 
@@ -22,9 +22,9 @@ giderme. Komutun adı `ios-homescreen`.
 - Okuma kayıtlarını ve yedekleri kendi veri klasöründe tutar; yalnız düzen dosyası sizin
   gösterdiğiniz yere gider.
 
-Komutun adı `ios-homescreen`, Python paketinin adı `ios_homescreen`. Bu adlar projenin ilk
-aylarından kaldı ve değişmiyor; böylece onlara dayanan betikler ve araçlar çalışmaya devam
-ediyor.
+Komut `iconshuffle`. Eski komut `ios-homescreen` de aynı programı açar, ona yazılmış
+betikler çalışmaya devam eder. Python'daki içe aktarma adı `ios_homescreen` olarak durur;
+yedekler de eski klasöründe kalır.
 
 Geliştirmek için depodan:
 
@@ -32,29 +32,29 @@ Geliştirmek için depodan:
 git clone https://github.com/YakupEmreYerli/IconShuffle
 cd IconShuffle
 uv sync
-uv run ios-homescreen --help
+uv run iconshuffle --help
 ```
 
 ## Hızlı başlangıç
 
 ```bash
 # 1. Telefonu layout.toml dosyasına çek. Yalnız okur, telefona hiçbir şey yazmaz.
-ios-homescreen pull
+iconshuffle pull
 
 # 2. Dosyayı düzenle: satırları taşı, sondaki listeden uygulama ekle, klasör kur.
 $EDITOR layout.toml
 
 # 3. Neyin değişeceğine bak. Telefona bağlanmaz.
-ios-homescreen check
+iconshuffle check
 
 # 4. Yaz. push değişiklikleri gösterip sorar; sonra yedek, yazma, doğrulama, gerekirse geri dönüş.
-ios-homescreen push
+iconshuffle push
 ```
 
 Bir `push` komutunu geri almak için aldığı yedeği geri yazın:
 
 ```bash
-ios-homescreen restore latest
+iconshuffle restore latest
 ```
 
 ## Komutlar
@@ -195,7 +195,7 @@ Changes compared with the pull from iPhone (iPhone 15, iOS 27.0) on 2026-10-10 1
 <img src="assets/ui-light.png" alt="Deneme modunda, A-Z sıralamadan sonra IconShuffle düzenleyicisi: solda App Library, ortada telefon, sağda değişiklik listesi ve Uygula düğmesi">
 </picture>
 
-Masaüstü uygulaması düzenleyiciyi kendi penceresinde açar; `ios-homescreen editor` aynı
+Masaüstü uygulaması düzenleyiciyi kendi penceresinde açar; `iconshuffle editor` aynı
 düzenleyiciyi tarayıcıda açar. Düzenleyici telefonu okur; telefonun uygulama simgelerini ve
 telefon gönderiyorsa duvar kâğıdını gösterir. Uygulamaları,
 klasörleri ve widget'ları ana ekranın resmi üzerinde, sayfalar arasında ve dock'a
@@ -216,8 +216,8 @@ kaydeder; düzenleyiciyle metin düzenleyicisi arasında gidip gelebilirsiniz. D
 dosya `check` ve `push` ile de çalışır.
 
 ```bash
-ios-homescreen editor          # USB ile; Wi-Fi için --wifi ekleyin
-ios-homescreen editor --demo   # uydurma uygulamalı bir deneme iPhone'u
+iconshuffle editor          # USB ile; Wi-Fi için --wifi ekleyin
+iconshuffle editor --demo   # uydurma uygulamalı bir deneme iPhone'u
 ```
 
 | Seçenek | Anlamı |
@@ -274,8 +274,8 @@ ikili veri var.
 Wi-Fi için iOS 17 ya da sonrası gerekir. Telefon USB ile bağlıyken bir kez kurun:
 
 ```bash
-ios-homescreen wifi setup      # USB üzerinden, bir kez
-ios-homescreen wifi status     # ayar, eşleşme ve telefonun Wi-Fi'de cevap verip vermediği
+iconshuffle wifi setup      # USB üzerinden, bir kez
+iconshuffle wifi status     # ayar, eşleşme ve telefonun Wi-Fi'de cevap verip vermediği
 ```
 
 `wifi setup` telefondaki Wi-Fi bağlantısı ayarını açar ve bu bilgisayarı Wi-Fi için
@@ -291,7 +291,7 @@ değil eşleşmeden tanır; iOS özel ve değişen Wi-Fi adresleri kullanıyor. 
 telefonla eşliyse `--udid` verin.
 
 Telefon dinlemeye devam ettiği halde Bonjour cevapları bir süre gelmeyebiliyor. Bu yüzden
-ios-homescreen her başarılı Wi-Fi bağlantısından sonra telefonun cevap verdiği adresi ve portu
+iconshuffle her başarılı Wi-Fi bağlantısından sonra telefonun cevap verdiği adresi ve portu
 hatırlar; bir sonraki bağlantıda Bonjour ile ararken o adrese doğrudan da bağlanmayı dener ve
 hangisi önce cevap verirse onu kullanır. Adresler önbellek klasöründeki `wifi-addresses.json`
 dosyasında durur; dosyayı silmek yalnız bir sonraki bağlantının Bonjour'a kalmasına yol açar.
@@ -402,11 +402,11 @@ duvarı mDNS'e (UDP 5353) izin vermeli.
 `this computer has no Wi-Fi pairing yet` ya da eski bir pymobiledevice3 sürümünün yaptığı
 eşleşme: USB üzerinden `wifi setup` komutunu yeniden çalıştırın.
 
-Tarayıcı, sayfanın terminaldeki adresi istediğini söylüyor: `ios-homescreen editor` komutunun
+Tarayıcı, sayfanın terminaldeki adresi istediğini söylüyor: `iconshuffle editor` komutunun
 yazdığı adresin tamamını açın. İçindeki anahtar düzenleyici her açıldığında değişir.
 
 `the iPhone's layout changed since layout.toml was pulled`: `pull` komutundan sonra telefonda
-düzen değişmiş. Yeni bir dosyaya çekin (`ios-homescreen pull yeni.toml`), değişikliklerinizi
+düzen değişmiş. Yeni bir dosyaya çekin (`iconshuffle pull yeni.toml`), değişikliklerinizi
 oraya taşıyıp onu yazın; dosyanızın geçerli olmasını istiyorsanız `--force` kullanın.
 
 `there is no terminal to ask in`: `push` ve `restore` yazmadan önce sorar. Bir betikte,
